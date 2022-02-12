@@ -10,4 +10,4 @@ Impedende para onde ele foi, o proximo valor vai somar ou subitraí 1.
 
 O modulo( a distância entre o cavalo e a posição procurada ) do cavalo sempre vai resultar 2 ou 1, caso seja uma posição válida.
 
-Ou seja, a soma dos modulos resulta em um movimento válido
+Ou seja, a soma dos modulos sendo 3 resulta em um movimento válido
