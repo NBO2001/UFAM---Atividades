@@ -8,6 +8,9 @@ Defina a função possivel(x1,y1,x2,y2) que verifica se a posição (x2,y2) cons
 &nbsp;
 
 ## Resolvendo
+
+![Horse_move](https://user-images.githubusercontent.com/54229396/153724857-94132fbc-8eaa-48fe-ac66-3a36f4a44e62.png)
+
 Um cavalo tem 8 posições possiveis.
 
 Um cavalo vai sempre andar duas casa em direção ao X e Y
