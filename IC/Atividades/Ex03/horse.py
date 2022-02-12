@@ -48,6 +48,8 @@ def possivel(x1,y1,x2,y2) -> bool:
         return False
     # Verifica se está no tabuleiro
     elif (
+        not(is_on_table(x1,y1))
+        or
         not(is_on_table(x2,y2))
         ):
         return False
