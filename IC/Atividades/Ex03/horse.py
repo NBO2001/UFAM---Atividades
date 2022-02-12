@@ -41,9 +41,9 @@ def is_integer(vl):
 def possivel(x1,y1,x2,y2) -> bool:
     #Verifica se alguma cordenada é flutuante
     if (
-        not (x1) or not (y1)
+        not is_integer(x1) or not is_integer(y1)
         or
-        not (x2) or not (y2)
+        not is_integer(x2) or not is_integer(y2)
     ):
         return False
     # Verifica se está no tabuleiro

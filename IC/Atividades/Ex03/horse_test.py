@@ -17,10 +17,12 @@ class TestClassDemoInstance:
         assert possivel(8.1,8,9,10) == False
         assert possivel(8,8.5,9,10) == False
         assert possivel(8,8,9.5,9.5) == False
-    
+        assert possivel(1,1,2.5,2.5) == False
+
     def test_int(self):
         assert is_integer(1) == True
         assert is_integer(1.5584) == False
+        assert is_integer(2.5) == False
         assert is_integer(1.5) == False
         assert is_integer(5.5) == False
         assert is_integer(5) == True
