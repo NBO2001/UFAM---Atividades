@@ -13,5 +13,7 @@ class TestClassDemoInstance:
         assert possivel(5,5,7,6) == True
         assert possivel(1,8,2,4) == False
         assert possivel(1,1,2,3) == True
+        assert possivel(8,8,9,10) == False
+
         
 

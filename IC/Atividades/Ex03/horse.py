@@ -27,7 +27,7 @@ def possivel(x1,y1,x2,y2) -> bool:
 
     # Verifica se está no tabuleiro
     if (
-        not(is_on_table)
+        not(is_on_table(x2,y2))
         ):
         return False
     # Verifica se soma dos modulos é 3
