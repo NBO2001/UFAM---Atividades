@@ -23,10 +23,31 @@ def is_on_table(x, y)-> bool:
     else:
         return False
 
-def possivel(x1,y1,x2,y2) -> bool:
+def is_integer(vl):
+    """
+    Como não posso usar outros métodos,
+    já que não foi visto em aula, verificarei se o número é inteiro apenas usando funções matématica vistas em aula.
+    """
+    mul = (vl*10)
+    rest = mul%5
+    if(not((rest))):
+        
+        resul_div = mul/5
+        # Se o resto do for par, significa que a o número termina com 0
+        return not(resul_div%2)
+    else:
+        return False
 
-    # Verifica se está no tabuleiro
+def possivel(x1,y1,x2,y2) -> bool:
+    #Verifica se alguma cordenada é flutuante
     if (
+        not (x1) or not (y1)
+        or
+        not (x2) or not (y2)
+    ):
+        return False
+    # Verifica se está no tabuleiro
+    elif (
         not(is_on_table(x2,y2))
         ):
         return False
