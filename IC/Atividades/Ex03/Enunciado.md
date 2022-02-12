@@ -1,0 +1,1 @@
+Considere o problema dos movimentos do cavalo no jogo do xadrez (Seção 9 - pg.59, das Notas de Aula), onde as posições no tabuleiro são representadas por valores x e y. Defina a função possivel(x1,y1,x2,y2) que verifica se a posição (x2,y2) constitui um movimento válido para um cavalo na posição (x1,y1).
