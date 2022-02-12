@@ -1,3 +1,7 @@
+"""
+Explicação em: https://github.com/NBO2001/UFAM---Atividades/blob/main/IC/Atividades/Ex03/Enunciado.md
+"""
+
 #Devolve o modulo de um número
 def modulo(x):
     if x > 0:
