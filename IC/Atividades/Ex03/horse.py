@@ -21,20 +21,14 @@ def is_on_table(x, y)-> bool:
 
 def possivel(x1,y1,x2,y2) -> bool:
 
-    if(
+    # Verifica se está no tabuleiro
+    if (
         not(is_on_table)
         ):
         return False
-    elif (
-        modulo(x1-x2) == 2 
-        and 
-        modulo(y1-y2)==1
-        ):
-        return True
-    elif(
-        modulo(y1-y2) == 2
-        and
-        modulo(x1-x2) == 1
+    # Verifica se soma dos modulos é 3
+    elif ( 
+        (modulo(x1-x2) + modulo(y1-y2)) == 3 
         ):
         return True
     else:
