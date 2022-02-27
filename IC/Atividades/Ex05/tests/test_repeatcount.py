@@ -3,7 +3,9 @@ from pytest import mark
 from src.repeatcount import dig
 
 
-@mark.parametrize('number_a, number_b', [(00000, 1000)])
+@mark.parametrize(
+    'number_a, number_b', [(00000, 1000), (20000, 50000), (5268, 5267)]
+)
 def test_deve_retorna_4(number_a, number_b):
     assert dig(number_a, number_b) == 4
 
