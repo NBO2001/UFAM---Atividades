@@ -1,19 +1,20 @@
 # A prova foi feita no papel e com pouco tempo
 # Releve o péssimo nome das funções e variavéis
 
+
 # Questão 1
 def pontos(p1, p2):
 
-    a, b = p1
+    (a, b) = p1
     c, d = p2
 
     if (a + c) % 5 == 0:
         return a + c
-    if (a + d) % 5 == 0:
+    elif (a + d) % 5 == 0:
         return a + d
-    if (b + c) % 5 == 0:
+    elif (b + c) % 5 == 0:
         return b + c
-    if (b + d) % 5 == 0:
+    elif (b + d) % 5 == 0:
         return b + d
     else:
         return 0
@@ -43,7 +44,7 @@ def tuples_equals(tups):
 
 
 def maior_number(list_tupes):
-    maiorA, maiorB = list_tupes[0]
+    (maiorA, maiorB) = list_tupes[0]
     maior = (maiorA, maiorB)
 
     for c, d in list_tupes:
