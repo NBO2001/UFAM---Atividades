@@ -2,16 +2,13 @@ from functools import reduce
 
 from src.primeira_parte import tem_carrocas
 
-
+# P06: Escreva a função pontos que associe uma lista de "pedras"
+#  a soma dos pontos das pedras nela contidos. 
+# Onde os pontos de uma pedra é a soma de suas pontas.
 def pontos(pedras):
 
-    # Vou pegar o primeiro elemento da lista de pedras
-    # E o ultimo elemento da lista de pedras
-
-    primeira_pedra_a, primeira_pedra_b = pedras[0]
-    ultima_pedra_a, ultima_pedra_b = pedras[-1]
-
-    return primeira_pedra_a + ultima_pedra_b
+   return [ (pedra, soma_faces(0,pedra))  for pedra in pedras  ]
+    
 
 
 # P07: Escreva a função garagem que associe uma lista de "pedras" ao maior
@@ -73,8 +70,22 @@ def ocorre_pedra_p(pedra, mao_do_jogador):
 # P10: Escreva a função ocorre_valor_p que associe um valor válido para
 # "ponta" e uma "mão" e produza True sss o valor ocorre em alguma pedra
 # da mão e False caso contrário.
-def ocorre_valor_p(pedras):
-    pass
+
+# Funcao auxiliar
+def hasfit(nib, stone):
+
+    stone_a, stone_b = stone
+
+    return stone_a == nib or stone_a == nib or stone_b == nib or stone_b == nib
+
+
+def pedras_com_encaixe(ponta, mao_do_jogador):
+    return [pedra for pedra in mao_do_jogador if hasfit(ponta, pedra)]
+
+
+def ocorre_valor_p(ponta, mao_do_jogador):
+
+    return len(pedras_com_encaixe(ponta, mao_do_jogador)) != 0
 
 
 # P11: Escreva a função ocorre_pedra que associe a um valor e uma "mão",
@@ -133,5 +144,8 @@ def tira_maior(mao_do_jogador):
 
 # P16: Escreva a função tira_maior_v que associe um valor e uma "mão" à lista similar à "mão"
 # de onde se extraiu a pedra de maior pontos de um determinado valor para ponta.
-def tira_maior_v(pedras):
+def tira_maior_v(ponta, mao_do_jogador):
+
+    stones_com_encaixe = pedras_com_encaixe(ponta, mao_do_jogador)
+
     pass
