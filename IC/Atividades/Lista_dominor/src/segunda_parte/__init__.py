@@ -1,5 +1,7 @@
 from functools import reduce
 
+from src.primeira_parte import tem_carrocas
+
 
 def pontos(pedras):
 
@@ -88,25 +90,45 @@ def ocorre_pedra(pedra, mao_do_jogador):
 
 # P12: Escreva a função pedra_maior que associe uma "mão" a pedra de maior valor na "mão" dada.
 #  Uma pedra p1 é maior que uma outra p2 sss a soma das pontas de p1 for maior que a soma das pontas de p2.
-def pedra_maior(pedras):
-    pass
+def pedra_maior(mão_do_jogador):
+
+    maior_pedra = (0, 0)
+
+    for pedra in mão_do_jogador:
+
+        if soma_faces(0, pedra) > soma_faces(0, maior_pedra):
+            maior_pedra = pedra
+        elif soma_faces(0, pedra) < soma_faces(0, maior_pedra):
+            maior_pedra = maior_pedra
+        else:
+            maior_pedra = pedra
+
+    return maior_pedra
 
 
 # P13: Escreva a função ocorre_valor_q que associe um valor e
 # uma "mão" e produza o número de pedras na mão que possuem o valor dado.
-def ocorre_valor_q(pedras):
-    pass
+def ocorre_valor_q(pedra, mao_do_jogador):
+
+    return len(ocorre_pedra(pedra, mao_do_jogador))
 
 
 # P14: Escreva a função ocorre_carroca_q que associe uma mão à quantidade de carroças nela existentes.
-def ocorre_carroca_q(pedras):
-    pass
+def ocorre_carroca_q(mao_do_jogador):
+    return len(tem_carrocas(mao_do_jogador))
 
 
 # P15: Escreva a função tira_maior que associe uma mão a uma
 # lista similar à "mão" de onde foi extraída a pedra de maior ponto.
-def tira_maior(pedras):
-    pass
+def tira_maior(mao_do_jogador):
+
+    maior_pedra = pedra_maior(mao_do_jogador)
+
+    return [
+        pedra
+        for pedra in mao_do_jogador
+        if ordertuple(pedra) != ordertuple(maior_pedra)
+    ]
 
 
 # P16: Escreva a função tira_maior_v que associe um valor e uma "mão" à lista similar à "mão"

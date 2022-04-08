@@ -1,5 +1,5 @@
-from src.horse import is_integer, possivel
 from pytest import mark
+from src.horse import is_integer, possivel
 
 
 @mark.parametrize(

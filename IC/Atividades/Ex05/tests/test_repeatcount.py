@@ -1,5 +1,4 @@
 from pytest import mark
-
 from src.repeatcount import dig
 
 
