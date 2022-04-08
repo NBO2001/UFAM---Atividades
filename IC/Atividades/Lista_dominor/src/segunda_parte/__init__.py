@@ -26,7 +26,7 @@ def soma_faces(soma_das_faces, pedra_element):
 
 
 def multcinco(number):
-    if number < 6:
+    if number < 5:
         return 0
 
     return 5 + multcinco(number - 5)
