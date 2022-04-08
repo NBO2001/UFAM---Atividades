@@ -18,11 +18,11 @@ def pontos(pedras):
 # Função auxiliar
 
 
-def soma_faces(pedra, pedra_element):
+def soma_faces(soma_das_faces, pedra_element):
 
     ld_a_pedra, ld_b_pedra = pedra_element
 
-    return (ld_a_pedra + ld_b_pedra) + pedra
+    return (ld_a_pedra + ld_b_pedra) + soma_das_faces
 
 
 def multcinco(number):
