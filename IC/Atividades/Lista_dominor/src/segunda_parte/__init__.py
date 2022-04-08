@@ -128,6 +128,13 @@ def ocorre_valor_q(pedra, mao_do_jogador):
 def ocorre_carroca_q(mao_do_jogador):
     return len(tem_carrocas(mao_do_jogador))
 
+#Funcao auxiliar
+def lista_sem_maior(pedra_maior, pedras):
+    return [
+        pedra
+        for pedra in pedras
+        if ordertuple(pedra) != ordertuple(pedra_maior)
+    ]
 
 # P15: Escreva a função tira_maior que associe uma mão a uma
 # lista similar à "mão" de onde foi extraída a pedra de maior ponto.
@@ -135,17 +142,13 @@ def tira_maior(mao_do_jogador):
 
     maior_pedra = pedra_maior(mao_do_jogador)
 
-    return [
-        pedra
-        for pedra in mao_do_jogador
-        if ordertuple(pedra) != ordertuple(maior_pedra)
-    ]
+    return lista_sem_maior(maior_pedra, mao_do_jogador)
 
 
 # P16: Escreva a função tira_maior_v que associe um valor e uma "mão" à lista similar à "mão"
 # de onde se extraiu a pedra de maior pontos de um determinado valor para ponta.
 def tira_maior_v(ponta, mao_do_jogador):
 
-    stones_com_encaixe = pedras_com_encaixe(ponta, mao_do_jogador)
+    maior_pedra = pedra_maior(pedras_com_encaixe(ponta, mao_do_jogador))
 
-    pass
+    return lista_sem_maior(maior_pedra, mao_do_jogador)
