@@ -1,4 +1,5 @@
-def pedrap(valorA, valorb):
+def pedrap(pedra):
+    valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
 
 
@@ -7,7 +8,7 @@ def maop(mao_do_jogador):
     pedras_validas = [
         (ld_pedra_a, ld_pedra_b)
         for ld_pedra_a, ld_pedra_b in mao_do_jogador
-        if pedrap(ld_pedra_a, ld_pedra_b)
+        if pedrap((ld_pedra_a, ld_pedra_b))
     ]
     return len(mao_do_jogador) <= 7 and mao_do_jogador == pedras_validas
 
