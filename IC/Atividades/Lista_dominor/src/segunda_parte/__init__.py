@@ -2,6 +2,7 @@ from functools import reduce
 
 from src.primeira_parte import tem_carrocas
 
+
 # P06: Escreva a função pontos que associe uma lista de "pedras"
 #  a soma dos pontos das pedras nela contidos.
 # Onde os pontos de uma pedra é a soma de suas pontas.
@@ -55,8 +56,7 @@ def ordertuple(element):
         return element
 
 
-def pedra_igual_p(duas_pedras):
-    primeira_pedra, segunda_pedra = duas_pedras
+def pedra_igual_p(primeira_pedra, segunda_pedra):
 
     return ordertuple(primeira_pedra) == ordertuple(segunda_pedra)
 
@@ -64,12 +64,17 @@ def pedra_igual_p(duas_pedras):
 # P09: Escreva a função ocorre_pedra_p que associe
 # uma "pedra" e uma "mão" a True sss a "pedra" ocorre na "mão" e False caso contrário.
 
-#Funcaçao auxiliar
+# Funcaçao auxiliar
 def lista_de_pedras(pedra, mao_do_jogador):
-    return [ pedr for pedr in mao_do_jogador if ordertuple(pedr) == ordertuple(pedra) ]
+    return [
+        pedr
+        for pedr in mao_do_jogador
+        if ordertuple(pedr) == ordertuple(pedra)
+    ]
+
 
 def ocorre_pedra_p(pedra, mao_do_jogador):
-    
+
     return len(lista_de_pedras(pedra, mao_do_jogador)) != 0
 
 
@@ -100,7 +105,8 @@ def ocorre_pedra(valor_ponta, mao_do_jogador):
 
     return [
         (pedra_a, predra_b)
-        for pedra_a, predra_b in mao_do_jogador if pedra_a == valor_ponta or predra_b==valor_ponta 
+        for pedra_a, predra_b in mao_do_jogador
+        if pedra_a == valor_ponta or predra_b == valor_ponta
     ]
 
 

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "segundo_trabalho"
+version = "0.1.0"
+description = "Segundo Trabalho de TTCC"
+authors = ["Natanael Bezerra de Oliveira <natanbezerr63@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.2"
+isort = "^5.10.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
+blue = "^0.8.0"
+prospector = "^1.7.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
