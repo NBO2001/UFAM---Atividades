@@ -1,14 +1,21 @@
 import pandas as pd
+from os import walk
 from utils import decribe_data, read_base, prepare_data
 
+for _, _, files in walk('./dados/Tabs/calculo_1/reprovados'):
 
-base_teste = pd.read_csv("./dados/Tabs/calculo_1/alunos_aprovados_2014_ 1° Semestre.csv", encoding="UTF-8")
+    for file in files:
+        base_teste = pd.read_csv(
+            f'./dados/Tabs/calculo_1/reprovados/{file}',
+            encoding='UTF-8',
+        )
+        print(base_teste['FORMA_INGRESSO'].unique())
 
-base_teste = pd.read_excel("./dados/tx_rend_escolas_2020/tx_rend_escolas_2020.xlsx")
+        base_teste = base_teste.loc[
+            base_teste['FORMA_INGRESSO'] != 'SISU - AC (Ampla Concorrência)'
+        ]
+        base_teste = base_teste.loc[
+            base_teste['FORMA_INGRESSO'] != 'PSC - AC (Ampla Concorrência)'
+        ]
 
-print(base_teste['FORMA_INGRESSO'].unique())
-
-base_teste = base_teste.loc[base_teste['FORMA_INGRESSO'] != 'SISU - AC (Ampla Concorrência)']
-base_teste = base_teste.loc[base_teste['FORMA_INGRESSO'] != 'PSC - AC (Ampla Concorrência)']
-
-print(base_teste.tail())
+        print(base_teste.tail())

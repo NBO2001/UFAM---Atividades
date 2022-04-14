@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def read_base(
     path: str,
     colluns: list = [
@@ -10,13 +11,15 @@ def read_base(
         'ANO',
     ],
     with_loc=True,
-    encond= 'ISO-8859-1'
+    encond='ISO-8859-1',
 ):
     dt_notas_md = pd.read_csv(f'{path}', encoding=encond, sep=';')
 
     try:
         dt_notas_md = dt_notas_md.loc[dt_notas_md['ID_PESSOA'] != '#N/D']
-        dt_notas_md['ID_PESSOA'] = pd.to_numeric(dt_notas_md['ID_PESSOA'], errors='coerce').convert_dtypes() 
+        dt_notas_md['ID_PESSOA'] = pd.to_numeric(
+            dt_notas_md['ID_PESSOA'], errors='coerce'
+        ).convert_dtypes()
     except:
         dt_notas_md = pd.read_csv(f'{path}', encoding='ISO-8859-1', sep=';')
 
@@ -33,10 +36,10 @@ def save_table(
 
 
 def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
-    
+
     ano = ((table['ANO']).unique())[0]
     situan = ((table['DESCR_PERIODO']).unique())[0]
-    
+
     alunos_aprovados = table.loc[table['DESCR_SITUACAO'] == 'Aprovado']
     save_table(alunos_aprovados, f'alunos_aprovados_{ano}_{situan}', path)
 
