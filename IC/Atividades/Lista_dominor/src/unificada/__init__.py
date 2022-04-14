@@ -1,11 +1,13 @@
-from functools import reduce
-
-
+# P01: Escreva a função pedrap que associe um par a True se e somente se (sss) o
+# par é uma representação válida para uma "pedra" e False caso contrário.
+# pedrap(2,7) ==> False pedrap((-3),4) ==> False pedrap(3,4) ==> True
 def pedrap(pedra):
     valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
 
 
+# P02: Escreva a função maop que associe uma lista de pares de inteiros
+#  a True sss a lista é uma representação válida para a "mão" de um jogador e False caso contrário.
 def maop(mao_do_jogador):
 
     pedras_validas = [
@@ -16,6 +18,8 @@ def maop(mao_do_jogador):
     return len(mao_do_jogador) <= 7 and mao_do_jogador == pedras_validas
 
 
+# P03: Escreva a função carrocap que associe um
+# par a True sss o par é uma "carroça" e False caso contrário.
 def carrocap(pedra):
 
     ld_pedra_a, ld_pedra_b = pedra
@@ -23,11 +27,14 @@ def carrocap(pedra):
     return ld_pedra_a == ld_pedra_b
 
 
+# P04: Escreva a função tem_carroca_p que associe uma "mão" a
+#  True sss a mão possuir pelo menos uma carroça e False caso contrário.
 def tem_carroca_p(mao_do_jogador):
 
     return len(tem_carrocas(mao_do_jogador)) != 0
 
 
+# P05: Escreva a função tem_carrocas que associe a uma "mão" a lista das "carroças" nela contida.
 def tem_carrocas(mao_do_jogador):
 
     return [
@@ -44,31 +51,15 @@ def pontos(pedras):
     if len(pedras) == 0:
         return 0
 
-    return soma_faces(0, pedras[0]) + pontos(pedras[1:])
+    return (head(pedras)[0] + head(pedras)[1]) + pontos(tail(pedras))
 
 
 # P07: Escreva a função garagem que associe uma lista de "pedras" ao maior
 #  múltiplo de 5 (cinco), menor ou igual à soma dos pontos nela contidos.
 
-# Função auxiliar
-
-
-def soma_faces(soma_das_faces, pedra_element):
-
-    ld_a_pedra, ld_b_pedra = pedra_element
-
-    return (ld_a_pedra + ld_b_pedra) + soma_das_faces
-
-
-def multcinco(number):
-    if number < 5:
-        return 0
-
-    return 5 + multcinco(number - 5)
-
 
 def garagem(pedras):
-    soma_das_faces = reduce(soma_faces, pedras, 0)
+    soma_das_faces = pontos(pedras)
 
     return multcinco(soma_das_faces)
 
@@ -76,18 +67,6 @@ def garagem(pedras):
 # P08: Escreva a função pedra_igual_p que associe dois pares de inteiros a
 # True sss representam a mesma pedra e False caso contrário. É bom lembrar
 # que a ordem das pontas é irrelevante, assim (2,4) e (4,2) representam a mesma pedra.
-
-# Função Auxiliar para ordenar as tuplas:
-
-
-def ordertuple(element):
-    element_a, element_b = element
-    if element_a > element_b:
-        return (element_b, element_a)
-    elif element_a < element_b:
-        return (element_a, element_b)
-    else:
-        return element
 
 
 def pedra_igual_p(primeira_pedra, segunda_pedra):
@@ -98,14 +77,6 @@ def pedra_igual_p(primeira_pedra, segunda_pedra):
 # P09: Escreva a função ocorre_pedra_p que associe
 # uma "pedra" e uma "mão" a True sss a "pedra" ocorre na "mão" e False caso contrário.
 
-# Funcaçao auxiliar
-def lista_de_pedras(pedra, mao_do_jogador):
-    return [
-        pedr
-        for pedr in mao_do_jogador
-        if ordertuple(pedr) == ordertuple(pedra)
-    ]
-
 
 def ocorre_pedra_p(pedra, mao_do_jogador):
 
@@ -115,17 +86,6 @@ def ocorre_pedra_p(pedra, mao_do_jogador):
 # P10: Escreva a função ocorre_valor_p que associe um valor válido para
 # "ponta" e uma "mão" e produza True sss o valor ocorre em alguma pedra
 # da mão e False caso contrário.
-
-# Funcao auxiliar
-def hasfit(nib, stone):
-
-    stone_a, stone_b = stone
-
-    return stone_a == nib or stone_a == nib or stone_b == nib or stone_b == nib
-
-
-def pedras_com_encaixe(ponta, mao_do_jogador):
-    return [pedra for pedra in mao_do_jogador if hasfit(ponta, pedra)]
 
 
 def ocorre_valor_p(ponta, mao_do_jogador):
@@ -152,9 +112,9 @@ def pedra_maior(mão_do_jogador):
 
     for pedra in mão_do_jogador:
 
-        if soma_faces(0, pedra) > soma_faces(0, maior_pedra):
+        if pontos([pedra]) > pontos([maior_pedra]):
             maior_pedra = pedra
-        elif soma_faces(0, pedra) < soma_faces(0, maior_pedra):
+        elif pontos([pedra]) < pontos([maior_pedra]):
             maior_pedra = maior_pedra
         else:
             maior_pedra = pedra
@@ -172,15 +132,6 @@ def ocorre_valor_q(face, mao_do_jogador):
 # P14: Escreva a função ocorre_carroca_q que associe uma mão à quantidade de carroças nela existentes.
 def ocorre_carroca_q(mao_do_jogador):
     return len(tem_carrocas(mao_do_jogador))
-
-
-# Funcao auxiliar
-def lista_sem_maior(pedra_maior, pedras):
-    return [
-        pedra
-        for pedra in pedras
-        if ordertuple(pedra) != ordertuple(pedra_maior)
-    ]
 
 
 # P15: Escreva a função tira_maior que associe uma mão a uma
@@ -343,6 +294,50 @@ def faz_jogada(mao_do_jogador, mesa):
 
 
 # Funções Auxiliares
+
+
+def multcinco(number):
+    if number < 5:
+        return 0
+
+    return 5 + multcinco(number - 5)
+
+
+def ordertuple(element):
+    element_a, element_b = element
+    if element_a > element_b:
+        return (element_b, element_a)
+    elif element_a < element_b:
+        return (element_a, element_b)
+    else:
+        return element
+
+
+def lista_de_pedras(pedra, mao_do_jogador):
+    return [
+        pedr
+        for pedr in mao_do_jogador
+        if ordertuple(pedr) == ordertuple(pedra)
+    ]
+
+
+def hasfit(nib, stone):
+
+    stone_a, stone_b = stone
+
+    return stone_a == nib or stone_a == nib or stone_b == nib or stone_b == nib
+
+
+def pedras_com_encaixe(ponta, mao_do_jogador):
+    return [pedra for pedra in mao_do_jogador if hasfit(ponta, pedra)]
+
+
+def lista_sem_maior(pedra_maior, pedras):
+    return [
+        pedra
+        for pedra in pedras
+        if ordertuple(pedra) != ordertuple(pedra_maior)
+    ]
 
 
 def suma(values):
