@@ -1,4 +1,4 @@
-from src.segunda_parte import ocorre_valor_q
+from src.unificada import ocorre_valor_q
 
 
 def test_contem_uma_pedra_na_mao():

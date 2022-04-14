@@ -1,4 +1,4 @@
-from src.segunda_parte import pedra_igual_p
+from src.unificada import pedra_igual_p
 
 
 def test_return_true_com_duas_pedra_iguais():

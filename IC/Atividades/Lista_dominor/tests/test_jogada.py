@@ -1,4 +1,4 @@
-from src.terceira_parte import jogada
+from src.unificada import jogada
 
 
 def test_jogada_uma_pontuaçao():

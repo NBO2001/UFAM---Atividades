@@ -1,4 +1,4 @@
-from src.segunda_parte import multcinco
+from src.unificada import multcinco
 
 
 def test_somar_multiplos_de_cinco_retorna_35():

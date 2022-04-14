@@ -1,4 +1,4 @@
-from src.segunda_parte import tira_maior
+from src.unificada import tira_maior
 
 
 def test_retorna_sem_as_maiores():

@@ -1,4 +1,4 @@
-from src.segunda_parte import ocorre_pedra_p
+from src.unificada import ocorre_pedra_p
 
 
 def test_contem_uma_pedra_na_mao():

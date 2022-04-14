@@ -1,4 +1,4 @@
-from src.primeira_parte import tem_carroca_p
+from src.unificada import tem_carroca_p
 
 
 def test_mao_com_carroca():

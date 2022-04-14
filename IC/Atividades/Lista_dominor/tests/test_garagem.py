@@ -1,4 +1,4 @@
-from src.segunda_parte import garagem
+from src.unificada import garagem
 
 
 def test_garagem_25_pontos():

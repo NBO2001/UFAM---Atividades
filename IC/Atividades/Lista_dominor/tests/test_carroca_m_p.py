@@ -1,6 +1,6 @@
 from pytest import mark
 
-from src.terceira_parte import carroca_m_p
+from src.unificada import carroca_m_p
 
 
 @mark.parametrize(

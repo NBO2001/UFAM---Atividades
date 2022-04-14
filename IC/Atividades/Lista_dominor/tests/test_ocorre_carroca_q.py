@@ -1,4 +1,4 @@
-from src.segunda_parte import ocorre_carroca_q
+from src.unificada import ocorre_carroca_q
 
 
 def test_contem_uma_carroca_na_mao():

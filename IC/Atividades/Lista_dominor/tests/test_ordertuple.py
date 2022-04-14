@@ -1,4 +1,4 @@
-from src.segunda_parte import ordertuple
+from src.unificada import ordertuple
 
 
 def test_tuplas_em_ordem():

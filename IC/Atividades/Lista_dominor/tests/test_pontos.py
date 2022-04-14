@@ -1,4 +1,4 @@
-from src.segunda_parte import pontos
+from src.unificada import pontos
 
 
 def test_soma_retorna_5_tuplas():

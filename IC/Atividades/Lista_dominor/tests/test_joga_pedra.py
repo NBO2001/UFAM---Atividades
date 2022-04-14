@@ -1,4 +1,4 @@
-from src.terceira_parte import joga_pedra
+from src.unificada import joga_pedra
 
 
 def test_joga_pedra_mesa_com_5():

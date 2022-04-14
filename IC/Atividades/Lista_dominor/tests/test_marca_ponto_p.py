@@ -1,4 +1,4 @@
-from src.terceira_parte import marca_ponto_p
+from src.unificada import marca_ponto_p
 
 
 def test_marca_ponto_p_retorna_verdeiro():

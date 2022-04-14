@@ -1,4 +1,4 @@
-from src.segunda_parte import pedra_maior
+from src.unificada import pedra_maior
 
 
 def test_pedra_maior_no_meio():

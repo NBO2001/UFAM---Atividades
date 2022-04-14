@@ -1,4 +1,4 @@
-from src.terceira_parte import find_indexs
+from src.unificada import find_indexs
 
 
 def test_find_indexs_lado_com_5():

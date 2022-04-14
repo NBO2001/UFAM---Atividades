@@ -1,4 +1,4 @@
-from src.segunda_parte import tira_maior_v
+from src.unificada import tira_maior_v
 
 
 def test_da_ponta_5_retira_o_maior_valor():

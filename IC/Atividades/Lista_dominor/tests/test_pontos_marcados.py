@@ -1,4 +1,4 @@
-from src.terceira_parte import pontos_marcados
+from src.unificada import pontos_marcados
 
 
 def test_retorna_True():

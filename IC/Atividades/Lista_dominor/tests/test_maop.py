@@ -1,4 +1,4 @@
-from src.primeira_parte import maop
+from src.unificada import maop
 
 
 def test_mao_valida():

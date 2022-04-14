@@ -1,4 +1,4 @@
-from src.segunda_parte import ocorre_valor_p
+from src.unificada import ocorre_valor_p
 
 
 def test_com_o_jogador_tendo_um_pedra_retorn_true():

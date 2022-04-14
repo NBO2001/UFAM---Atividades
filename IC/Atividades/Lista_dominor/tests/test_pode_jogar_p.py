@@ -1,4 +1,4 @@
-from src.terceira_parte import pode_jogar_p
+from src.unificada import pode_jogar_p
 
 
 def test_pode_jogar_p_retorna_verdadeiro():

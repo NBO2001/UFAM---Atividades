@@ -1,6 +1,6 @@
 from pytest import mark
 
-from src.terceira_parte import mesap
+from src.unificada import mesap
 
 
 def test_mesap_mesa_valida():

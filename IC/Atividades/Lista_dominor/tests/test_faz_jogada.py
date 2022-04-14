@@ -1,4 +1,4 @@
-from src.terceira_parte import faz_jogada
+from src.unificada import faz_jogada
 
 
 def test_faz_jogada_test1():

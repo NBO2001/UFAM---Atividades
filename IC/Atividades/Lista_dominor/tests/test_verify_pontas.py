@@ -1,5 +1,4 @@
-import pdb
-from src.terceira_parte import verify_pontas
+from src.unificada import verify_pontas
 
 
 def test_verify_pontas_retorna_true():

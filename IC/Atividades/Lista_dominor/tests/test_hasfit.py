@@ -1,4 +1,4 @@
-from src.segunda_parte import hasfit
+from src.unificada import hasfit
 
 
 def test_pedra_tem_encaixe_retorna_verdadeiro():

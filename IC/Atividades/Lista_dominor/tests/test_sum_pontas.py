@@ -1,4 +1,4 @@
-from src.terceira_parte import sum_pontas
+from src.unificada import sum_pontas
 
 
 def test_soma_pontas_retorna_25():

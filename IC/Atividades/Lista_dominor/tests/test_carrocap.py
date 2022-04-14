@@ -1,4 +1,4 @@
-from src.primeira_parte import carrocap
+from src.unificada import carrocap
 
 
 def test_carroca_valida():

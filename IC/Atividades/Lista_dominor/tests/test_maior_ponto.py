@@ -1,4 +1,4 @@
-from src.terceira_parte import maior_ponto
+from src.unificada import maior_ponto
 
 
 def test_maior_ponto_index_3():

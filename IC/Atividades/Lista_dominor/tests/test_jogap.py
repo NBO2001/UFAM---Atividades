@@ -1,4 +1,4 @@
-from src.terceira_parte import jogap
+from src.unificada import jogap
 
 
 def test_jogap_retorn_true():

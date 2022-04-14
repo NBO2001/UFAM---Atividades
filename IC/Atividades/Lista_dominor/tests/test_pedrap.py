@@ -1,4 +1,4 @@
-from src.primeira_parte import pedrap
+from src.unificada import pedrap
 
 
 def test_deprap_primeiro():
