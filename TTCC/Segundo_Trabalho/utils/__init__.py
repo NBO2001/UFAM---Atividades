@@ -32,7 +32,7 @@ def read_base(
 def save_table(
     table: pd.DataFrame, name: str = 'Analizy', path: str = './dados/Tabs/'
 ):
-    table.to_csv(f'{path}{name}.csv', encoding='utf-8', index=False)
+    table.to_csv(f'{path}{name}.csv', encoding='utf-8')
 
 
 def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
@@ -40,38 +40,33 @@ def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
     ano = ((table['ANO']).unique())[0]
     situan = ((table['DESCR_PERIODO']).unique())[0]
 
+    table = table.loc[table['NUM_VERSAO'] == '2016/1']
+
     alunos_aprovados = table.loc[table['DESCR_SITUACAO'] == 'Aprovado']
     save_table(alunos_aprovados, f'alunos_aprovados_{ano}_{situan}', path)
 
-    total_alunos, _ = table.shape
-
-    quatidade_aprovados, _ = alunos_aprovados.shape
+    total_alunos = len(table['ID_PESSOA'].unique())
+    
+    quatidade_aprovados = len(alunos_aprovados['ID_PESSOA'].unique())
 
     alunos_reprovados_por_falta = table.loc[
-        table['DESCR_SITUACAO'] == 'Reprovado por Freqüência'
+        table['DESCR_SITUACAO'] != 'Aprovado'
     ]
+    
     save_table(
         alunos_reprovados_por_falta,
-        f'reprovados_por_falta_{ano}_{situan}',
+        f'reprovados_{ano}_{situan}',
         path,
     )
 
-    quatidade_reprovados_por_falta, _ = alunos_reprovados_por_falta.shape
-    alunos_reprovados_por_nota = table.loc[
-        table['DESCR_SITUACAO'] == 'Reprovado por Nota'
-    ]
-    save_table(
-        alunos_reprovados_por_nota, f'reprovados_por_nota_{ano}_{situan}', path
-    )
-    quatidade_reprovados_por_nota, _ = alunos_reprovados_por_nota.shape
+    quatidade_reprovados = len(alunos_reprovados_por_falta['ID_PESSOA'].unique())
 
     return (
         ano,
         situan,
         total_alunos,
         quatidade_aprovados,
-        quatidade_reprovados_por_falta,
-        quatidade_reprovados_por_nota,
+        quatidade_reprovados,
     )
 
 
@@ -82,16 +77,11 @@ def print_itens(table):
         total_alunos,
         quatidade_aprovados,
         quatidade_reprovados_por_falta,
-        quatidade_reprovados_por_nota,
     ) = decribe_data(table)
     print(f'Ano: {ano}')
     print(f'Total de alunos: {total_alunos}')
     print(f'Aprovados {quatidade_aprovados}')
-    print(
-        f'Reprovados total: { quatidade_reprovados_por_falta + quatidade_reprovados_por_nota}\n ----- \n'
-    )
-    print(f'Reprovados por falta: {quatidade_reprovados_por_falta}')
-    print(f'Reprovados por nota: {quatidade_reprovados_por_nota}')
+    print(f'Reprovados total: { quatidade_reprovados_por_falta}\n ----- \n')
 
     print('\n--------\n')
 
@@ -102,18 +92,14 @@ def prepare_data(datas):
     total_alunos = []
     alunos_aprovados = []
     total_de_reprovados = []
-    alunos_reprovados_por_nota = []
-    alunos_aprovados_por_falta = []
 
     for data in datas:
-        ano, situan, alunos_t, alunos_p, alunos_rn, alunos_rf = data
+        ano, situan, alunos_t, alunos_p, alunos_rnf = data
         anos.append(ano)
         situans.append(situan)
         total_alunos.append(alunos_t)
         alunos_aprovados.append(alunos_p)
-        total_de_reprovados.append(alunos_rn + alunos_rf)
-        alunos_reprovados_por_nota.append(alunos_rn)
-        alunos_aprovados_por_falta.append(alunos_rf)
+        total_de_reprovados.append(alunos_rnf)
 
     return {
         'Ano': anos,

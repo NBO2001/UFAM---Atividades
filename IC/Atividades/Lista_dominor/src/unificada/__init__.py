@@ -1,6 +1,8 @@
 # P01: Escreva a função pedrap que associe um par a True se e somente se (sss) o
 # par é uma representação válida para uma "pedra" e False caso contrário.
 # pedrap(2,7) ==> False pedrap((-3),4) ==> False pedrap(3,4) ==> True
+
+
 def pedrap(pedra):
     valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
@@ -195,7 +197,10 @@ def carroca_m_p(mesa):
 
 def pontos_marcados(mesa):
 
-    return multcinco(sum_pontas(mesa)) == sum_pontas(mesa)
+    if multcinco(sum_pontas(mesa)) == sum_pontas(mesa):
+        return sum_pontas(mesa)
+    else:
+        return 0
 
 
 # P20: Escreva a função pode_jogar_p que associe uma "pedra" e uma "mesa" a
@@ -210,14 +215,15 @@ def pode_jogar_p(pedra, mesa):
 
 
 # P21: Escreva a função marca_ponto_p que tenha como entrada uma "pedra"
-# e uma "mesa" e produza True sss a pedra pode ser jogada fazendo pontos em uma das pontas da mesa. Lembre-se que as carroças devem ser contadas pelas duas pontas da pedra.
+# e uma "mesa" e produza True sss a pedra pode ser jogada fazendo pontos em uma das
+# pontas da mesa. Lembre-se que as carroças devem ser contadas pelas duas pontas da pedra.
 
 
 def marca_ponto_p(pedra, mesa):
 
     indexs = find_indexs(pedra[0], mesa) + find_indexs(pedra[1], mesa)
 
-    return find_to_point(indexs, pedra, mesa)
+    return find_to_point(indexs, pedra, mesa) != 0
 
 
 # P22: Escreva a função maior_ponto que associa uma pedra e uma mesa ao
@@ -280,7 +286,9 @@ def jogap(mao_do_jogador, mesa):
 
 def jogada(mao_do_jogador, mesa):
 
-    return len(mapea_pedra(mao_do_jogador, mesa))
+    bigger_stones = mapea_pedra(mao_do_jogador, mesa)
+
+    return (bigger_stones[0][1], bigger_stones[0][3])
 
 
 # P26: Escreva a função faz_jogada que associe uma "mão" e uma "mesa" e produza uma nova "mesa" obtida
@@ -289,11 +297,95 @@ def jogada(mao_do_jogador, mesa):
 
 def faz_jogada(mao_do_jogador, mesa):
 
-    pedra, _, m_ponto_index = mapea_pedra(mao_do_jogador, mesa)[0]
+    pedra, _, _, m_ponto_index = mapea_pedra(mao_do_jogador, mesa)[0]
     return joga_pedra(pedra, mesa, m_ponto_index)
 
 
-# Funções Auxiliares
+# P27: Escreva a função lista_de_jogadas que associa uma lista de pedras
+# com True, sss ela representa corretamentamente uma sequência de jogadas.
+
+
+def lista_de_jogadas(pedras):
+    if len(pedras) <= 1:
+        return True
+
+    return pedras[0][1] == pedras[1][0] and lista_de_jogadas(tail(pedras))
+
+
+# P28: Escreva a função mesa2p que associa um valor com True, sss ele representa
+#  corretamentamente a descrição de uma mesa no formato 2 com sua representação no formato 1.
+def mesa2p(mesa_formato_1, mesa_formato_2):
+    olde_table = conversor_de_mesa(mesa_formato_2)
+    return iquals_tables(mesa_formato_1, olde_table)
+
+
+# P29: Escreva a função marca_ponto_2 que associa uma mesa no formato 2 com o número de pontos marcados.
+def marca_ponto_2(mesa_formato_2):
+    old_table = conversor_de_mesa(mesa_formato_2)
+    return pontos_marcados(old_table)
+
+
+# P30: Escreva a função faz_jogada_2 que associa uma pedra, uma mesa e um
+# número de ponta na mesa, com a mesa obtida após jogar a pedra na ponta indicada.
+def faz_jogada_2(pedra, mesa_formato_2, nun_ponta):
+    old_table = conversor_de_mesa(mesa_formato_2)
+    new_ponta = joga_pedra(pedra, old_table, nun_ponta)
+
+    new_stone = order_stone(new_ponta[nun_ponta], pedra)
+    ponta_subs = mesa_formato_2[nun_ponta + 1]
+
+    anterior = mesa_formato_2[: nun_ponta + 1]
+    new_path = [new_stone] + ponta_subs
+    posterior = mesa_formato_2[nun_ponta + 2 :]
+
+    return anterior + [new_path] + posterior
+
+
+# P31: Escreva a função pedra_de_ponto que associa uma mesa no formato 1 com uma pedra que pode marcar ponto.
+def pedra_de_ponto(mesa_formato_1):
+    stones_with_encaixe = pedras_de_ponto(mesa_formato_1)
+    if len(stones_with_encaixe) != 0:
+        return stones_with_encaixe[0]
+    else:
+        return []
+
+
+# P32: Escreva a função pedras_de_ponto que associa uma mesa no formato 1 com a lista de pedras que podem marcar ponto.
+def pedras_de_ponto(mesa_formato_1):
+    stones_with_encaixe = []
+
+    for stone in get_all_stones():
+
+        if pode_jogar_p(stone, mesa_formato_1) and marca_ponto_p(
+            stone, mesa_formato_1
+        ):
+            stones_with_encaixe.append(stone)
+
+    return stones_with_encaixe
+
+
+# P33: Escreva a função pedra_de_maior_ponto que associa uma mesa no formato 1 com a pedra que marcar mais pontos.
+def pedra_de_maior_ponto(mesa_formato_1):
+
+    stones_with_encaixe = pedras_de_ponto(mesa_formato_1)
+    pedras_pont = mapea_pedra(stones_with_encaixe, mesa_formato_1)
+
+    fisrt_value = pedras_pont[0]
+
+    stone, _, _, _ = fisrt_value
+
+    return stone
+
+
+# P34: Escreva a função pedras_fora_p que associa uma mesa no formato 2 e uma pedra com True sss ela ainda não foi jogada.
+def pedras_fora_p(mesa_formato_2, pedra):
+
+    stones_list = merge_stones(mesa_formato_2)
+
+    return find_stone_in_list(pedra, stones_list) != True
+
+
+## Funções Auxiliares
 
 
 def multcinco(number):
@@ -439,12 +531,107 @@ def mapea_pedra(mao_do_jogador, mesa):
 
     pedras = []
 
-    for pedra in mao_do_jogador:
-        m_ponto, m_ponto_index = m_mais_ponto(pedra, mesa)
+    for idn in range(0, len(mao_do_jogador)):
+        m_ponto, m_ponto_index = m_mais_ponto(mao_do_jogador[idn], mesa)
         if m_ponto > mior_ponto:
             mior_ponto = m_ponto
-            pedras = [(pedra, m_ponto, m_ponto_index)]
+            pedras = [(mao_do_jogador[idn], idn, m_ponto, m_ponto_index)]
         elif m_ponto == mior_ponto:
-            pedras.append((pedra, m_ponto, m_ponto_index))
+            pedras.append((mao_do_jogador[idn], idn, m_ponto, m_ponto_index))
 
     return pedras
+
+
+def conversor_de_mesa(mesa):
+
+    return conversor_de_pontas(tail(mesa))
+
+
+def conversor_de_pontas(pontas):
+
+    if len(pontas) == 0:
+        return ()
+    elif len(pontas) != 0 and len(pontas[0]) == 0:
+        return ([],)
+
+    return coversor_de_pedras(head(pontas)[0]) + conversor_de_pontas(
+        tail(pontas)
+    )
+
+
+def coversor_de_pedras(pedra):
+    if len(pedra) == 2:
+        if pedra[0] == pedra[1]:
+            return ([pedra[0], pedra[1]],)
+        else:
+            return ([pedra[0]],)
+    else:
+        return ([],)
+
+
+def iquals_tables(table_one, table_two):
+
+    if len(table_one) != len(table_two):
+        return False
+    elif len(table_one) == 0:
+        return True
+
+    return head(table_one) == head(table_two) and iquals_tables(
+        tail(table_one), tail(table_two)
+    )
+
+
+def find_stone_in_list(stone, stones_list):
+    if len(stones_list) == 0:
+        return False
+
+    return ordertuple(stone) == ordertuple(
+        head(stones_list)
+    ) or find_stone_in_list(stone, tail(stones_list))
+
+
+def merge_stones(mesa_formato_2):
+    if len(mesa_formato_2) == 0:
+        return []
+
+    return head(mesa_formato_2) + merge_stones(tail(mesa_formato_2))
+
+
+def order_stone(ponta, stone):
+    if ponta[0] == stone[0]:
+        return stone
+    else:
+        return (stone[1], stone[0])
+
+
+def get_all_stones():
+    return [
+        (0, 0),
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (0, 1),
+        (0, 2),
+        (0, 3),
+        (0, 4),
+        (0, 5),
+        (0, 6),
+        (1, 2),
+        (1, 3),
+        (1, 4),
+        (1, 5),
+        (1, 6),
+        (2, 3),
+        (2, 4),
+        (2, 5),
+        (2, 6),
+        (3, 4),
+        (3, 5),
+        (3, 6),
+        (4, 5),
+        (4, 6),
+        (5, 6),
+    ]

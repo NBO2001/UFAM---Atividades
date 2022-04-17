@@ -31,4 +31,6 @@ tabl = pd.DataFrame(prepare_data(base_data))
 
 
 tab1 = tabl.sort_values(by='Ano')
+tab1 = tab1.groupby(["Ano"]).sum()
+
 save_table(tab1, name='Geral', path='./dados/Tabs/ic/')
