@@ -35,7 +35,7 @@ def save_table(
     table.to_csv(f'{path}{name}.csv', encoding='utf-8')
 
 
-def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
+def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/', name= "1"):
 
     ano = ((table['ANO']).unique())[0]
     situan = ((table['DESCR_PERIODO']).unique())[0]
@@ -43,7 +43,7 @@ def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
     table = table.loc[table['NUM_VERSAO'] == '2016/1']
 
     alunos_aprovados = table.loc[table['DESCR_SITUACAO'] == 'Aprovado']
-    save_table(alunos_aprovados, f'alunos_aprovados_{ano}_{situan}', path)
+    save_table(alunos_aprovados, f'alunos_aprovados_{ano}_{situan}_{name}', path)
 
     total_alunos = len(table['ID_PESSOA'].unique())
     
@@ -55,7 +55,7 @@ def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/'):
     
     save_table(
         alunos_reprovados_por_falta,
-        f'reprovados_{ano}_{situan}',
+        f'reprovados_{ano}_{situan}_{name}',
         path,
     )
 

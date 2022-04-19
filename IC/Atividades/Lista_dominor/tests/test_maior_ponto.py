@@ -10,4 +10,4 @@ def test_maior_ponto_index_0():
 
 
 def test_maior_ponto_index_0():
-    assert maior_ponto((3, 3), ([0, 3], [4], [0, 5], [0])) == 0
+    assert maior_ponto((3, 3), ([3], [4], [5], [0])) == 0

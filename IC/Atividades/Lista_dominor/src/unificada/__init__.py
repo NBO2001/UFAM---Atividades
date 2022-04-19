@@ -385,6 +385,92 @@ def pedras_fora_p(mesa_formato_2, pedra):
     return find_stone_in_list(pedra, stones_list) != True
 
 
+#P35: Defina a função somavet que determine a soma de dois vetores x e y, de origem no ponto (0,0)
+#  e situados no primeiro quadrante do plano cartesiano.
+def somavet(vetor_1, vetor_2):
+    return ( vetor_1[0] + vetor_2[0], vetor_1[1] + vetor_2[1])
+
+#P36: Defina a função sumdo que dado um número inteiro positivo n, construa uma lista com todos
+#  os pares cuja soma de elementos é igual a n.
+def sumdo(n):
+
+    end_list = []
+    
+    for contador in range(0,n,2):
+        if suma(end_list) < n:
+            end_list.append(contador)
+
+    return end_list
+
+#P37: Dada uma lista L, contendo um número igual de números inteiros pares e ímpares (em qualquer ordem),
+#  defina a função alterna que, quando avaliada, produz uma lista na qual esses números pares e ímpares encontram-se alternados.
+def alterna_numeros(lista_baguncada):
+
+    if len(lista_baguncada) == 0: return []
+
+    pair_numbers = filter_numbers(ispair, lista_baguncada)
+    odd_numbers = filter_numbers(isodd, lista_baguncada)
+    return [head(pair_numbers)] + [head(odd_numbers)] + alterna_numeros(tail(pair_numbers) + tail(odd_numbers))
+
+    
+
+#P38: Defina a função intersec que a partir de duas listas de 
+# elementos distintos, determina a interseção entre elas.
+def intersec():
+    pass
+
+#P39: Defina a função uni que dadas duas listas
+#  de elementos distintos, determina a união entre elas.
+def uni():
+    pass
+
+
+#P40: Verificar se uma cadeia é uma palavra (apenas letras). e_palav(cadeia)
+def e_palav(cadeia):
+    pass
+#P41: Verificar se uma cadeia é um número inteiro positivo. e_int(cadeia)
+def e_int(cadeia):
+    pass
+#P42: Dado um verbo regular e um tempo do modo indicativo, 
+# produzir as conjugações. conjuga(verbo,tempo) 
+# conjuga("jogar","presente") 
+# ==> [ "eu jogo", "tu jogas", "ele joga", "nos jogamos", "vos jogais", "eles jogam"]
+def conjuga(verbo,tempo):
+    pass
+
+#P43: Verificar se uma cadeia representa um número real (escrito na notação com ponto decimal). 
+# e_float(cadeia) e_float("3") ==> False e_float("3.") ==> False e_float("ab") ==> False e_float("3.5") ==> True
+def e_float(cadeia):
+    pass
+
+#P44: Determinar a cadeia formada pela parte inteira e a cadeia
+#  formada pela parte fracionária da representação de um número através de cadeia de caracteres.
+#  Se o número for inteiro, 
+# a parte fracionária será zero.
+#  int_frac(cadeia) int_frac("324.8765") ==> ("324","8765") int_frac("4586") ==> ("4586","0")
+def int_frac(cadeia):
+    pass
+#P45: Dado um número de dois algarismo, produzir a cadeia de caracteres que seja a sua representação literal. 
+# traduz(numero) traduz(35) ==> "trinta e cinco" traduz(3) ==> "tres" traduz(15) ==> "quinze"
+
+def traduz(numero):
+
+    if numero <= 9:
+        return get_number_0_9(numero)
+    elif 19 >= numero > 9:
+        return get_number_10_19(numero)
+    elif 90 >= numero > 19:
+        
+        numero_inteiro = (numero//10)*10
+        numero_fracionado = numero%10
+        if numero_fracionado != 0:
+            traducao_a = get_number_20_90(numero_inteiro) 
+            traducao_b = get_number_0_9(numero_fracionado)
+            return f'{traducao_a} e {traducao_b}'
+        else:
+            return get_number_20_90(numero_inteiro)
+
+
 ## Funções Auxiliares
 
 
@@ -446,11 +532,11 @@ def head(lista_itens):
         return lista_itens[0]
 
 
-def tail(lista_itens):
+def tail(lista_itens, position=1):
     if len(lista_itens) == 0:
         return []
     else:
-        return lista_itens[1:]
+        return lista_itens[position:]
 
 
 def pedrap_is(pedra):
@@ -635,3 +721,61 @@ def get_all_stones():
         (4, 6),
         (5, 6),
     ]
+
+def get_number_0_9(number):
+    numeros_0_a_9 = ["zero",
+    "um",
+    "dois",
+    "tres",
+    "quatro",
+    "cinco",
+    "seis",
+    "sete",
+    "oito",
+    "nove"]
+    return numeros_0_a_9[number]
+
+def get_number_10_19(number):
+    index = number - 10
+    numeros_10_a_19 = ["dez",
+    "onze",
+    "doze",
+    "treze",
+    "quatorze ou catorze",
+    "quinze",
+    "dezesseis",
+    "dezessete",
+    "dezoito",
+    "dezenove"]
+
+    return numeros_10_a_19[index]
+
+def get_number_20_90(numeber):
+
+    index = int((numeber-20)/10)
+
+    numbers = ["vinte",
+    "trinta",
+    "quarenta",
+    "cinquenta",
+    "sessenta",
+    "setenta",
+    "oitenta",
+    "noventa",]
+    return numbers[index]
+
+def filter_numbers(condition, list_numbers):
+    
+    if len(list_numbers) == 0: return []
+    
+    elif condition(head(list_numbers)):
+
+        return [head(list_numbers) ]+ filter_numbers(condition,tail(list_numbers))
+    else:
+        return filter_numbers(condition,tail(list_numbers))
+
+def ispair(number):
+    return number%2 == 0
+
+def isodd(number):
+    return number%2 != 0
