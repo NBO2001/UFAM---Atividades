@@ -3,6 +3,10 @@
 # pedrap(2,7) ==> False pedrap((-3),4) ==> False pedrap(3,4) ==> True
 
 
+from cmath import phase
+from sys import breakpointhook
+
+
 def pedrap(pedra):
     valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
@@ -306,6 +310,7 @@ def faz_jogada(mao_do_jogador, mesa):
 
 
 def lista_de_jogadas(pedras):
+
     if len(pedras) <= 1:
         return True
 
@@ -315,12 +320,14 @@ def lista_de_jogadas(pedras):
 # P28: Escreva a função mesa2p que associa um valor com True, sss ele representa
 #  corretamentamente a descrição de uma mesa no formato 2 com sua representação no formato 1.
 def mesa2p(mesa_formato_1, mesa_formato_2):
+
     olde_table = conversor_de_mesa(mesa_formato_2)
     return iquals_tables(mesa_formato_1, olde_table)
 
 
 # P29: Escreva a função marca_ponto_2 que associa uma mesa no formato 2 com o número de pontos marcados.
 def marca_ponto_2(mesa_formato_2):
+
     old_table = conversor_de_mesa(mesa_formato_2)
     return pontos_marcados(old_table)
 
@@ -328,6 +335,7 @@ def marca_ponto_2(mesa_formato_2):
 # P30: Escreva a função faz_jogada_2 que associa uma pedra, uma mesa e um
 # número de ponta na mesa, com a mesa obtida após jogar a pedra na ponta indicada.
 def faz_jogada_2(pedra, mesa_formato_2, nun_ponta):
+
     old_table = conversor_de_mesa(mesa_formato_2)
     new_ponta = joga_pedra(pedra, old_table, nun_ponta)
 
@@ -343,7 +351,9 @@ def faz_jogada_2(pedra, mesa_formato_2, nun_ponta):
 
 # P31: Escreva a função pedra_de_ponto que associa uma mesa no formato 1 com uma pedra que pode marcar ponto.
 def pedra_de_ponto(mesa_formato_1):
+
     stones_with_encaixe = pedras_de_ponto(mesa_formato_1)
+
     if len(stones_with_encaixe) != 0:
         return stones_with_encaixe[0]
     else:
@@ -368,6 +378,7 @@ def pedras_de_ponto(mesa_formato_1):
 def pedra_de_maior_ponto(mesa_formato_1):
 
     stones_with_encaixe = pedras_de_ponto(mesa_formato_1)
+
     pedras_pont = mapea_pedra(stones_with_encaixe, mesa_formato_1)
 
     fisrt_value = pedras_pont[0]
@@ -385,73 +396,135 @@ def pedras_fora_p(mesa_formato_2, pedra):
     return find_stone_in_list(pedra, stones_list) != True
 
 
-#P35: Defina a função somavet que determine a soma de dois vetores x e y, de origem no ponto (0,0)
+# P35: Defina a função somavet que determine a soma de dois vetores x e y, de origem no ponto (0,0)
 #  e situados no primeiro quadrante do plano cartesiano.
 def somavet(vetor_1, vetor_2):
-    return ( vetor_1[0] + vetor_2[0], vetor_1[1] + vetor_2[1])
+    return (vetor_1[0] + vetor_2[0], vetor_1[1] + vetor_2[1])
 
-#P36: Defina a função sumdo que dado um número inteiro positivo n, construa uma lista com todos
+
+# P36: Defina a função sumdo que dado um número inteiro positivo n, construa uma lista com todos
 #  os pares cuja soma de elementos é igual a n.
 def sumdo(n):
 
     end_list = []
-    
-    for contador in range(0,n,2):
+
+    for contador in range(0, n, 2):
+
         if suma(end_list) < n:
             end_list.append(contador)
 
     return end_list
 
-#P37: Dada uma lista L, contendo um número igual de números inteiros pares e ímpares (em qualquer ordem),
+
+# P37: Dada uma lista L, contendo um número igual de números inteiros pares e ímpares (em qualquer ordem),
 #  defina a função alterna que, quando avaliada, produz uma lista na qual esses números pares e ímpares encontram-se alternados.
 def alterna_numeros(lista_baguncada):
 
-    if len(lista_baguncada) == 0: return []
+    if len(lista_baguncada) == 0:
+        return []
 
     pair_numbers = filter_numbers(ispair, lista_baguncada)
+
     odd_numbers = filter_numbers(isodd, lista_baguncada)
-    return [head(pair_numbers)] + [head(odd_numbers)] + alterna_numeros(tail(pair_numbers) + tail(odd_numbers))
 
-    
+    return (
+        [head(pair_numbers)]
+        + [head(odd_numbers)]
+        + alterna_numeros(tail(pair_numbers) + tail(odd_numbers))
+    )
 
-#P38: Defina a função intersec que a partir de duas listas de 
+
+# P38: Defina a função intersec que a partir de duas listas de
 # elementos distintos, determina a interseção entre elas.
-def intersec():
-    pass
+def intersec(lista_one, lista_two):
 
-#P39: Defina a função uni que dadas duas listas
+    if len(lista_one) == 0:
+
+        return []
+
+    else:
+
+        return contains_in(head(lista_one), lista_two) + intersec(
+            tail(lista_one), lista_two
+        )
+
+
+# P39: Defina a função uni que dadas duas listas
 #  de elementos distintos, determina a união entre elas.
-def uni():
-    pass
+def uni(lista_one, lista_two):
+
+    bigger_list = lista_one + lista_two
+
+    list_ordenned = order_list(bigger_list)
+
+    return remove_dupl(list_ordenned)
 
 
-#P40: Verificar se uma cadeia é uma palavra (apenas letras). e_palav(cadeia)
+# P40: Verificar se uma cadeia é uma palavra (apenas letras). e_palav(cadeia)
 def e_palav(cadeia):
-    pass
-#P41: Verificar se uma cadeia é um número inteiro positivo. e_int(cadeia)
-def e_int(cadeia):
-    pass
-#P42: Dado um verbo regular e um tempo do modo indicativo, 
-# produzir as conjugações. conjuga(verbo,tempo) 
-# conjuga("jogar","presente") 
-# ==> [ "eu jogo", "tu jogas", "ele joga", "nos jogamos", "vos jogais", "eles jogam"]
-def conjuga(verbo,tempo):
-    pass
 
-#P43: Verificar se uma cadeia representa um número real (escrito na notação com ponto decimal). 
+    cadeia_em_uppercase = upper_phrase(cadeia)
+
+    cadeia_com_apenas_letras = with_apenas_carc(cadeia_em_uppercase)
+
+    return cadeia_em_uppercase == cadeia_com_apenas_letras
+
+
+# P41: Verificar se uma cadeia é um número inteiro positivo. e_int(cadeia)
+def e_int(cadeia):
+
+    if len(cadeia) == 0:
+        return True
+
+    return verify_is_number(head(cadeia)) and e_int(tail(cadeia))
+
+
+# P42: Dado um verbo regular e um tempo do modo indicativo,
+# produzir as conjugações. conjuga(verbo,tempo)
+# conjuga("jogar","presente")
+# ==> [ "eu jogo", "tu jogas", "ele joga", "nos jogamos", "vos jogais", "eles jogam"]
+def conjuga(verbo, tempo):
+    breakpoint()
+    if tempo == 'presente':
+
+        return conj_in_present(verbo)
+
+    elif tempo == 'passado':
+        return conj_in_preterito(verbo)
+
+    elif tempo == 'futuro':
+        return conj_in_futiry(verbo)
+
+
+# P43: Verificar se uma cadeia representa um número real (escrito na notação com ponto decimal).
 # e_float(cadeia) e_float("3") ==> False e_float("3.") ==> False e_float("ab") ==> False e_float("3.5") ==> True
 def e_float(cadeia):
-    pass
 
-#P44: Determinar a cadeia formada pela parte inteira e a cadeia
+    antes, depois = int_frac(cadeia)
+
+    return (
+        depois != '0' and verify_is_number(antes) and verify_is_number(depois)
+    )
+
+
+# P44: Determinar a cadeia formada pela parte inteira e a cadeia
 #  formada pela parte fracionária da representação de um número através de cadeia de caracteres.
-#  Se o número for inteiro, 
+#  Se o número for inteiro,
 # a parte fracionária será zero.
 #  int_frac(cadeia) int_frac("324.8765") ==> ("324","8765") int_frac("4586") ==> ("4586","0")
 def int_frac(cadeia):
-    pass
-#P45: Dado um número de dois algarismo, produzir a cadeia de caracteres que seja a sua representação literal. 
+
+    with_split = cadeia.split('.')
+
+    if len(with_split) == 1 or len(with_split[1]) == 0:
+        return (with_split[0], '0')
+    else:
+        return (with_split[0], with_split[1])
+
+
+# P45: Dado um número de dois algarismo, produzir a cadeia de caracteres que seja a sua representação literal.
 # traduz(numero) traduz(35) ==> "trinta e cinco" traduz(3) ==> "tres" traduz(15) ==> "quinze"
+
 
 def traduz(numero):
 
@@ -460,11 +533,11 @@ def traduz(numero):
     elif 19 >= numero > 9:
         return get_number_10_19(numero)
     elif 90 >= numero > 19:
-        
-        numero_inteiro = (numero//10)*10
-        numero_fracionado = numero%10
+
+        numero_inteiro = (numero // 10) * 10
+        numero_fracionado = numero % 10
         if numero_fracionado != 0:
-            traducao_a = get_number_20_90(numero_inteiro) 
+            traducao_a = get_number_20_90(numero_inteiro)
             traducao_b = get_number_0_9(numero_fracionado)
             return f'{traducao_a} e {traducao_b}'
         else:
@@ -722,60 +795,191 @@ def get_all_stones():
         (5, 6),
     ]
 
+
 def get_number_0_9(number):
-    numeros_0_a_9 = ["zero",
-    "um",
-    "dois",
-    "tres",
-    "quatro",
-    "cinco",
-    "seis",
-    "sete",
-    "oito",
-    "nove"]
+    numeros_0_a_9 = [
+        'zero',
+        'um',
+        'dois',
+        'tres',
+        'quatro',
+        'cinco',
+        'seis',
+        'sete',
+        'oito',
+        'nove',
+    ]
     return numeros_0_a_9[number]
+
 
 def get_number_10_19(number):
     index = number - 10
-    numeros_10_a_19 = ["dez",
-    "onze",
-    "doze",
-    "treze",
-    "quatorze ou catorze",
-    "quinze",
-    "dezesseis",
-    "dezessete",
-    "dezoito",
-    "dezenove"]
+    numeros_10_a_19 = [
+        'dez',
+        'onze',
+        'doze',
+        'treze',
+        'quatorze ou catorze',
+        'quinze',
+        'dezesseis',
+        'dezessete',
+        'dezoito',
+        'dezenove',
+    ]
 
     return numeros_10_a_19[index]
 
+
 def get_number_20_90(numeber):
 
-    index = int((numeber-20)/10)
+    index = int((numeber - 20) / 10)
 
-    numbers = ["vinte",
-    "trinta",
-    "quarenta",
-    "cinquenta",
-    "sessenta",
-    "setenta",
-    "oitenta",
-    "noventa",]
+    numbers = [
+        'vinte',
+        'trinta',
+        'quarenta',
+        'cinquenta',
+        'sessenta',
+        'setenta',
+        'oitenta',
+        'noventa',
+    ]
     return numbers[index]
 
+
 def filter_numbers(condition, list_numbers):
-    
-    if len(list_numbers) == 0: return []
-    
+
+    if len(list_numbers) == 0:
+        return []
+
     elif condition(head(list_numbers)):
 
-        return [head(list_numbers) ]+ filter_numbers(condition,tail(list_numbers))
+        return [head(list_numbers)] + filter_numbers(
+            condition, tail(list_numbers)
+        )
     else:
-        return filter_numbers(condition,tail(list_numbers))
+        return filter_numbers(condition, tail(list_numbers))
+
 
 def ispair(number):
-    return number%2 == 0
+    return number % 2 == 0
+
 
 def isodd(number):
-    return number%2 != 0
+    return number % 2 != 0
+
+
+def upper_letter(leteer):
+
+    if 'a' <= leteer and leteer <= 'z':
+        return chr(ord(leteer) - 32)
+    else:
+        return leteer
+
+
+def get_only_string(leteer):
+
+    if 'A' <= leteer and leteer <= 'Z':
+        return leteer
+    elif ord(leteer) == 32:
+        return ' '
+    else:
+        return ''
+
+
+def with_apenas_carc(phrase):
+    if len(phrase) == 0:
+        return ''
+
+    return get_only_string(head(phrase)) + with_apenas_carc(tail(phrase))
+
+
+def upper_phrase(phrase):
+
+    if len(phrase) == 0:
+        return ''
+
+    return upper_letter(head(phrase)) + upper_phrase(tail(phrase))
+
+
+def verify_is_number(numero):
+
+    if len(numero) == 1:
+        return 48 <= ord(head(numero)) <= 57
+
+    return (48 <= ord(head(numero)) <= 57) and verify_is_number(tail(numero))
+
+
+def contains_in(value, list_values):
+
+    if len(list_values) == 0:
+
+        return []
+
+    elif value == head(list_values):
+
+        return [value] + contains_in(value, tail(list_values))
+
+    else:
+
+        return contains_in(value, tail(list_values))
+
+
+def order_list(lista_itns):
+
+    lista_itns.sort()
+
+    return lista_itns
+
+
+def remove_dupl(lista):
+
+    lista_final = []
+
+    for element in lista:
+        if len(contains_in(element, lista_final)) == 0:
+            lista_final.append(element)
+
+    return lista_final
+
+
+def conj_in_present(verbo):
+
+    new_v = verbo[:-2]
+
+    return [
+        f'eu {new_v}o',
+        f'tu {new_v}as',
+        f'ele {new_v}a',
+        f'nos {new_v}amos',
+        f'vos {new_v}ais',
+        f'eles {new_v}am',
+    ]
+
+
+def conj_in_preterito(verbo):
+
+    new_v = verbo[:-2]
+
+    return [
+        f'eu {new_v}ava',
+        f'tu {new_v}avas',
+        f'ele {new_v}ava',
+        f'nos {new_v}ávamos',
+        f'vos {new_v}áveis',
+        f'eles {new_v}avam',
+    ]
+
+
+def conj_in_futiry(verbo):
+
+    new_v = verbo[:-2]
+
+    return [
+        f'eu {new_v}arei',
+        f'tu {new_v}arás',
+        f'ele {new_v}ará',
+        f'nos {new_v}aremos',
+        f'vos {new_v}areis',
+        f'eles {new_v}arão',
+    ]
