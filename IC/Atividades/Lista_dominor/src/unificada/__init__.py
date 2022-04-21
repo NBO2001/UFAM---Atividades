@@ -2,11 +2,6 @@
 # par é uma representação válida para uma "pedra" e False caso contrário.
 # pedrap(2,7) ==> False pedrap((-3),4) ==> False pedrap(3,4) ==> True
 
-
-from cmath import phase
-from sys import breakpointhook
-
-
 def pedrap(pedra):
     valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
@@ -484,7 +479,7 @@ def e_int(cadeia):
 # conjuga("jogar","presente")
 # ==> [ "eu jogo", "tu jogas", "ele joga", "nos jogamos", "vos jogais", "eles jogam"]
 def conjuga(verbo, tempo):
-    breakpoint()
+    
     if tempo == 'presente':
 
         return conj_in_present(verbo)
