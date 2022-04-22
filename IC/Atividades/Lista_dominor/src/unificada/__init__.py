@@ -2,6 +2,7 @@
 # par é uma representação válida para uma "pedra" e False caso contrário.
 # pedrap(2,7) ==> False pedrap((-3),4) ==> False pedrap(3,4) ==> True
 
+
 def pedrap(pedra):
     valorA, valorb = pedra
     return 6 >= valorA >= 0 and 6 >= valorb >= 0
@@ -479,7 +480,7 @@ def e_int(cadeia):
 # conjuga("jogar","presente")
 # ==> [ "eu jogo", "tu jogas", "ele joga", "nos jogamos", "vos jogais", "eles jogam"]
 def conjuga(verbo, tempo):
-    
+
     if tempo == 'presente':
 
         return conj_in_present(verbo)
@@ -920,11 +921,25 @@ def contains_in(value, list_values):
         return contains_in(value, tail(list_values))
 
 
+def append_element_ord(number, lista_of_numbers):
+
+    if len(lista_of_numbers) == 0:
+        return [number]
+    elif number <= head(lista_of_numbers):
+
+        return [number] + lista_of_numbers
+    else:
+        return [head(lista_of_numbers)] + append_element_ord(
+            number, tail(lista_of_numbers)
+        )
+
+
 def order_list(lista_itns):
 
-    lista_itns.sort()
+    if len(lista_itns) == 0:
+        return []
 
-    return lista_itns
+    return append_element_ord(head(lista_itns), order_list(tail(lista_itns)))
 
 
 def remove_dupl(lista):

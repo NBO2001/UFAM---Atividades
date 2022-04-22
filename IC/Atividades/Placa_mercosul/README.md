@@ -1,0 +1,3 @@
+#Placas Mercosul - Exercício simples com strings
+
+Defina a função placa(x) cuja avaliação resulta em um dos seguintes: 'carro', 'moto', ou 'nada', dependendo se x é uma string válida para, respectivamente, uma representação de placa de carro, de placa de moto ou nenhuma das anteriores. No Brasil, uma placa veicular no padrão Mercosul tem atualmente a configuração LLLNLNN para carros e LLLNNLN para motos, onde L denota uma letra e N um algarismo.
