@@ -50,7 +50,12 @@ def tem_carrocas(mao_do_jogador):
 #  a soma dos pontos das pedras nela contidos.
 # Onde os pontos de uma pedra é a soma de suas pontas.
 def pontos(pedras):
-    if len(pedras) == 0:
+
+    if len(pedras) == 1:
+
+        return head(pedras)[0] + head(pedras)[1]
+
+    elif len(pedras) == 0:
         return 0
 
     return (head(pedras)[0] + head(pedras)[1]) + pontos(tail(pedras))
@@ -108,20 +113,11 @@ def ocorre_pedra(valor_ponta, mao_do_jogador):
 
 # P12: Escreva a função pedra_maior que associe uma "mão" a pedra de maior valor na "mão" dada.
 #  Uma pedra p1 é maior que uma outra p2 sss a soma das pontas de p1 for maior que a soma das pontas de p2.
-def pedra_maior(mão_do_jogador):
 
-    maior_pedra = (0, 0)
 
-    for pedra in mão_do_jogador:
+def pedra_maior(mao_do_jogador):
 
-        if pontos([pedra]) > pontos([maior_pedra]):
-            maior_pedra = pedra
-        elif pontos([pedra]) < pontos([maior_pedra]):
-            maior_pedra = maior_pedra
-        else:
-            maior_pedra = pedra
-
-    return maior_pedra
+    return quem_e_maior(head(mao_do_jogador), tail(mao_do_jogador))
 
 
 # P13: Escreva a função ocorre_valor_q que associe um valor e
@@ -133,6 +129,7 @@ def ocorre_valor_q(face, mao_do_jogador):
 
 # P14: Escreva a função ocorre_carroca_q que associe uma mão à quantidade de carroças nela existentes.
 def ocorre_carroca_q(mao_do_jogador):
+
     return len(tem_carrocas(mao_do_jogador))
 
 
@@ -187,7 +184,7 @@ def carroca_m_p(mesa):
         len(lado_a) == 2
         or len(lado_b) == 2
         or len(lado_c) == 2
-        or len(lado_b) == 2
+        or len(lado_d) == 2
     )
 
 
@@ -198,8 +195,11 @@ def carroca_m_p(mesa):
 def pontos_marcados(mesa):
 
     if multcinco(sum_pontas(mesa)) == sum_pontas(mesa):
+
         return sum_pontas(mesa)
+
     else:
+
         return 0
 
 
@@ -235,15 +235,9 @@ def maior_ponto(pedra, mesa):
 
     indexs = find_indexs(pedra[0], mesa) + find_indexs(pedra[1], mesa)
 
-    maior_ponto = 0
-    maior_ponto_index = 0
+    lista_de_pontucoes = maior_ponto_v2(indexs, pedra, mesa)
 
-    for inx in indexs:
-        if maior_ponto <= pontos_marcados_v(joga_pedra(pedra, mesa, inx)):
-            maior_ponto = pontos_marcados_v(joga_pedra(pedra, mesa, inx))
-            maior_ponto_index = inx
-
-    return maior_ponto_index
+    return getbigger(lista_de_pontucoes)[0]
 
 
 # P23: Escreva a função joga_pedra que associe uma "pedra", uma "mesa" e
@@ -253,9 +247,13 @@ def maior_ponto(pedra, mesa):
 def joga_pedra(pedra, mesa, index):
 
     valores_anteriores = mesa[:index]
+
     if len(mesa) != index + 1:
+
         valores_posteriores = mesa[(index + 1) :]
+
     else:
+
         valores_posteriores = ()
 
     return (
@@ -318,6 +316,7 @@ def lista_de_jogadas(pedras):
 def mesa2p(mesa_formato_1, mesa_formato_2):
 
     olde_table = conversor_de_mesa(mesa_formato_2)
+
     return iquals_tables(mesa_formato_1, olde_table)
 
 
@@ -357,17 +356,11 @@ def pedra_de_ponto(mesa_formato_1):
 
 
 # P32: Escreva a função pedras_de_ponto que associa uma mesa no formato 1 com a lista de pedras que podem marcar ponto.
+
+
 def pedras_de_ponto(mesa_formato_1):
-    stones_with_encaixe = []
 
-    for stone in get_all_stones():
-
-        if pode_jogar_p(stone, mesa_formato_1) and marca_ponto_p(
-            stone, mesa_formato_1
-        ):
-            stones_with_encaixe.append(stone)
-
-    return stones_with_encaixe
+    return pedras_de_ponto_burlador(get_all_stones(), mesa_formato_1)
 
 
 # P33: Escreva a função pedra_de_maior_ponto que associa uma mesa no formato 1 com a pedra que marcar mais pontos.
@@ -400,16 +393,11 @@ def somavet(vetor_1, vetor_2):
 
 # P36: Defina a função sumdo que dado um número inteiro positivo n, construa uma lista com todos
 #  os pares cuja soma de elementos é igual a n.
+
+
 def sumdo(n):
 
-    end_list = []
-
-    for contador in range(0, n, 2):
-
-        if suma(end_list) < n:
-            end_list.append(contador)
-
-    return end_list
+    return sumdo_auxiliar_burlador(n, list(range(0, n, 2)))
 
 
 # P37: Dada uma lista L, contendo um número igual de números inteiros pares e ímpares (em qualquer ordem),
@@ -508,11 +496,14 @@ def e_float(cadeia):
 #  Se o número for inteiro,
 # a parte fracionária será zero.
 #  int_frac(cadeia) int_frac("324.8765") ==> ("324","8765") int_frac("4586") ==> ("4586","0")
+
+
 def int_frac(cadeia):
 
-    with_split = cadeia.split('.')
+    with_split = slipte(cadeia, '.')
 
     if len(with_split) == 1 or len(with_split[1]) == 0:
+
         return (with_split[0], '0')
     else:
         return (with_split[0], with_split[1])
@@ -647,13 +638,23 @@ def ponta_que_entra(pedra, ponta):
         return [pedra[0]]
 
 
-def find_indexs(lado_a, mesa):
-    indece = []
-    for ind in range(0, len(mesa)):
-        if len(mesa[ind]) != 0 and lado_a == mesa[ind][0]:
-            indece.append(ind)
+def find_indexs_auxiliador(lado_a, mesa, lista_idxs):
+    if len(lista_idxs) == 0:
+        return []
+    elif (
+        len(mesa[head(lista_idxs)]) != 0
+        and lado_a == mesa[head(lista_idxs)][0]
+    ):
+        return [head(lista_idxs)] + find_indexs_auxiliador(
+            lado_a, mesa, tail(lista_idxs)
+        )
+    else:
+        return find_indexs_auxiliador(lado_a, mesa, tail(lista_idxs))
 
-    return indece
+
+def find_indexs(lado_a, mesa):
+
+    return find_indexs_auxiliador(lado_a, mesa, list(range(0, len(mesa))))
 
 
 def find_to_point(indexs, pedra, mesa):
@@ -760,35 +761,9 @@ def order_stone(ponta, stone):
 
 
 def get_all_stones():
+
     return [
-        (0, 0),
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-        (6, 6),
-        (0, 1),
-        (0, 2),
-        (0, 3),
-        (0, 4),
-        (0, 5),
-        (0, 6),
-        (1, 2),
-        (1, 3),
-        (1, 4),
-        (1, 5),
-        (1, 6),
-        (2, 3),
-        (2, 4),
-        (2, 5),
-        (2, 6),
-        (3, 4),
-        (3, 5),
-        (3, 6),
-        (4, 5),
-        (4, 6),
-        (5, 6),
+        (lado_a, lado_b) for lado_a in range(7) for lado_b in range(lado_a, 7)
     ]
 
 
@@ -993,3 +968,87 @@ def conj_in_futiry(verbo):
         f'vos {new_v}areis',
         f'eles {new_v}arão',
     ]
+
+
+def quem_e_maior(cabeca, corpo):
+
+    if len(corpo) == 0:
+        return cabeca
+    elif pontos([cabeca]) > pontos([quem_e_maior(head(corpo), tail(corpo))]):
+        return cabeca
+    elif pontos([cabeca]) < pontos([quem_e_maior(head(corpo), tail(corpo))]):
+        return quem_e_maior(head(corpo), tail(corpo))
+    else:
+        return cabeca
+
+
+def maior_ponto_v2(indexs, pedra, mesa):
+    if len(indexs) == 0:
+        return [(101010101, 10101010)]
+    elif len(indexs) == 1:
+        return [
+            (
+                head(indexs),
+                pontos_marcados_v(joga_pedra(pedra, mesa, head(indexs))),
+            )
+        ]
+    else:
+        return [
+            (
+                head(indexs),
+                pontos_marcados_v(joga_pedra(pedra, mesa, head(indexs))),
+            )
+        ] + maior_ponto_v2(tail(indexs), pedra, mesa)
+
+
+def getbigger(lista_de_pontucoes):
+
+    if len(lista_de_pontucoes) == 0:
+
+        return (1010101, 10505121)
+
+    elif len(lista_de_pontucoes) == 1:
+
+        return head(lista_de_pontucoes)
+
+    elif head(lista_de_pontucoes)[1] < getbigger(tail(lista_de_pontucoes))[1]:
+
+        return getbigger(tail(lista_de_pontucoes))
+
+    else:
+
+        return head(lista_de_pontucoes)
+
+
+def sumdo_auxiliar_burlador(n, lista_of_numbers):
+
+    if len(lista_of_numbers) == 0:
+        return []
+    elif n - head(lista_of_numbers) >= 0:
+        return [head(lista_of_numbers)] + sumdo_auxiliar_burlador(
+            n - head(lista_of_numbers), tail(lista_of_numbers)
+        )
+    else:
+        return []
+
+
+def pedras_de_ponto_burlador(stones, mesa_formato_1):
+
+    if len(stones) == 0:
+
+        return []
+
+    elif pode_jogar_p(head(stones), mesa_formato_1) and marca_ponto_p(
+        head(stones), mesa_formato_1
+    ):
+
+        return [head(stones)] + pedras_de_ponto_burlador(
+            tail(stones), mesa_formato_1
+        )
+
+    else:
+        return pedras_de_ponto_burlador(tail(stones), mesa_formato_1)
+
+
+def slipte(cadeia, separator):
+    return cadeia.split(separator)

@@ -1,5 +1,6 @@
-from src.unificada import e_float
 from pytest import mark
+
+from src.unificada import e_float
 
 
 @mark.parametrize('cadeia', ['2.5', '5.6', '21548.5', '549812.5'])
