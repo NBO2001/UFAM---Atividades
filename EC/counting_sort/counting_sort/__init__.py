@@ -21,11 +21,18 @@ def sort(lista_valores: list) -> list:
         bucket[number] += 1
   
 
-    lista_ord = []
+    for element_bucket in range(1,len(bucket)):
+       
+        bucket[element_bucket] = bucket[element_bucket-1] + bucket[element_bucket]
+    
+    
 
-    for buck in range(len((bucket))):
+    lista_ord = [0] * len(lista_valores)
 
-        lista_ord = lista_ord + [buck]*bucket[buck]
-
+    for number in lista_valores:
+        
+        lista_ord[bucket[number]-1] = number
+        
+        bucket[number] -= 1
 
     return lista_ord
