@@ -501,7 +501,7 @@ def e_float(cadeia):
 def int_frac(cadeia):
 
     with_split = slipte(cadeia, '.')
-
+    
     if len(with_split) == 1 or len(with_split[1]) == 0:
 
         return (with_split[0], '0')
@@ -1049,6 +1049,16 @@ def pedras_de_ponto_burlador(stones, mesa_formato_1):
     else:
         return pedras_de_ponto_burlador(tail(stones), mesa_formato_1)
 
+def protetor_range(sum_values):
+    if sum_values < 0:
+        return 0
+    else:
+        return sum_values
 
-def slipte(cadeia, separator):
-    return cadeia.split(separator)
+def slipte(cadeia: str, separator):
+
+    lista_sep = [ na for na in range(len(cadeia)) if ord(cadeia[na]) == ord(separator)]
+    if len(lista_sep) >= 1:
+        return [cadeia[:lista_sep[0]], cadeia[(lista_sep[0]+1):] ]
+    else:
+        return [cadeia]
