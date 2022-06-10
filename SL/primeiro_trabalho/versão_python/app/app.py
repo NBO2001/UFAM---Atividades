@@ -16,6 +16,16 @@ def sumBinary(binaryA, binaryB, resto='0'):
 
 def bsum(valueBinaryA, valueBinaryB):
 
+    if len(valueBinaryA) != len(valueBinaryB):
+        if len(valueBinaryA) > len(valueBinaryB):
+            valueBinaryB = (
+                '0' * (len(valueBinaryA) - len(valueBinaryB))
+            ) + valueBinaryB
+        else:
+            valueBinaryA = (
+                '0' * (len(valueBinaryB) - len(valueBinaryA))
+            ) + valueBinaryA
+
     arraySobras = ['0' for i in range(0, len(valueBinaryA) + 1)]
     contaResultado = ''
 
@@ -38,7 +48,7 @@ def convertInDecimal(anyNumber: str, anyBase: int) -> int:
 
     dictiorySymbulos = {
         f'{number if number < 10 else chr(number+55)}': number
-        for number in range(0, 16)
+        for number in range(0, 36)
     }
 
     posicaoNow = len(anyNumber) - 1
@@ -58,7 +68,7 @@ def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
 
     dictiorySymbulos = {
         number: f'{number if number < 10 else chr(number+55)}'
-        for number in range(0, 16)
+        for number in range(0, 36)
     }
 
     stringRetorn = ''
@@ -74,9 +84,34 @@ def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
     return stringRetorn
 
 
-def main():
+def main(numberAndBaseOrigem, baseDestiny):
 
-    pass
+    itsNumebrInDecimalis = convertInDecimal(
+        numberAndBaseOrigem[0], numberAndBaseOrigem[1]
+    )
+
+    itsNumebrInDestiny = convertDecimalInAnyBase(
+        itsNumebrInDecimalis, baseDestiny
+    )
+
+    return itsNumebrInDestiny
 
 
-main()
+if __name__ == '__main__':
+
+    while True:
+        
+        numberA = input('Digite um número na base de origem: ')
+        baseA = int(input('Qual a base? '))
+
+        userTyped = input('Qual a base de destino? ')
+        baseB = int(userTyped) if userTyped else 10
+
+        numberAndBaseOrigem = (numberA, baseA)
+
+        numberEndIs = main(numberAndBaseOrigem, baseB)
+
+        print(numberEndIs)
+
+        if input('Deseja converter outro numero? [S/N]') == 'N':
+            break
