@@ -100,9 +100,11 @@ def main(numberAndBaseOrigem, baseDestiny):
 if __name__ == '__main__':
 
     while True:
-        
+
         numberA = input('Digite um número na base de origem: ')
-        baseA = int(input('Qual a base? '))
+
+        userTypedA = input('Qual a base de origem? ')
+        baseA = int(userTypedA) if userTypedA else 10
 
         userTyped = input('Qual a base de destino? ')
         baseB = int(userTyped) if userTyped else 10
