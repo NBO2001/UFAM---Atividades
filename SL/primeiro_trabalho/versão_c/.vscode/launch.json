@@ -1,11 +1,12 @@
 {
     "configurations": [
+        
         {
             "name": "C/C++: gcc-7 build and debug active file",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": [],
+            "args": ["-lm"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
