@@ -1,82 +1,73 @@
-def sumBinary(binaryA, binaryB, resto='0'):
+'''
+Program-Name: ConversorDeBases
+Author: Natanael Bezerra de Oliveira
+GitHub: https://github.com/NBO2001/UFAM---Atividades/tree/main/SL/primeiro_trabalho/versão_python
 
-    if binaryA == '1' and binaryB == '1' and resto == '0':
-        return ('0', '1')
-    elif binaryA == '1' and binaryB == '1' and resto == '1':
-        return ('1', '1')
-    elif ((binaryA == '1') ^ (binaryB == '1')) and resto == '1':
-        return ('0', '1')
-    elif ((binaryA == '1') ^ (binaryB == '1')) and resto == '0':
-        return ('1', '0')
-    elif ((binaryA == '0') and (binaryB == '0')) and resto == '0':
-        return ('0', '0')
-    elif ((binaryA == '0') and (binaryB == '0')) and resto == '1':
-        return ('1', '0')
+================================== EXPLICAÇÃO DE COMO FUNCIONA ==================================================================
+Há duas formas de usar este programa.
 
+1º Importando o conversor para uma sessão python.
 
-def bsum(valueBinaryA, valueBinaryB):
+Vocẽ pode digitar no terminal " python3 ", na mesma pasta em que está o aquivo app.py, em seguida digite: from app import app
 
-    if len(valueBinaryA) != len(valueBinaryB):
-        if len(valueBinaryA) > len(valueBinaryB):
-            valueBinaryB = (
-                '0' * (len(valueBinaryA) - len(valueBinaryB))
-            ) + valueBinaryB
-        else:
-            valueBinaryA = (
-                '0' * (len(valueBinaryB) - len(valueBinaryA))
-            ) + valueBinaryA
+A função app recebe 3 parametros; valorOriginal, que replesenta o valor a ser convertido; baseDeEntrada, que representa a base de entrada; baseDestiny, que representa o valor de saida.
 
-    arraySobras = ['0' for i in range(0, len(valueBinaryA) + 1)]
-    contaResultado = ''
+2º Rodar o app no terminal.
+    basta digitar o comando; python3 app.py
 
-    for i in range((len(valueBinaryA)), 0, -1):
+================================== REQUISITOS MINIMOS ==================================================================
+    python = "^3.9"
+'''
 
-        resultadoDaSoma, sobraDaSoma = sumBinary(
-            valueBinaryA[i - 1], valueBinaryB[i - 1], arraySobras[i]
-        )
-
-        contaResultado = f'{resultadoDaSoma}{contaResultado}'
-        arraySobras[i - 1] = sobraDaSoma
-
-        if (i - 1) == 0:
-            contaResultado = f'{sobraDaSoma}{contaResultado}'
-
-    return contaResultado
-
-
+# Converte qualquer base para base decimal
 def convertInDecimal(anyNumber: str, anyBase: int) -> int:
 
+    # Gerar um dicionario de simbulos
     dictiorySymbulos = {
+
         f'{number if number < 10 else chr(number+55)}': number
+
         for number in range(0, 36)
+
     }
 
+    # Define a posição final da string
     posicaoNow = len(anyNumber) - 1
 
     acumulador = 0
 
     for symbulo in anyNumber:
 
+        # Procura o valor do simbolo no dicionário, após multiplica ele pela base de entrada elevada a posição atual.
         acumulador += dictiorySymbulos[symbulo] * (anyBase**posicaoNow)
 
         posicaoNow -= 1
 
     return acumulador
 
-
+# Função para converter um número decimal para qualquer outra base.
 def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
 
+    # Gerar um dicionario de simbulos
     dictiorySymbulos = {
+
         number: f'{number if number < 10 else chr(number+55)}'
+
         for number in range(0, 36)
+
     }
 
     stringRetorn = ''
 
+    # Divissões sucessivas
     if decimalValue >= 0:
+
         while decimalValue > 0:
+
             restoDivisao = decimalValue % anyBase
 
+            # Procura no dicionario o simbulo equivalente ao resto da divisão, após 
+            # concate com o que já está armazenado no valor de retorno.
             stringRetorn = f'{dictiorySymbulos[restoDivisao]}{stringRetorn}'
 
             decimalValue = decimalValue // anyBase
@@ -84,19 +75,28 @@ def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
     return stringRetorn
 
 
-def main(numberAndBaseOrigem, baseDestiny):
+# Função principal, responsável por fazer a integração entre as duas funções anteriores
+def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
+
+    arrayRetorn = []
 
     itsNumebrInDecimalis = convertInDecimal(
-        numberAndBaseOrigem[0], numberAndBaseOrigem[1]
+        valorOriginal, baseDeEntrada
     )
 
     itsNumebrInDestiny = convertDecimalInAnyBase(
         itsNumebrInDecimalis, baseDestiny
     )
 
-    return itsNumebrInDestiny
+    arrayRetorn.append(itsNumebrInDestiny)
+
+    if baseDestiny != 10:
+        arrayRetorn.append(baseDestiny)
+
+    return arrayRetorn
 
 
+# Interatividade com o usuário do programa
 if __name__ == '__main__':
 
     while True:
@@ -108,10 +108,8 @@ if __name__ == '__main__':
 
         userTyped = input('Qual a base de destino? ')
         baseB = int(userTyped) if userTyped else 10
-
-        numberAndBaseOrigem = (numberA, baseA)
-
-        numberEndIs = main(numberAndBaseOrigem, baseB)
+        
+        numberEndIs = app(numberA, baseA, baseB)
 
         print(numberEndIs)
 

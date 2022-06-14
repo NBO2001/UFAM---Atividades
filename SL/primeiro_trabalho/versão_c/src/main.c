@@ -1,6 +1,6 @@
 /*
 * Autor: Natanael Bezerra De Oliveira
-* GitHub: https://github.com/NBO2001/UFAM---Atividades/tree/main/SL/primeiro_trabalho/versão_c
+*
 */
 
 #include<stdio.h>
