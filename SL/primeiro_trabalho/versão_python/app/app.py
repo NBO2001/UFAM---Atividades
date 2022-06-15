@@ -6,16 +6,20 @@ GitHub: https://github.com/NBO2001/UFAM---Atividades/tree/main/SL/primeiro_traba
 ================================== EXPLICAÇÃO DE COMO FUNCIONA ==================================================================
 Há duas formas de usar este programa.
 
-1º Importando o conversor para uma sessão python.
+1º Rodar o app no terminal.
+    basta digitar o comando; python3 app.py
+
+2º Importando o conversor para uma sessão python.
 
 Vocẽ pode digitar no terminal " python3 ", na mesma pasta em que está o aquivo app.py, em seguida digite: from app import app
 
 A função app recebe 3 parametros; valorOriginal, que replesenta o valor a ser convertido; baseDeEntrada, que representa a base de entrada; baseDestiny, que representa o valor de saida.
 
-2º Rodar o app no terminal.
-    basta digitar o comando; python3 app.py
+O retorn da função é uma lista com o tamanho até 2, em que o primeiro indice é o valor convertido e
+o segundo a base (Caso a base seja diferente de 10)
 
 ================================== REQUISITOS MINIMOS ==================================================================
+    
     python = "^3.9"
 '''
 
@@ -31,7 +35,6 @@ def convertInDecimal(anyNumber: str, anyBase: int) -> int:
 
     }
 
-    # Define a posição final da string
     posicaoNow = len(anyNumber) - 1
 
     acumulador = 0
@@ -99,6 +102,17 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
 # Interatividade com o usuário do programa
 if __name__ == '__main__':
 
+    print('\033[93m') # Apenas para alterar a cor do terminal (Frescura)
+    print('\033[1m') 
+
+    print(f'{ "=" * 50 } AVISO { "=" * 50 } \n')
+    print(f'Esse program está definido até a base 35 (Z).')
+    print(f'Esse programa não está definido para letras minisculas, portanto use de A-Z.')
+    print(f'Esse programa não funciona para números fracionários, nem negativos.')
+
+    print(f'\n{ "=" * 48 } FIM AVISO { "=" * 48 }') 
+    print('\033[0m') # Apenas para alterar a cor do terminal (Frescura)
+
     while True:
 
         numberA = input('Digite um número na base de origem: ')
@@ -111,7 +125,19 @@ if __name__ == '__main__':
         
         numberEndIs = app(numberA, baseA, baseB)
 
-        print(numberEndIs)
+        print('\033[92m') # Apenas para alterar a cor do terminal (Frescura)
+
+        if len(numberEndIs) == 2:
+
+            print(f'Esse número na base {numberEndIs[1]}  é: {numberEndIs[0]}')
+        
+        else:
+
+            print(f'Esse número na base 10 é: {numberEndIs[0]}')
+
+        print('\033[94m') # Apenas para alterar a cor do terminal (Frescura)
 
         if input('Deseja converter outro numero? [S/N]') == 'N':
             break
+
+        print('\033[0m') # Apenas para alterar a cor do terminal (Frescura)
