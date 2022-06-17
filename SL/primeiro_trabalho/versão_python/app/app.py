@@ -100,7 +100,7 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
 
 
 # Interatividade com o usuário do programa
-if __name__ == '__main__':
+def initFunc():
 
     print('\033[93m') # Apenas para alterar a cor do terminal (Frescura)
     print('\033[1m') 
@@ -141,3 +141,7 @@ if __name__ == '__main__':
             break
 
         print('\033[0m') # Apenas para alterar a cor do terminal (Frescura)
+
+
+if '__main__' == __name__:
+    initFunc()
