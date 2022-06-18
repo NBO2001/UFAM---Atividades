@@ -244,7 +244,7 @@ def ganhouOJogo(fortuna_infortúnio: str) -> bool:
     if fortuna_infortunio_em_decimal == 7:
 
         print(
-            f'\033[92m Fortuna! +{fortuna_infortunio_em_decimal}! Hoje a sorte está com você!! \n Voçê ganhou a pontuação máxima!  \033[00m'
+            f'\033[92m Fortuna! +{fortuna_infortunio_em_decimal}! Hoje a sorte está com você!! \n Você ganhou a pontuação máxima!  \033[00m'
         )
 
         return True
@@ -278,14 +278,14 @@ def roda_da_fortuna(fortuna_infortúnio: str, tentativa: int) -> str:
 
     rodaRoda(roda, sua_sorte_em_decimal + 1, reverse=True)
 
-    if ganhouOJogo(fortuna_infortúnio):
-        return 1
-
     printResul(fortuna_infortúnio)
+
+    if ganhouOJogo(fortuna_infortúnio):
+        return fortuna_infortúnio
 
     sleep(0.8)
 
-    (print(f'Você tem {tentativa} tentativas')) if tentativa != 0 else None
+    (print(f'Você tem {tentativa} tentativa(s)')) if tentativa != 0 else None
 
     return fortuna_infortúnio
 
@@ -336,6 +336,9 @@ def app():
         sleep(0.8)
 
         fortuna_infortunio = roda_da_fortuna(fortuna_infortunio, tentativa - 1)
+        
+        if ganhouOJogo(fortuna_infortunio):
+            return 1
 
         if (tentativa - 1) != 0:
 
