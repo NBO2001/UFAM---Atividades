@@ -1,23 +1,29 @@
 from datetime import timedelta
 from time import localtime, time_ns
 
+
 def random():
     d = timedelta(microseconds=-1)
-    
-    valorAleatorio = (d.microseconds * (localtime().tm_sec) + time_ns())**2
+
+    valorAleatorio = (d.microseconds * (localtime().tm_sec) + time_ns()) ** 2
 
     return valorAleatorio
 
-def binaryRandom(quantidadeBytes=4, seed=0 ):
+
+def binaryRandom(quantidadeBytes=4, seed=0):
 
     numeroAletório = random()
 
-    binaryAleatorio = convertDecimalInAnyBase((numeroAletório + seed + time_ns()),2)[-quantidadeBytes:]
+    binaryAleatorio = convertDecimalInAnyBase(
+        (numeroAletório + seed + time_ns()), 2
+    )[-quantidadeBytes:]
 
     return binaryAleatorio
 
+
 def qualValorEmDeci():
-    return convertInDecimal(binaryRandom(),2,True)
+    return convertInDecimal(binaryRandom(), 2, True)
+
 
 def sumBinary(binaryA, binaryB, resto='0'):
 
@@ -33,6 +39,7 @@ def sumBinary(binaryA, binaryB, resto='0'):
         return ('0', '0')
     elif ((binaryA == '0') and (binaryB == '0')) and resto == '1':
         return ('1', '0')
+
 
 # Soma um binario '1010' + '10101'
 def bsum(valueBinaryA: str, valueBinaryB: str, quatidadeBytes: int = 8):
@@ -64,16 +71,16 @@ def bsum(valueBinaryA: str, valueBinaryB: str, quatidadeBytes: int = 8):
 
     return contaResultado[-quatidadeBytes:]
 
+
 # Qualquer base para decimal
-def convertInDecimal(anyNumber: str, anyBase: int, complementoDeDois: bool=False) -> int:
+def convertInDecimal(
+    anyNumber: str, anyBase: int, complementoDeDois: bool = False
+) -> int:
 
     # Gerar um dicionario de simbulos
     dictiorySymbulos = {
-
         f'{number if number < 10 else chr(number+55)}': number
-
         for number in range(0, 36)
-
     }
 
     posicaoNow = len(anyNumber) - 1
@@ -85,7 +92,9 @@ def convertInDecimal(anyNumber: str, anyBase: int, complementoDeDois: bool=False
         # Procura o valor do simbolo no dicionário, após multiplica ele pela base de entrada elevada a posição atual.
         if (posicaoNow == (len(anyNumber) - 1)) and complementoDeDois:
 
-            valorTemporario = - dictiorySymbulos[symbulo] * (anyBase**posicaoNow)
+            valorTemporario = -dictiorySymbulos[symbulo] * (
+                anyBase**posicaoNow
+            )
             acumulador += valorTemporario
 
         else:
@@ -95,16 +104,14 @@ def convertInDecimal(anyNumber: str, anyBase: int, complementoDeDois: bool=False
 
     return acumulador
 
+
 # Função para converter um número decimal para qualquer outra base.
 def convertDecimalInAnyBase(decimalValue: int, anyBase: int) -> str:
 
     # Gerar um dicionario de simbulos
     dictiorySymbulos = {
-
         number: f'{number if number < 10 else chr(number+55)}'
-
         for number in range(0, 36)
-
     }
 
     stringRetorn = ''
@@ -116,7 +123,7 @@ def convertDecimalInAnyBase(decimalValue: int, anyBase: int) -> str:
 
             restoDivisao = decimalValue % anyBase
 
-            # Procura no dicionario o simbulo equivalente ao resto da divisão, após 
+            # Procura no dicionario o simbulo equivalente ao resto da divisão, após
             # concate com o que já está armazenado no valor de retorno.
             stringRetorn = f'{dictiorySymbulos[restoDivisao]}{stringRetorn}'
 
@@ -130,9 +137,7 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
 
     arrayRetorn = []
 
-    itsNumebrInDecimalis = convertInDecimal(
-        valorOriginal, baseDeEntrada
-    )
+    itsNumebrInDecimalis = convertInDecimal(valorOriginal, baseDeEntrada)
 
     itsNumebrInDestiny = convertDecimalInAnyBase(
         itsNumebrInDecimalis, baseDestiny
@@ -144,4 +149,3 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
         arrayRetorn.append(baseDestiny)
 
     return arrayRetorn
-
