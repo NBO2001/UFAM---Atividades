@@ -216,6 +216,41 @@ def rodaRoda(
 
     print('')
 
+# Mostra as instruções do jogo na tela.
+def instucao():
+    print('=' * 32, end='')
+    print(' RODA DA FURTUNA ', end='')
+    print('=' * 32)
+
+    print(f'\t 1º É obrigatório girar ao menos uma vez a roleta.')
+    print(
+        f'\t 2º Caso não goste do resultado você pode girar a roleta mais 3 vezes.'
+    )
+    print(f'\t 3º Ao final a sua pontuação será o resultado da roleta.')
+    print(f'\t 4º Se conseguir +7 você ganha o jogo na hora.')
+
+    print('=' * 81)
+
+    input('Aperte enter para iniciar!')
+
+
+# Finaliza o jogo se o jogador tiver alcançado a pontuação máxima.
+def ganhouOJogo(fortuna_infortúnio: str) -> bool:
+
+    fortuna_infortunio_em_decimal = convertInDecimal(
+        fortuna_infortúnio, 2, complementoDeDois=True
+    )
+
+    if fortuna_infortunio_em_decimal == 7:
+
+        print(
+            f'\033[92m Fortuna! +{fortuna_infortunio_em_decimal}! Hoje a sorte está com você!! \n Voçê ganhou a pontuação máxima!  \033[00m'
+        )
+
+        return True
+    else:
+        return False
+
 
 def roda_da_fortuna(fortuna_infortúnio: str, tentativa: int) -> str:
 
@@ -243,6 +278,9 @@ def roda_da_fortuna(fortuna_infortúnio: str, tentativa: int) -> str:
 
     rodaRoda(roda, sua_sorte_em_decimal + 1, reverse=True)
 
+    if ganhouOJogo(fortuna_infortúnio):
+        return 1
+
     printResul(fortuna_infortúnio)
 
     sleep(0.8)
@@ -255,6 +293,8 @@ def roda_da_fortuna(fortuna_infortúnio: str, tentativa: int) -> str:
 # Função que inicia o jogo.
 def app():
 
+    instucao()
+
     fortuna_infortunio = binaryRandom(seed=time_ns())
 
     roda = geradorDeRoda(fortuna_infortunio)
@@ -263,9 +303,8 @@ def app():
         fortuna_infortunio, 2, True
     )
 
-
     rodaRoda(roda)
-    
+
     print(f'A roleta está em {fortuna_infortunio_em_decimal}')
 
     print('Girando roleta . . .')
@@ -280,6 +319,9 @@ def app():
 
     rodaRoda(roda, sua_sorte_em_decimal + 1, reverse=True)
 
+    if ganhouOJogo(fortuna_infortunio):
+        return 1
+
     printResul(fortuna_infortunio)
 
     continue_sim_ou_nao = input('Você quer (s) jogar ou (d) desistir? ')
@@ -293,12 +335,22 @@ def app():
 
         sleep(0.8)
 
-        roda_da_fortuna(fortuna_infortunio, tentativa - 1)
+        fortuna_infortunio = roda_da_fortuna(fortuna_infortunio, tentativa - 1)
 
         if (tentativa - 1) != 0:
 
-            para_ou_continua = input('p de Para ou c de Continua? ')
+            para_ou_continua = input('(p) de Para ou (c) de Continua? ')
+
             if para_ou_continua != 'c':
+
+                fortuna_infortunio_em_decimal = convertInDecimal(
+                    fortuna_infortunio, 2, complementoDeDois=True
+                )
+
+                print(
+                    f"Sua pontuação final é {'+' if fortuna_infortunio_em_decimal >= 0 else '' }{fortuna_infortunio_em_decimal}"
+                )
+
                 break
 
     return 1
