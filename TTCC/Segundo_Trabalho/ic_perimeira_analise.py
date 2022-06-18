@@ -20,12 +20,9 @@ for _, _, files in walk('./dados/Anonimizados/IC/'):
         merge_tables = pd.merge(
             read_base(f'./dados/Anonimizados/IC/{file}'), alunos_base
         )
-        lh = file.split(".")
+        lh = file.split('.')
         base_data.append(
-            decribe_data(
-                merge_tables,
-                './dados/Tabs/ic/',name=lh[0]
-            )
+            decribe_data(merge_tables, './dados/Tabs/ic/', name=lh[0])
         )
 
 tabl = pd.DataFrame(prepare_data(base_data))
@@ -33,6 +30,6 @@ tabl = pd.DataFrame(prepare_data(base_data))
 
 tab1 = tabl.sort_values(by='Ano')
 
-tab1 = tab1.groupby(["Ano"]).sum()
+tab1 = tab1.groupby(['Ano']).sum()
 
 save_table(tab1, name='Geral', path='./dados/Tabs/ic/')

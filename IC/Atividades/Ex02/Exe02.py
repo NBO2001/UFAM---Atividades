@@ -22,9 +22,9 @@ def amarelo(
     lA = height / 2
 
     # Get the hypotenuse
-    lado_is = sqrt((lA ** 2) + (lA ** 2))
+    lado_is = sqrt((lA**2) + (lA**2))
 
     # Calcuter the area
-    area_is = lado_is ** 2
+    area_is = lado_is**2
 
     return f'{area_is:.2f}'

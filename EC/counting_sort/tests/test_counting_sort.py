@@ -19,4 +19,15 @@ def test_sugerido_pela_professora():
 
 
 def test_2_sugerido_pela_professora():
-    assert sort([12, 5, 1, 7, 11, 50, 9, 14, 15, 12]) == [1, 5, 7, 9, 11, 12, 12, 14, 15, 50]
+    assert sort([12, 5, 1, 7, 11, 50, 9, 14, 15, 12]) == [
+        1,
+        5,
+        7,
+        9,
+        11,
+        12,
+        12,
+        14,
+        15,
+        50,
+    ]

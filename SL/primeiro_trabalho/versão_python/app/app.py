@@ -1,4 +1,4 @@
-'''
+"""
 Program-Name: ConversorDeBases
 Author: Natanael Bezerra de Oliveira
 GitHub: https://github.com/NBO2001/UFAM---Atividades/tree/main/SL/primeiro_trabalho/versão_python
@@ -19,20 +19,17 @@ O retorn da função é uma lista com o tamanho até 2, em que o primeiro indice
 o segundo a base (Caso a base seja diferente de 10)
 
 ================================== REQUISITOS MINIMOS ==================================================================
-    
+
     python = "^3.9"
-'''
+"""
 
 # Converte qualquer base para base decimal
 def convertInDecimal(anyNumber: str, anyBase: int) -> int:
 
     # Gerar um dicionario de simbulos
     dictiorySymbulos = {
-
         f'{number if number < 10 else chr(number+55)}': number
-
         for number in range(0, 36)
-
     }
 
     posicaoNow = len(anyNumber) - 1
@@ -48,16 +45,14 @@ def convertInDecimal(anyNumber: str, anyBase: int) -> int:
 
     return acumulador
 
+
 # Função para converter um número decimal para qualquer outra base.
 def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
 
     # Gerar um dicionario de simbulos
     dictiorySymbulos = {
-
         number: f'{number if number < 10 else chr(number+55)}'
-
         for number in range(0, 36)
-
     }
 
     stringRetorn = ''
@@ -69,7 +64,7 @@ def convertDecimalInAnyBase(decimalValue: int, anyBase) -> str:
 
             restoDivisao = decimalValue % anyBase
 
-            # Procura no dicionario o simbulo equivalente ao resto da divisão, após 
+            # Procura no dicionario o simbulo equivalente ao resto da divisão, após
             # concate com o que já está armazenado no valor de retorno.
             stringRetorn = f'{dictiorySymbulos[restoDivisao]}{stringRetorn}'
 
@@ -83,9 +78,7 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
 
     arrayRetorn = []
 
-    itsNumebrInDecimalis = convertInDecimal(
-        valorOriginal, baseDeEntrada
-    )
+    itsNumebrInDecimalis = convertInDecimal(valorOriginal, baseDeEntrada)
 
     itsNumebrInDestiny = convertDecimalInAnyBase(
         itsNumebrInDecimalis, baseDestiny
@@ -102,16 +95,20 @@ def app(valorOriginal, baseDeEntrada=10, baseDestiny=10):
 # Interatividade com o usuário do programa
 def initFunc():
 
-    print('\033[93m') # Apenas para alterar a cor do terminal (Frescura)
-    print('\033[1m') 
+    print('\033[93m')   # Apenas para alterar a cor do terminal (Frescura)
+    print('\033[1m')
 
     print(f'{ "=" * 50 } AVISO { "=" * 50 } \n')
     print(f'Esse program está definido até a base 35 (Z).')
-    print(f'Esse programa não está definido para letras minisculas, portanto use de A-Z.')
-    print(f'Esse programa não funciona para números fracionários, nem negativos.')
+    print(
+        f'Esse programa não está definido para letras minisculas, portanto use de A-Z.'
+    )
+    print(
+        f'Esse programa não funciona para números fracionários, nem negativos.'
+    )
 
-    print(f'\n{ "=" * 48 } FIM AVISO { "=" * 48 }') 
-    print('\033[0m') # Apenas para alterar a cor do terminal (Frescura)
+    print(f'\n{ "=" * 48 } FIM AVISO { "=" * 48 }')
+    print('\033[0m')   # Apenas para alterar a cor do terminal (Frescura)
 
     while True:
 
@@ -122,25 +119,25 @@ def initFunc():
 
         userTyped = input('Qual a base de destino? ')
         baseB = int(userTyped) if userTyped else 10
-        
+
         numberEndIs = app(numberA, baseA, baseB)
 
-        print('\033[92m') # Apenas para alterar a cor do terminal (Frescura)
+        print('\033[92m')   # Apenas para alterar a cor do terminal (Frescura)
 
         if len(numberEndIs) == 2:
 
             print(f'Esse número na base {numberEndIs[1]}  é: {numberEndIs[0]}')
-        
+
         else:
 
             print(f'Esse número na base 10 é: {numberEndIs[0]}')
 
-        print('\033[94m') # Apenas para alterar a cor do terminal (Frescura)
+        print('\033[94m')   # Apenas para alterar a cor do terminal (Frescura)
 
         if input('Deseja converter outro numero? [S/N]') == 'N':
             break
 
-        print('\033[0m') # Apenas para alterar a cor do terminal (Frescura)
+        print('\033[0m')   # Apenas para alterar a cor do terminal (Frescura)
 
 
 if '__main__' == __name__:

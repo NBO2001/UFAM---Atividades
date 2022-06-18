@@ -35,7 +35,7 @@ def save_table(
     table.to_csv(f'{path}{name}.csv', encoding='utf-8')
 
 
-def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/', name= "1"):
+def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/', name='1'):
 
     ano = ((table['ANO']).unique())[0]
     situan = ((table['DESCR_PERIODO']).unique())[0]
@@ -43,23 +43,27 @@ def decribe_data(table: pd.DataFrame, path: str = './dados/Tabs/', name= "1"):
     table = table.loc[table['NUM_VERSAO'] == '2016/1']
 
     alunos_aprovados = table.loc[table['DESCR_SITUACAO'] == 'Aprovado']
-    save_table(alunos_aprovados, f'alunos_aprovados_{ano}_{situan}_{name}', path)
+    save_table(
+        alunos_aprovados, f'alunos_aprovados_{ano}_{situan}_{name}', path
+    )
 
     total_alunos = len(table['ID_PESSOA'].unique())
-    
+
     quatidade_aprovados = len(alunos_aprovados['ID_PESSOA'].unique())
 
     alunos_reprovados_por_falta = table.loc[
         table['DESCR_SITUACAO'] != 'Aprovado'
     ]
-    
+
     save_table(
         alunos_reprovados_por_falta,
         f'reprovados_{ano}_{situan}_{name}',
         path,
     )
 
-    quatidade_reprovados = len(alunos_reprovados_por_falta['ID_PESSOA'].unique())
+    quatidade_reprovados = len(
+        alunos_reprovados_por_falta['ID_PESSOA'].unique()
+    )
 
     return (
         ano,

@@ -4,8 +4,8 @@ from os import walk
 from utils import decribe_data, read_base, save_table
 
 
-def seach_in_ac(folder, direce_lis ,label='Sem_Cota'):
-    
+def seach_in_ac(folder, direce_lis, label='Sem_Cota'):
+
     anos = []
     alunos = []
     desc_p = []
@@ -13,13 +13,12 @@ def seach_in_ac(folder, direce_lis ,label='Sem_Cota'):
     in_file = tuple(walk(f'./dados/Tabs/{folder}'))
 
     for file in in_file[0][2]:
-        #breakpoint()
+        # breakpoint()
         base_teste = pd.read_csv(
             f'./dados/Tabs/{folder}/{file}',
             encoding='UTF-8',
         )
         # print(base_teste['FORMA_INGRESSO'].unique())
-        
 
         for cota in direce_lis:
             try:
@@ -28,8 +27,8 @@ def seach_in_ac(folder, direce_lis ,label='Sem_Cota'):
                 ]
             except:
                 breakpoint()
-                print("Error")
-            
+                print('Error')
+
         if len(base_teste['ANO']):
             anos.append(base_teste['ANO'].unique()[0])
             desc_p.append(base_teste['DESCR_PERIODO'].unique()[0])
@@ -117,134 +116,202 @@ ampla = [
     'Mandado Judicial',
     'SISU - AC (Ampla Concorrência)' 'Transferência Ex-Ofício (Obrigatória)',
     'PSE - Reopção de Curso',
-    'PSE - Portador de Diploma'
+    'PSE - Portador de Diploma',
 ]
 
-tabela_aprovados_sem_cota = pd.DataFrame(seach_in_ac('calculo_1/aprovados',cotas,"aprovados_sn_cota"))
+tabela_aprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('calculo_1/aprovados', cotas, 'aprovados_sn_cota')
+)
 
 tabela_aprovados_sem_cota = tabela_aprovados_sem_cota.sort_values(by='Anos')
-#breakpoint()
-tabela_reprovados_sem_cota = pd.DataFrame(seach_in_ac('calculo_1/reprovados',cotas,"reprovados_sn_cota"))
+# breakpoint()
+tabela_reprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('calculo_1/reprovados', cotas, 'reprovados_sn_cota')
+)
 
 tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.sort_values(by='Anos')
-tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(columns=['Desc_p'])
+tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result = pd.merge(tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on="Anos")
+result = pd.merge(
+    tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on='Anos'
+)
 
 
 save_table(result, name='resul_ac', path='./dados/Tabs/calculo_1/')
 
 
-tabela_aprovados_com_cota = pd.DataFrame(seach_in_ac('calculo_1/aprovados',ampla,"aprovados_cn_cota"))
+tabela_aprovados_com_cota = pd.DataFrame(
+    seach_in_ac('calculo_1/aprovados', ampla, 'aprovados_cn_cota')
+)
 tabela_aprovados_com_cota = tabela_aprovados_com_cota.sort_values(by='Anos')
 
-tabela_reprovados_com_cota = pd.DataFrame(seach_in_ac('calculo_1/reprovados',ampla,"reprovados_cn_cota"))
+tabela_reprovados_com_cota = pd.DataFrame(
+    seach_in_ac('calculo_1/reprovados', ampla, 'reprovados_cn_cota')
+)
 tabela_reprovados_com_cota = tabela_reprovados_com_cota.sort_values(by='Anos')
-tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(columns=['Desc_p'])
+tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result_cota = pd.merge(tabela_aprovados_com_cota, tabela_reprovados_com_cota, on="Anos")
+result_cota = pd.merge(
+    tabela_aprovados_com_cota, tabela_reprovados_com_cota, on='Anos'
+)
 save_table(result_cota, name='resul_cotas', path='./dados/Tabs/calculo_1/')
 
 
-
-tabela_aprovados_sem_cota = pd.DataFrame(seach_in_ac('ic/aprovados',cotas,"aprovados_sn_cota"))
+tabela_aprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('ic/aprovados', cotas, 'aprovados_sn_cota')
+)
 tabela_aprovados_sem_cota = tabela_aprovados_sem_cota.sort_values(by='Anos')
 
-tabela_reprovados_sem_cota = pd.DataFrame(seach_in_ac('ic/reprovados',cotas,"reprovados_sn_cota"))
+tabela_reprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('ic/reprovados', cotas, 'reprovados_sn_cota')
+)
 tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.sort_values(by='Anos')
-tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(columns=['Desc_p'])
+tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result = pd.merge(tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on="Anos")
+result = pd.merge(
+    tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on='Anos'
+)
 
 
 save_table(result, name='resul_ac', path='./dados/Tabs/ic/')
 
 
-tabela_aprovados_com_cota = pd.DataFrame(seach_in_ac('ic/aprovados',ampla,"aprovados_cn_cota"))
+tabela_aprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ic/aprovados', ampla, 'aprovados_cn_cota')
+)
 tabela_aprovados_com_cota = tabela_aprovados_com_cota.sort_values(by='Anos')
 
-tabela_reprovados_com_cota = pd.DataFrame(seach_in_ac('ic/reprovados',ampla,"reprovados_cn_cota"))
+tabela_reprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ic/reprovados', ampla, 'reprovados_cn_cota')
+)
 tabela_reprovados_com_cota = tabela_reprovados_com_cota.sort_values(by='Anos')
-tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(columns=['Desc_p'])
+tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result_cota = pd.merge(tabela_aprovados_com_cota, tabela_reprovados_com_cota, on="Anos")
+result_cota = pd.merge(
+    tabela_aprovados_com_cota, tabela_reprovados_com_cota, on='Anos'
+)
 save_table(result_cota, name='resul_cotas', path='./dados/Tabs/ic/')
 
 
-
-tabela_aprovados_sem_cota = pd.DataFrame(seach_in_ac('md/aprovados',cotas,"aprovados_sn_cota"))
+tabela_aprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('md/aprovados', cotas, 'aprovados_sn_cota')
+)
 tabela_aprovados_sem_cota = tabela_aprovados_sem_cota.sort_values(by='Anos')
 
-tabela_reprovados_sem_cota = pd.DataFrame(seach_in_ac('md/reprovados',cotas,"reprovados_sn_cota"))
+tabela_reprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('md/reprovados', cotas, 'reprovados_sn_cota')
+)
 tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.sort_values(by='Anos')
-tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(columns=['Desc_p'])
+tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result = pd.merge(tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on="Anos")
+result = pd.merge(
+    tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on='Anos'
+)
 
 
 save_table(result, name='resul_ac', path='./dados/Tabs/md/')
 
 
-tabela_aprovados_com_cota = pd.DataFrame(seach_in_ac('md/aprovados',ampla,"aprovados_cn_cota"))
+tabela_aprovados_com_cota = pd.DataFrame(
+    seach_in_ac('md/aprovados', ampla, 'aprovados_cn_cota')
+)
 tabela_aprovados_com_cota = tabela_aprovados_com_cota.sort_values(by='Anos')
 
-tabela_reprovados_com_cota = pd.DataFrame(seach_in_ac('md/reprovados',ampla,"reprovados_cn_cota"))
+tabela_reprovados_com_cota = pd.DataFrame(
+    seach_in_ac('md/reprovados', ampla, 'reprovados_cn_cota')
+)
 tabela_reprovados_com_cota = tabela_reprovados_com_cota.sort_values(by='Anos')
-tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(columns=['Desc_p'])
+tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result_cota = pd.merge(tabela_aprovados_com_cota, tabela_reprovados_com_cota, on="Anos")
+result_cota = pd.merge(
+    tabela_aprovados_com_cota, tabela_reprovados_com_cota, on='Anos'
+)
 save_table(result_cota, name='resul_cotas', path='./dados/Tabs/md/')
 
 
-
-
-tabela_aprovados_sem_cota = pd.DataFrame(seach_in_ac('ttcc/aprovados',cotas,"aprovados_sn_cota"))
+tabela_aprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('ttcc/aprovados', cotas, 'aprovados_sn_cota')
+)
 tabela_aprovados_sem_cota = tabela_aprovados_sem_cota.sort_values(by='Anos')
 
-tabela_reprovados_sem_cota = pd.DataFrame(seach_in_ac('ttcc/reprovados',cotas,"reprovados_sn_cota"))
+tabela_reprovados_sem_cota = pd.DataFrame(
+    seach_in_ac('ttcc/reprovados', cotas, 'reprovados_sn_cota')
+)
 tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.sort_values(by='Anos')
-tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(columns=['Desc_p'])
+tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result = pd.merge(tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on="Anos")
+result = pd.merge(
+    tabela_aprovados_sem_cota, tabela_reprovados_sem_cota, on='Anos'
+)
 
 
 save_table(result, name='resul_ac', path='./dados/Tabs/ttcc/')
 
 
-tabela_aprovados_com_cota = pd.DataFrame(seach_in_ac('ttcc/aprovados',ampla,"aprovados_cn_cota"))
+tabela_aprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ttcc/aprovados', ampla, 'aprovados_cn_cota')
+)
 tabela_aprovados_com_cota = tabela_aprovados_com_cota.sort_values(by='Anos')
 
-tabela_reprovados_com_cota = pd.DataFrame(seach_in_ac('ttcc/reprovados',ampla,"reprovados_cn_cota"))
+tabela_reprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ttcc/reprovados', ampla, 'reprovados_cn_cota')
+)
 tabela_reprovados_com_cota = tabela_reprovados_com_cota.sort_values(by='Anos')
-tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(columns=['Desc_p'])
+tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result_cota = pd.merge(tabela_aprovados_com_cota, tabela_reprovados_com_cota, on="Anos")
+result_cota = pd.merge(
+    tabela_aprovados_com_cota, tabela_reprovados_com_cota, on='Anos'
+)
 save_table(result_cota, name='resul_cotas', path='./dados/Tabs/ttcc/')
 
-tabela_aprovados_com_cota = pd.DataFrame(seach_in_ac('ttcc/aprovados',ampla,"aprovados_cn_cota"))
+tabela_aprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ttcc/aprovados', ampla, 'aprovados_cn_cota')
+)
 tabela_aprovados_com_cota = tabela_aprovados_com_cota.sort_values(by='Anos')
 
-tabela_reprovados_com_cota = pd.DataFrame(seach_in_ac('ttcc/reprovados',ampla,"reprovados_cn_cota"))
+tabela_reprovados_com_cota = pd.DataFrame(
+    seach_in_ac('ttcc/reprovados', ampla, 'reprovados_cn_cota')
+)
 tabela_reprovados_com_cota = tabela_reprovados_com_cota.sort_values(by='Anos')
-tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(columns=['Desc_p'])
+tabela_reprovados_com_cota = tabela_reprovados_com_cota.drop(
+    columns=['Desc_p']
+)
 # tabela_reprovados_sem_cota = tabela_reprovados_sem_cota.groupby('Anos')['Total_alunos'].apply(sum)
 
 
-result_cota = pd.merge(tabela_aprovados_com_cota, tabela_reprovados_com_cota, on="Anos")
+result_cota = pd.merge(
+    tabela_aprovados_com_cota, tabela_reprovados_com_cota, on='Anos'
+)
 save_table(result_cota, name='resul_cotas', path='./dados/Tabs/ttcc/')

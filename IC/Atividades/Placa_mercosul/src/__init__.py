@@ -1,15 +1,17 @@
-
 def placa(x):
 
     final_da_placa = x[-3:]
-    
-    if verify_is_number([final_da_placa[0],final_da_placa[2]]) and verify_is_cadeia_valida([final_da_placa[1]]):
-        return "moto" 
-    elif verify_is_cadeia_valida(head(final_da_placa)) and verify_is_number(tail(final_da_placa)):
-        return "carro"
-    else:
-        return "nada"
 
+    if verify_is_number(
+        [final_da_placa[0], final_da_placa[2]]
+    ) and verify_is_cadeia_valida([final_da_placa[1]]):
+        return 'moto'
+    elif verify_is_cadeia_valida(head(final_da_placa)) and verify_is_number(
+        tail(final_da_placa)
+    ):
+        return 'carro'
+    else:
+        return 'nada'
 
 
 # Funções auxiliares
@@ -46,9 +48,11 @@ def get_only_string(leteer):
     else:
         return ''
 
+
 def verify_is_cadeia_valida(cadeia):
-    if len(cadeia) == 1: return get_only_string(head(cadeia))
+    if len(cadeia) == 1:
+        return get_only_string(head(cadeia))
 
-    return get_only_string(head(cadeia)) and verify_is_cadeia_valida(tail(cadeia))
-
-        
+    return get_only_string(head(cadeia)) and verify_is_cadeia_valida(
+        tail(cadeia)
+    )

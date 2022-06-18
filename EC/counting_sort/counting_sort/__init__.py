@@ -32,5 +32,5 @@ def sort(lista_valores: list) -> list:
         lista_ord[bucket[number] - 1] = number
 
         bucket[number] -= 1
-    
+
     return lista_ord

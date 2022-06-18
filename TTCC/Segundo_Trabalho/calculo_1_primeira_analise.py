@@ -16,7 +16,7 @@ alunos_base = read_base(
 
 for _, _, files in walk('./dados/Anonimizados/Calculo_1/'):
     for file in files:
-        
+
         merge_tables = pd.merge(
             read_base(f'./dados/Anonimizados/Calculo_1/{file}'), alunos_base
         )

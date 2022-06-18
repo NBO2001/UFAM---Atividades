@@ -24,8 +24,8 @@ def dig(a, b):
     for potencia in range(4, -1, -1):
 
         is_equal_first, restos = verifica_divisao_inteira_numeros(
-            divisao_de_um_numero(a, 10 ** potencia),
-            divisao_de_um_numero(b, 10 ** potencia),
+            divisao_de_um_numero(a, 10**potencia),
+            divisao_de_um_numero(b, 10**potencia),
         )
         a, b = restos
         if is_equal_first:

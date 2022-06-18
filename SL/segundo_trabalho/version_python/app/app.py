@@ -216,6 +216,7 @@ def rodaRoda(
 
     print('')
 
+
 # Mostra as instruções do jogo na tela.
 def instucao():
     print('=' * 32, end='')
@@ -336,7 +337,7 @@ def app():
         sleep(0.8)
 
         fortuna_infortunio = roda_da_fortuna(fortuna_infortunio, tentativa - 1)
-        
+
         if ganhouOJogo(fortuna_infortunio):
             return 1
 
