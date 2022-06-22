@@ -1,4 +1,4 @@
-# Authors: Marcelo Cipiano e Natanael Bezerra de Oliveira
+# Authors: Marcelo Henrique Soares Cipriano e Natanael Bezerra de Oliveira
 
 # Para execução do código é necessário usar o python >= 3.9
 
@@ -26,7 +26,7 @@ def sumBinary(binaryA: str, binaryB: str, resto: str = '0') -> tuple:
 # Soma qualquer número binario com qualquer outro numero binário.
 def bsum(valueBinaryA: str, valueBinaryB: str, quatidadeBytes: int = 8):
 
-    # Padroniza os binários
+    # Padroniza os binários, pega duas str e deixar as duas com o tamanho da maior.
     if len(valueBinaryA) != len(valueBinaryB):
 
         if len(valueBinaryA) > len(valueBinaryB):
@@ -41,6 +41,7 @@ def bsum(valueBinaryA: str, valueBinaryB: str, quatidadeBytes: int = 8):
                 '0' * (len(valueBinaryB) - len(valueBinaryA))
             ) + valueBinaryA
 
+    # Criar um vetor para amarzenar o resto das somas.
     arraySobras = ['0' for i in range(0, len(valueBinaryA) + 1)]
     contaResultado = ''
 
@@ -253,6 +254,7 @@ def ganhouOJogo(fortuna_infortúnio: str) -> bool:
         return False
 
 
+# Função que implementa cada jogada a partir do giro obrigatório, gerando o resultado.
 def roda_da_fortuna(fortuna_infortúnio: str, tentativa: int) -> str:
 
     roda = geradorDeRoda(fortuna_infortúnio)
@@ -308,6 +310,11 @@ def app():
 
     print(f'A roleta está em {fortuna_infortunio_em_decimal}')
 
+    continue_sim_ou_nao = input('Você quer (s) jogar ou (d) desistir? ')
+
+    if continue_sim_ou_nao != 's':
+        return 1
+
     print('Girando roleta . . .')
 
     sua_sorte = binaryRandom(seed=(time_ns() + 2))
@@ -325,9 +332,11 @@ def app():
 
     printResul(fortuna_infortunio)
 
-    continue_sim_ou_nao = input('Você quer (s) jogar ou (d) desistir? ')
+    para_ou_continua = input(
+        'Você tem 3 tentativas. \n(p) de Para ou (c) de Continua? '
+    )
 
-    if continue_sim_ou_nao != 's':
+    if para_ou_continua != 'c':
         return 1
 
     for tentativa in range(3, 0, -1):
