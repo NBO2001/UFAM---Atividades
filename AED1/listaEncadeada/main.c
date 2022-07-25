@@ -62,6 +62,118 @@ void insert(typeList * lst, typeData dat){
 
 }
 
+//Remove the first element. Return 1 successfully otherwise return 0.
+char popf(typeList * lst){
+
+    typeNode * aux;
+    if(lst->first){
+
+        aux = lst->first;
+        lst->first = aux->next;
+        free(aux);
+        return 1;
+    }
+    return 0;
+
+}
+
+//Remove the end element. Return 1 successfully otherwise return 0.
+char pope(typeList * lst){
+
+    typeNode * aux, * aux2;
+    
+    if(!lst->first) return 0;
+
+    aux = lst->first;
+    if(!aux->next){
+        lst->first = NULL;
+        free(aux);
+        return 1;
+    }
+    while (aux->next->next){
+        aux = aux->next;
+    }
+
+    aux2 = aux->next;
+    
+    aux->next = NULL;
+
+    free(aux2);
+
+    return 1;
+    
+}
+
+//Remove element by index. Return 1 successfully otherwise return 0.
+char popi(typeList * lst, int k){
+    int i=1;
+    typeNode * aux, * anterior;
+    
+    if(!lst->first) return 0;
+
+    aux = lst->first;
+    
+    if((k!=1) && (!aux->next)){
+        return 0;
+    }
+
+    if(k==1){
+        if(aux->next){
+            anterior = aux->next;
+            lst->first = anterior;
+        }else{
+            lst->first = NULL;
+        }
+        
+        free(aux);
+        return 1;
+    }
+
+    while ((i < k) && aux->next){ 
+        
+        anterior = aux;
+        aux = aux->next;
+        i++;
+    }
+
+    if (i == k){
+
+        anterior->next = aux->next;
+
+        free(aux);
+
+        return 1;
+    }
+
+    return 0;
+    
+}
+
+// Check it it's growing
+char isCrescent(typeList * lst){
+
+    typeNode * aux;
+
+    aux = lst->first;
+
+    if((!aux) || (!aux->next)){
+        return 1;
+    }
+    
+    while(aux->next){
+
+        if(aux->data.d > aux->next->data.d){
+            return 0;
+        }
+
+        aux = aux->next;
+
+    }
+    return 1;
+
+
+}
+
 // Show only data
 void showData(typeData *dat){
 
@@ -86,18 +198,39 @@ void showList(typeList * lst){
 
 }
 
+// Function read data
+void read(typeList * lst,int tam){
+
+    typeData dt;
+
+    for(int i=0; i< tam;i++){
+
+        scanf("%d", &dt.d);
+        insert(lst,dt);
+
+    }
+
+
+}
+
 int main(){
 
     typeList * l1;
-    typeData n1;
+    int n;
 
     l1 = list();
 
-    for(int i=0; i < 5; i++){
-        n1.d = i;
-        insert(l1,n1);
-    }
+    scanf("%d", &n);
+
+    read(l1,n);
+
+    //popi(l1,2); // Remove Element
 
     showList(l1);
 
+    if(isCrescent(l1)){
+        printf("e' crescente\n");
+    }else{
+        printf("Not cress\n");
+    }
 }
