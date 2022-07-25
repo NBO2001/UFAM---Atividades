@@ -62,6 +62,23 @@ void insert(typeList * lst, typeData dat){
 
 }
 
+// Detroy list
+void destroy(typeList * lst){
+
+    typeNode * nde, * aux;
+
+    nde = lst->first;
+
+    while (nde){
+        aux = nde;
+        nde = nde->next;
+        free(aux);
+    }
+
+    lst->first = NULL;
+
+}
+
 //Remove the first element. Return 1 successfully otherwise return 0.
 char popf(typeList * lst){
 
@@ -169,8 +186,8 @@ char isCrescent(typeList * lst){
         aux = aux->next;
 
     }
-    return 1;
 
+    return 1;
 
 }
 
@@ -228,9 +245,13 @@ int main(){
 
     showList(l1);
 
-    if(isCrescent(l1)){
+    if(isCrescent(l1)){ // Verfica se e' crescente
         printf("e' crescente\n");
     }else{
         printf("Not cress\n");
     }
+
+    destroy(l1);
+
+    showList(l1);
 }

@@ -1,4 +1,4 @@
-# Estruta de dados lista
+# Estrutura de dados lista
 
 A seguir, propriedades vistas em Knuth(1968, p. 235) e Aho, Hopcroft e Ullman (1983, p. 38-39)
 
