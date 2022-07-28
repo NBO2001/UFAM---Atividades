@@ -49,15 +49,14 @@ typeNode * node(typeData *dt){
 }
 
 // Insert in list
-void insert(typeList * lst, typeData dat){
+void insert(typeList * lst, typeData *dat){
 
     typeNode * nd;
     typeNode * aux;
 
-    nd = node(&dat);
-
-    aux = lst->first;
-    nd->next = aux;
+    nd = node(dat);
+    
+    nd->next = lst->first;
     lst->first = nd;
 
 }
@@ -223,7 +222,7 @@ void read(typeList * lst,int tam){
     for(int i=0; i< tam;i++){
 
         scanf("%d", &dt.d);
-        insert(lst,dt);
+        insert(lst,&dt);
 
     }
 

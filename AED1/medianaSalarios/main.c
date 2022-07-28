@@ -9,7 +9,9 @@ typedef struct tipoFuncionario{
 
 }tipoFuncionario;
 
+// Vetor de funcionarios Administrativos
 tipoFuncionario funcionariosAdm[2003];
+// Vetor de funcionarios Nao Administrativos
 tipoFuncionario funcionariosNAdm[2003];
 
 // Comara funcionarios
@@ -80,6 +82,8 @@ void merge(tipoFuncionario als[], int tam){
     aux = (tipoFuncionario *) malloc(sizeof(tipoFuncionario)*(tam+2));
 
     mergeR(als,0,tam-1,aux);
+
+    free(aux);
 
 }
 
@@ -168,16 +172,24 @@ void printCargo(char cargo){
     }
 }
 
+// Mostra mediana
 void mostraMediana(tipoFuncionario v[], int tam){
 
+    // Ser for uma tamanho impar, mostra o meio;
     if((tam%2)==1){
         printCargo(v[tam/2].funcao);
         printf("%.2f \n", v[tam/2].salario);
     }else{
+        // Se for par, mostra o meio e o anterio ao meio, desde que sejam diferentes.
         if(tam != 0){
             printCargo(v[tam/2].funcao);
-            printf("%.2f \n", v[tam/2].salario);
-            printf("%.2f \n", v[(tam/2)-1].salario);
+            if(v[tam/2].salario != v[(tam/2)-1].salario){
+
+                printf("%.2f \n", v[tam/2].salario);
+                printf("%.2f \n", v[(tam/2)-1].salario);
+            }else{
+                printf("%.2f \n", v[tam/2].salario);
+            }
         }
     }    
 
@@ -192,10 +204,10 @@ int main(){
     merge(funcionariosAdm,tamADM);
     
     mostraMediana(funcionariosAdm,tamADM);
-    
 
-    //showFuncions(funcionariosNAdm,tamNADM);
+    //  showFuncions(funcionariosNAdm,tamNADM);
     merge(funcionariosNAdm,tamNADM);
+
     mostraMediana(funcionariosNAdm,tamNADM);
 
 }
