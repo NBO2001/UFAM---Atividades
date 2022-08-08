@@ -52,7 +52,6 @@ typeNode * node(typeData *dt){
 void insert(typeList * lst, typeData *dat){
 
     typeNode * nd;
-    typeNode * aux;
 
     nd = node(dat);
     
@@ -165,6 +164,52 @@ char popi(typeList * lst, int k){
     
 }
 
+typeData popiV2(typeList * lst, int k){
+    int i=1;
+    typeData auxData;
+    typeNode * aux, * anterior;
+    
+    auxData.d = -9999;
+    if(!lst->first) return auxData;
+
+    aux = lst->first;
+    
+    if((k!=1) && (!aux->next)){
+        return auxData;
+    }
+
+    if(k==1){
+        if(aux->next){
+            anterior = aux->next;
+            lst->first = anterior;
+        }else{
+            lst->first = NULL;
+        }
+        auxData = aux->data;
+        free(aux);
+        return auxData;
+    }
+
+    while ((i < k) && aux->next){ 
+        
+        anterior = aux;
+        aux = aux->next;
+        i++;
+    }
+
+    if (i == k){
+
+        anterior->next = aux->next;
+        auxData = aux->data;
+        free(aux);
+
+        return auxData;
+    }
+
+    return auxData;
+    
+}
+
 // Check it it's growing
 char isCrescent(typeList * lst){
 
@@ -228,6 +273,58 @@ void read(typeList * lst,int tam){
 
 
 }
+// Funcao de teste de ordenacao
+int retornIndexMenor(typeList * lst){
+
+    typeNode * aux;
+    int k, cnt;
+    typeData menor;
+    aux = lst->first;
+
+    if(!aux) return 0;
+
+    menor = aux->data;
+    k = 1;
+    cnt = 1;
+    while(aux){
+
+        if(aux->data.d < menor.d){
+            menor = aux->data;
+            k=cnt;
+        }
+
+        aux = aux->next;
+        cnt++;
+    }
+    return k;
+
+}
+
+char isEmpty(typeList * lst){
+
+    if(!lst->first) return 0;
+    return 1;
+
+}
+
+void ordenaLista(typeList * lst){
+
+    typeList * lstAux;
+    typeData tmp;
+    int indexMenor;
+    lstAux = list();
+
+    while(isEmpty(lst)){
+
+        indexMenor = retornIndexMenor(lst);
+        tmp = popiV2(lst,indexMenor);
+        insert(lstAux,&tmp);
+
+    }
+
+    *lst = *lstAux;
+
+}
 
 int main(){
 
@@ -242,15 +339,16 @@ int main(){
 
     //popi(l1,2); // Remove Element
 
+    ordenaLista(l1);
     showList(l1);
+    
+    // if(isCrescent(l1)){ // Verfica se e' crescente
+    //     printf("e' crescente\n");
+    // }else{
+    //     printf("Not cress\n");
+    // }
 
-    if(isCrescent(l1)){ // Verfica se e' crescente
-        printf("e' crescente\n");
-    }else{
-        printf("Not cress\n");
-    }
+    // destroy(l1);
 
-    destroy(l1);
-
-    showList(l1);
+    
 }
