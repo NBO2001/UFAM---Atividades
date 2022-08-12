@@ -1,0 +1,6 @@
+Administrativo: 2800.00
+2010170
+2210172
+N Administrativo: 75000.00
+3300170
+3300110
