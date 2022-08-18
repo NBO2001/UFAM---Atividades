@@ -56,7 +56,7 @@
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
-    <comp lib="0" loc="(150,210)" name="Pin">
+    <comp lib="0" loc="(110,210)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
     <comp lib="0" loc="(300,110)" name="Pin">
@@ -64,7 +64,6 @@
     </comp>
     <comp lib="0" loc="(310,310)" name="Pin">
       <a name="appearance" val="NewPins"/>
-      <a name="label" val="S"/>
     </comp>
     <comp lib="0" loc="(420,200)" name="Pin">
       <a name="appearance" val="NewPins"/>
@@ -74,16 +73,14 @@
     <comp lib="0" loc="(840,150)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
-      <a name="label" val="Q"/>
       <a name="output" val="true"/>
     </comp>
     <comp lib="0" loc="(840,270)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
-      <a name="label" val="Q0"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(210,240)" name="NOT Gate"/>
+    <comp lib="1" loc="(210,250)" name="NOT Gate"/>
     <comp lib="1" loc="(260,250)" name="NOT Gate"/>
     <comp lib="1" loc="(310,250)" name="NOT Gate"/>
     <comp lib="1" loc="(380,230)" name="AND Gate"/>
@@ -91,14 +88,24 @@
     <comp lib="1" loc="(590,290)" name="NAND Gate"/>
     <comp lib="1" loc="(750,150)" name="NAND Gate"/>
     <comp lib="1" loc="(750,270)" name="NAND Gate"/>
-    <comp lib="8" loc="(283,85)" name="Text">
+    <comp lib="8" loc="(229,189)" name="Text">
+      <a name="text" val="Dector de bordas de subida."/>
+    </comp>
+    <comp lib="8" loc="(248,113)" name="Text">
+      <a name="text" val="S"/>
+    </comp>
+    <comp lib="8" loc="(252,319)" name="Text">
       <a name="text" val="R"/>
     </comp>
-    <wire from="(150,210)" to="(170,210)"/>
-    <wire from="(170,210)" to="(170,240)"/>
-    <wire from="(170,210)" to="(330,210)"/>
-    <wire from="(170,240)" to="(180,240)"/>
-    <wire from="(210,240)" to="(210,250)"/>
+    <comp lib="8" loc="(892,155)" name="Text">
+      <a name="text" val="Q"/>
+    </comp>
+    <comp lib="8" loc="(893,276)" name="Text">
+      <a name="text" val="Q ̍"/>
+    </comp>
+    <wire from="(110,210)" to="(110,250)"/>
+    <wire from="(110,210)" to="(330,210)"/>
+    <wire from="(110,250)" to="(180,250)"/>
     <wire from="(210,250)" to="(230,250)"/>
     <wire from="(260,250)" to="(280,250)"/>
     <wire from="(300,110)" to="(530,110)"/>

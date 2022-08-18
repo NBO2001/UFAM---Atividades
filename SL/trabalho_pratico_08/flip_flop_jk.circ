@@ -56,54 +56,64 @@
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
     <a name="simulationFrequency" val="1.0"/>
-    <comp lib="0" loc="(120,330)" name="Pin">
+    <comp lib="0" loc="(350,210)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
-    <comp lib="0" loc="(360,270)" name="Pin">
+    <comp lib="0" loc="(350,240)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
-    <comp lib="0" loc="(360,410)" name="Pin">
-      <a name="appearance" val="NewPins"/>
-    </comp>
-    <comp lib="0" loc="(390,320)" name="Pin">
+    <comp lib="0" loc="(420,320)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(630,330)" name="Pin">
+    <comp lib="0" loc="(680,210)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="0" loc="(630,370)" name="Pin">
+    <comp lib="0" loc="(680,250)" name="Pin">
       <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
     </comp>
-    <comp lib="1" loc="(180,360)" name="NOT Gate"/>
+    <comp lib="0" loc="(70,330)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </comp>
+    <comp lib="1" loc="(180,370)" name="NOT Gate"/>
     <comp lib="1" loc="(230,370)" name="NOT Gate"/>
     <comp lib="1" loc="(280,370)" name="NOT Gate"/>
-    <comp lib="1" loc="(350,350)" name="AND Gate"/>
-    <comp lib="4" loc="(510,320)" name="J-K Flip-Flop">
+    <comp lib="1" loc="(380,350)" name="AND Gate"/>
+    <comp lib="4" loc="(560,200)" name="J-K Flip-Flop">
       <a name="appearance" val="logisim_evolution"/>
+      <a name="trigger" val="falling"/>
     </comp>
-    <wire from="(120,330)" to="(140,330)"/>
-    <wire from="(140,330)" to="(140,360)"/>
-    <wire from="(140,330)" to="(300,330)"/>
-    <wire from="(140,360)" to="(150,360)"/>
-    <wire from="(180,360)" to="(180,370)"/>
+    <comp lib="8" loc="(200,309)" name="Text">
+      <a name="text" val="Dector de bordas de subida."/>
+    </comp>
+    <comp lib="8" loc="(297,212)" name="Text">
+      <a name="text" val="J"/>
+    </comp>
+    <comp lib="8" loc="(297,246)" name="Text">
+      <a name="text" val="K"/>
+    </comp>
+    <wire from="(130,330)" to="(130,370)"/>
+    <wire from="(130,330)" to="(330,330)"/>
+    <wire from="(130,370)" to="(150,370)"/>
     <wire from="(180,370)" to="(200,370)"/>
     <wire from="(230,370)" to="(250,370)"/>
-    <wire from="(280,370)" to="(300,370)"/>
-    <wire from="(350,350)" to="(370,350)"/>
-    <wire from="(360,270)" to="(500,270)"/>
-    <wire from="(360,410)" to="(500,410)"/>
-    <wire from="(370,320)" to="(370,350)"/>
-    <wire from="(370,320)" to="(390,320)"/>
-    <wire from="(370,350)" to="(500,350)"/>
-    <wire from="(500,270)" to="(500,330)"/>
-    <wire from="(500,370)" to="(500,410)"/>
-    <wire from="(560,330)" to="(630,330)"/>
-    <wire from="(560,370)" to="(630,370)"/>
+    <wire from="(280,370)" to="(330,370)"/>
+    <wire from="(350,210)" to="(550,210)"/>
+    <wire from="(350,240)" to="(490,240)"/>
+    <wire from="(380,350)" to="(400,350)"/>
+    <wire from="(400,320)" to="(400,350)"/>
+    <wire from="(400,320)" to="(420,320)"/>
+    <wire from="(400,350)" to="(550,350)"/>
+    <wire from="(490,230)" to="(490,240)"/>
+    <wire from="(490,230)" to="(550,230)"/>
+    <wire from="(550,250)" to="(550,350)"/>
+    <wire from="(610,210)" to="(680,210)"/>
+    <wire from="(610,250)" to="(680,250)"/>
+    <wire from="(70,330)" to="(130,330)"/>
   </circuit>
 </project>
