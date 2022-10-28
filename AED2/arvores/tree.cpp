@@ -45,8 +45,12 @@ char compare(typeData * a, typeData * b){
 char moveCursor(typeTree * tree, typeData * data){
 
     if(!tree->cursor){ return 0; }
+    
 
-    if(compare(&tree->cursor->data, data) == -1){
+    if(compare(&tree->cursor->data, data) == 0){
+        return 0;
+    }
+    else if(compare(&tree->cursor->data, data) == -1){
         if(tree->cursor->right){
 
             tree->cursor = tree->cursor->right;
@@ -56,8 +60,6 @@ char moveCursor(typeTree * tree, typeData * data){
             return 0;
         }
 
-    }else if(compare(&tree->cursor->data, data) == 0){
-        return 0;
     }else{
         if(tree->cursor->left){
 
@@ -176,8 +178,33 @@ typeData * successor(typeTree * tree, typeData * data){
 
     tree->cursor = tree->root;
 
-    moveCursor(tree, data);
+    // Cursor move
 
+    if(tree->cursor){
+
+        while (tree->cursor->data.age != data->age){
+            
+            if(tree->cursor->data.age < data->age){
+
+                if(tree->cursor->right){ tree->cursor = tree->cursor->right; }
+
+                else { 
+                    //tree->cursor = tree->cursor->father;
+                    return dtTemp;
+                }
+            }else{
+
+                if(tree->cursor->left){ tree->cursor = tree->cursor->left; }
+
+                else { return dtTemp; }
+            }
+            
+        }
+        
+
+    }
+
+    // -----
 
     if(tree->cursor->right){
         
@@ -191,6 +218,23 @@ typeData * successor(typeTree * tree, typeData * data){
         dtTemp = &tree->cursor->data;
         
 
+    }else if(tree->cursor->father->data.age < tree->cursor->data.age){
+
+        while(tree->cursor->father && tree->cursor->father->data.age < tree->cursor->data.age){
+            tree->cursor = tree->cursor->father;
+        }
+
+        if(!tree->cursor->father){ return dtTemp; }
+
+        tree->cursor = tree->cursor->father;
+        dtTemp = &tree->cursor->data;
+        
+    }
+    else{
+        
+        tree->cursor = tree->cursor->father;
+        
+        dtTemp = &tree->cursor->data;
     }
 
     tree->cursor = tmp;

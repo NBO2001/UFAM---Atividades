@@ -8,7 +8,7 @@ using namespace std;
 int main(){
 
     typeTree nTree;
-    typeData dt;
+    typeData dt, *dt2;
 
     newTree(&nTree);
 
@@ -36,7 +36,13 @@ int main(){
 
     //showTree(&nTree);
 
-    dt.age = 10;
+    dt.age = 17;
+
+    dt2 = successor(&nTree,&dt);
     
-    cout << "Antecessor: " << (predecessor(&nTree,&dt))->age << " Sucessor: " << (successor(&nTree,&dt))->age << "\n";
+    if(dt2){
+        
+        cout << " Sucessor: " << dt2->age << "\n";
+
+    }
 }
