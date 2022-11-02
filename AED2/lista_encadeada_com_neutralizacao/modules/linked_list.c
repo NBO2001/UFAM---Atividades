@@ -1,37 +1,8 @@
-#include "stdio.h"
-#include "stdlib.h"
-//#include "lista.h"
-typedef struct lista TListaSE;
+#include "../headers/linked_list.h"
 
-typedef struct {
-  int matricula;
-  double nota;
-} TInfo;
-
-void imprimirInfo(TInfo info){
-
-  printf("Vou imprimir a informação\n");
-
-}
-
-int compararInfo(TInfo info, void* chaveBusca){
-  int* matricula = chaveBusca;
-
-  return info.matricula - *matricula;
-}
-
-typedef struct elementoLSE{
-  TInfo cargautil;
-  struct elementoLSE* proximo; // sucessor
-} TElementoLSE;
-
-struct lista{
-  TElementoLSE* inicio;
-  int tamanho;
-};
-
-TListaSE* criarLSE(){
-  TListaSE* lista = malloc(sizeof(TListaSE));
+typeList* criarLSE(){
+  
+  typeList* lista = malloc(sizeof(typeList));
 
   lista->inicio = NULL;
   lista->tamanho = 0;
@@ -39,8 +10,8 @@ TListaSE* criarLSE(){
   return lista;
 }
 
-TElementoLSE* criarElementoLSE(TInfo carga){
-  TElementoLSE* elem = malloc(sizeof(TElementoLSE));
+TtypeNode* criartypeNode(typeData carga){
+  TtypeNode* elem = malloc(sizeof(TtypeNode));
 
   elem->cargautil = carga;
   elem->proximo=NULL;
@@ -48,7 +19,7 @@ TElementoLSE* criarElementoLSE(TInfo carga){
   return elem;
 }
 
-void imprimirElementoLSE(TElementoLSE* e){
+void imprimirtypeNode(TtypeNode* e){
 
   //printf("%lf %lf %d %d\n", e->lat, e->lgi, e->data, e->hora);
   //printf("%p", e->cargautil);
@@ -56,8 +27,8 @@ void imprimirElementoLSE(TElementoLSE* e){
 
 }
 
-void inserirInicioLSE(TListaSE* lse, TInfo carga){
-  TElementoLSE *novo = criarElementoLSE(carga);
+void inserirInicioLSE(typeList* lse, typeData carga){
+  TtypeNode *novo = criartypeNode(carga);
 
   lse->tamanho++;
   if (lse->inicio == NULL){
@@ -68,14 +39,14 @@ void inserirInicioLSE(TListaSE* lse, TInfo carga){
   }
 }
 
-void inserirFinalLSE(TListaSE* lse, TInfo carga){
-  TElementoLSE *novo = criarElementoLSE(carga);
+void inserirFinalLSE(typeList* lse, typeData carga){
+  TtypeNode *novo = criartypeNode(carga);
 
   lse->tamanho++;
   if (lse->inicio == NULL){
     lse->inicio = novo;
   }else{
-    TElementoLSE *cam = lse->inicio;
+    TtypeNode *cam = lse->inicio;
     while (cam->proximo!=NULL){
       cam = cam->proximo;
     }
@@ -83,25 +54,9 @@ void inserirFinalLSE(TListaSE* lse, TInfo carga){
   }
 }
 
-void imprimirLSE(TListaSE *l){
-
-  TElementoLSE* cam = l->inicio;
-  printf("inicio da impressão\n");
-  while(cam!=NULL){
-    printf("%p ", cam);
-    imprimirInfo(cam->cargautil);
-    cam = cam->proximo;
-  }
-  printf("\n");
-}
-
-int tamanhoLSE(TListaSE *l){
-  return l->tamanho;
-}
-
-TInfo acessarLSE(TListaSE *l, int pos){
-  TElementoLSE *cam = NULL;
-  TInfo carga;
+typeData acessarLSE(typeList *l, int pos){
+  TtypeNode *cam = NULL;
+  typeData carga;
   if( (pos>=1) && (pos<=l->tamanho) ){
     int i=1;
     cam = l->inicio;
@@ -114,8 +69,8 @@ TInfo acessarLSE(TListaSE *l, int pos){
   return carga;
 }
 
-TInfo removerInicioLSE(TListaSE *l){
-  TElementoLSE* elem;
+typeData removerInicioLSE(typeList *l){
+  TtypeNode* elem;
   if (l->inicio == NULL){
     elem = NULL;
   }else{
@@ -123,20 +78,20 @@ TInfo removerInicioLSE(TListaSE *l){
     l->inicio = elem->proximo;
     l->tamanho--;
   }
-  TInfo carga = elem->cargautil;
+  typeData carga = elem->cargautil;
   free(elem);
   return carga;
 }
 
-TInfo removerPosicaoLSE(TListaSE *l, int pos){
-    TElementoLSE* removido=NULL;
+typeData removerPosicaoLSE(typeList *l, int pos){
+    TtypeNode* removido=NULL;
 
-    TElementoLSE *ant=NULL;
+    TtypeNode *ant=NULL;
     if( (pos<1) || (pos>l->tamanho) ){
       printf("ERRO: Fora do escopo\n");
-      return (TInfo){.matricula=0, .nota=-1};
+      return emptyData();
     }
-    TElementoLSE *cam=l->inicio;
+    TtypeNode *cam=l->inicio;
     int i=1;
     while(i<pos){
       ant = cam;
@@ -154,30 +109,42 @@ TInfo removerPosicaoLSE(TListaSE *l, int pos){
     // atualizando a descrição da lista (reduzir o tamanho)
     l->tamanho--;
 
-    TInfo carga = removido->cargautil;
+    typeData carga = removido->cargautil;
     free(removido);
     return carga;
 }
 
-TInfo removerFinalLSE(TListaSE *l){
+typeData removerFinalLSE(typeList *l){
   return removerPosicaoLSE(l, l->tamanho);
 }
 
-TInfo buscarConteudoLSE(TListaSE* l, void *chaveBusca){
-  TElementoLSE *cam = l->inicio;
+void imprimirLSE(typeList *l){
+
+  TtypeNode* cam = l->inicio;
+  printf("inicio da impressão\n");
+  while(cam!=NULL){
+    //printf("%p ", cam);
+    imprimirInfo(cam->cargautil);
+    cam = cam->proximo;
+  }
+  printf("\n");
+}
+
+typeData buscarConteudoLSE(typeList* l, void *chaveBusca){
+  TtypeNode *cam = l->inicio;
 
   while ((cam!=NULL) && ( compararInfo(cam->cargautil, chaveBusca) !=0 ) ){
     cam = cam->proximo;
   }
   if (cam == NULL)
-    return (TInfo){.matricula=1, .nota=-1.0};
+    return emptyData();
   else
     return cam->cargautil;
 }
 
-TInfo removerConteudoLSE(TListaSE* l, void *chaveBusca){
-  TElementoLSE *cam = l->inicio;
-  TElementoLSE *ant=NULL;
+typeData removerConteudoLSE(typeList* l, void *chaveBusca){
+  TtypeNode *cam = l->inicio;
+  TtypeNode *ant=NULL;
   while ((cam!=NULL) && (compararInfo(cam->cargautil, chaveBusca)!=0) ){
     ant = cam;
     cam = cam->proximo;
@@ -191,29 +158,18 @@ TInfo removerConteudoLSE(TListaSE* l, void *chaveBusca){
       ant->proximo = cam->proximo;
       l->tamanho--;
     }
-    TInfo carga = cam->cargautil;
+    typeData carga = cam->cargautil;
     free(cam);
     return carga;
   }else{
-    return (TInfo){.matricula=0,.nota=-1.0};
+    return emptyData();
   }
 }
 
-
-void destruirLSE(TListaSE* *rl){
-
-  while((*rl)->inicio != NULL){
-      TInfo carga = removerInicioLSE(*rl);
-      //free(carga);
-  }
-  free(*rl);
-  *rl = NULL;
-}
-
-void inserirConteudoLSE(TListaSE *l, TInfo carga){
-  TElementoLSE* cam = l->inicio;
-  TElementoLSE* ant=NULL;
-  TElementoLSE *novo = criarElementoLSE(carga);
+void inserirConteudoLSE(typeList *l, typeData carga){
+  TtypeNode* cam = l->inicio;
+  TtypeNode* ant=NULL;
+  TtypeNode *novo = criartypeNode(carga);
 
   while( (cam != NULL) && (compararInfo(cam->cargautil, &carga ) >= 0) ){
     ant = cam;
@@ -230,4 +186,18 @@ void inserirConteudoLSE(TListaSE *l, TInfo carga){
     l->tamanho++;
   }
 
+}
+
+void destruirLSE(typeList* *rl){
+
+  while((*rl)->inicio != NULL){
+      typeData carga = removerInicioLSE(*rl);
+      //free(carga);
+  }
+  free(*rl);
+  *rl = NULL;
+}
+
+int tamanhoLSE(typeList *l){
+  return l->tamanho;
 }
