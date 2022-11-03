@@ -4,11 +4,11 @@
 #include <stdio.h>
 
 typedef struct {
-  long int placa;
-  unsigned int ano;
-  double kilometragem;
-  double peso;
-  double valor;
+    long int id;
+    char name[60];
+    double peso;
+    int idade;
+    char email[50];
 } typeData;
 
 void imprimirInfo(typeData info);

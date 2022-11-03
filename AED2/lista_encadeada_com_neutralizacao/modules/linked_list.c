@@ -1,19 +1,20 @@
 #include "../headers/linked_list.h"
 
-typeList* criarLSE(){
+typeList* newList(){
   
-  typeList* lista = malloc(sizeof(typeList));
+  typeList* list = malloc(sizeof(typeList));
 
-  lista->inicio = NULL;
-  lista->tamanho = 0;
+  list->inicio = NULL;
+  list->tamanho = 0;
 
-  return lista;
+  return list;
 }
 
-TtypeNode* criartypeNode(typeData carga){
+TtypeNode* newNode(typeData charge){
+
   TtypeNode* elem = malloc(sizeof(TtypeNode));
 
-  elem->cargautil = carga;
+  elem->chargeutil = charge;
   elem->proximo=NULL;
 
   return elem;
@@ -22,13 +23,13 @@ TtypeNode* criartypeNode(typeData carga){
 void imprimirtypeNode(TtypeNode* e){
 
   //printf("%lf %lf %d %d\n", e->lat, e->lgi, e->data, e->hora);
-  //printf("%p", e->cargautil);
-  imprimirInfo(e->cargautil);
+  //printf("%p", e->chargeutil);
+  imprimirInfo(e->chargeutil);
 
 }
 
-void inserirInicioLSE(typeList* lse, typeData carga){
-  TtypeNode *novo = criartypeNode(carga);
+void inserirInicioLSE(typeList* lse, typeData charge){
+  TtypeNode *novo = newNode(charge);
 
   lse->tamanho++;
   if (lse->inicio == NULL){
@@ -39,8 +40,8 @@ void inserirInicioLSE(typeList* lse, typeData carga){
   }
 }
 
-void inserirFinalLSE(typeList* lse, typeData carga){
-  TtypeNode *novo = criartypeNode(carga);
+void inserirFinalLSE(typeList* lse, typeData charge){
+  TtypeNode *novo = newNode(charge);
 
   lse->tamanho++;
   if (lse->inicio == NULL){
@@ -56,7 +57,7 @@ void inserirFinalLSE(typeList* lse, typeData carga){
 
 typeData acessarLSE(typeList *l, int pos){
   TtypeNode *cam = NULL;
-  typeData carga;
+  typeData charge;
   if( (pos>=1) && (pos<=l->tamanho) ){
     int i=1;
     cam = l->inicio;
@@ -64,9 +65,9 @@ typeData acessarLSE(typeList *l, int pos){
       i++;
       cam = cam->proximo;
     }
-    carga =   cam->cargautil;
+    charge =   cam->chargeutil;
   }
-  return carga;
+  return charge;
 }
 
 typeData removerInicioLSE(typeList *l){
@@ -78,9 +79,9 @@ typeData removerInicioLSE(typeList *l){
     l->inicio = elem->proximo;
     l->tamanho--;
   }
-  typeData carga = elem->cargautil;
+  typeData charge = elem->chargeutil;
   free(elem);
-  return carga;
+  return charge;
 }
 
 typeData removerPosicaoLSE(typeList *l, int pos){
@@ -109,9 +110,9 @@ typeData removerPosicaoLSE(typeList *l, int pos){
     // atualizando a descrição da lista (reduzir o tamanho)
     l->tamanho--;
 
-    typeData carga = removido->cargautil;
+    typeData charge = removido->chargeutil;
     free(removido);
-    return carga;
+    return charge;
 }
 
 typeData removerFinalLSE(typeList *l){
@@ -124,7 +125,7 @@ void imprimirLSE(typeList *l){
   printf("inicio da impressão\n");
   while(cam!=NULL){
     //printf("%p ", cam);
-    imprimirInfo(cam->cargautil);
+    imprimirInfo(cam->chargeutil);
     cam = cam->proximo;
   }
   printf("\n");
@@ -133,19 +134,19 @@ void imprimirLSE(typeList *l){
 typeData buscarConteudoLSE(typeList* l, void *chaveBusca){
   TtypeNode *cam = l->inicio;
 
-  while ((cam!=NULL) && ( compararInfo(cam->cargautil, chaveBusca) !=0 ) ){
+  while ((cam!=NULL) && ( compararInfo(cam->chargeutil, chaveBusca) !=0 ) ){
     cam = cam->proximo;
   }
   if (cam == NULL)
     return emptyData();
   else
-    return cam->cargautil;
+    return cam->chargeutil;
 }
 
 typeData removerConteudoLSE(typeList* l, void *chaveBusca){
   TtypeNode *cam = l->inicio;
   TtypeNode *ant=NULL;
-  while ((cam!=NULL) && (compararInfo(cam->cargautil, chaveBusca)!=0) ){
+  while ((cam!=NULL) && (compararInfo(cam->chargeutil, chaveBusca)!=0) ){
     ant = cam;
     cam = cam->proximo;
   }
@@ -158,20 +159,20 @@ typeData removerConteudoLSE(typeList* l, void *chaveBusca){
       ant->proximo = cam->proximo;
       l->tamanho--;
     }
-    typeData carga = cam->cargautil;
+    typeData charge = cam->chargeutil;
     free(cam);
-    return carga;
+    return charge;
   }else{
     return emptyData();
   }
 }
 
-void inserirConteudoLSE(typeList *l, typeData carga){
+void inserirConteudoLSE(typeList *l, typeData charge){
   TtypeNode* cam = l->inicio;
   TtypeNode* ant=NULL;
-  TtypeNode *novo = criartypeNode(carga);
+  TtypeNode *novo = newNode(charge);
 
-  while( (cam != NULL) && (compararInfo(cam->cargautil, &carga ) >= 0) ){
+  while( (cam != NULL) && (compararInfo(cam->chargeutil, &charge ) >= 0) ){
     ant = cam;
     cam = cam->proximo;
   }
@@ -191,8 +192,8 @@ void inserirConteudoLSE(typeList *l, typeData carga){
 void destruirLSE(typeList* *rl){
 
   while((*rl)->inicio != NULL){
-      typeData carga = removerInicioLSE(*rl);
-      //free(carga);
+      typeData charge = removerInicioLSE(*rl);
+      //free(charge);
   }
   free(*rl);
   *rl = NULL;

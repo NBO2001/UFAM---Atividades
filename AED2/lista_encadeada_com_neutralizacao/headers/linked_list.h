@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 typedef struct typeNode{
-  typeData cargautil;
+  typeData chargeutil;
   struct typeNode* proximo; // sucessor
 } TtypeNode;
 
@@ -20,14 +20,14 @@ struct lista{
   // int qtde_insercao;
 };
 
-typeList* criarLSE();
-TtypeNode* criartypeNode(typeData carga);
+typeList* newList();
+TtypeNode* newNode(typeData charge);
 void imprimirtypeNode(TtypeNode* e);
 
 // Operações baseadas em posição
 
-void inserirInicioLSE(typeList* lse, typeData carga);
-void inserirFinalLSE(typeList* lse, typeData carga);
+void inserirInicioLSE(typeList* lse, typeData charge);
+void inserirFinalLSE(typeList* lse, typeData charge);
 typeData acessarLSE(typeList *l, int pos);
 typeData removerInicioLSE(typeList *l);
 typeData removerPosicaoLSE(typeList *l, int pos);
@@ -37,7 +37,7 @@ typeData removerFinalLSE(typeList *l);
 void imprimirLSE(typeList *l);
 typeData buscarConteudoLSE(typeList* l, void *chaveBusca);
 typeData removerConteudoLSE(typeList* l, void *chaveBusca);
-void inserirConteudoLSE(typeList *l, typeData carga);
+void inserirConteudoLSE(typeList *l, typeData charge);
 void destruirLSE(typeList* *rl);
 int tamanhoLSE(typeList *l);
 
