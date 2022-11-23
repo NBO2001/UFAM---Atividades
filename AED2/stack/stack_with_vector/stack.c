@@ -44,7 +44,7 @@ char stackUp(typeStack * stk, void* item){
 
             int new_tam = stk->lenght * 2;
 
-            stk->itens = realloc(stk->itens,new_tam);
+            stk->itens = realloc(stk->itens, sizeof(void *)*new_tam);
 
             void* *vector = stk->itens;
             
