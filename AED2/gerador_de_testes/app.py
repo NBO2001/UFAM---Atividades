@@ -27,6 +27,6 @@ def gere(qnt=1, delim="\n", stop_poit=1, location=0):
 
 arq = open("out.in","w")
 
-arq.write(gere(qnt=100,stop_poit=0,location=1))
+arq.write(gere(qnt=30))
 
 arq.close()
