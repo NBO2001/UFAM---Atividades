@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "stdlib.h"
-#include "quick_sort.h"
+#include "typePerson.h"
 #include <string.h>
 
-typedef struct typePerson{
+struct typePerson{
 
     int id;
     char name[50];
@@ -11,7 +11,7 @@ typedef struct typePerson{
     int age;
     char email[50];
 
-}typePerson;
+};
 
 void viewPerson(typePerson * person){
 
@@ -53,40 +53,35 @@ char cmp_age(void * a, void * b){
 
     typePerson * aa = a;
     typePerson * bb = b;
+    
 
     return aa->age - bb->age;
 
 }
 
-int main(int argc, char * argv[]){
+char cmp_id(void * a, void * b){
 
-    typePerson * vet;
-    int n;
+    typePerson * aa = a;
+    typePerson * bb = b;
+    
 
-    scanf("%d%*c", &n);
+    return aa->id - bb->id;
 
-    vet = malloc(sizeof(typePerson)*n);
+}
 
-    for(int i=0; i < n; i++){
-        scanf("%d%*c", &vet[i].id);
-        scanf("%[^\n]%*c", vet[i].name);
-        scanf("%lf%*c", &vet[i].weight);
-        scanf("%d%*c", &vet[i].age);
-        scanf("%[^\n]%*c", vet[i].email);
-    }
-   
-    //viewPeople(vet, n);
+typePerson * readPerson(){
 
-    printf("Ordenado por nome ---- \n");
+    typePerson * person = malloc(sizeof(typePerson));
 
-    sort(vet,n, sizeof(typePerson), &cmp_name);
+    scanf("%d%*c", &person->id);
+    scanf("%[^\n]%*c", person->name);
+    scanf("%lf%*c", &person->weight);
+    scanf("%d%*c", &person->age);
+    scanf("%[^\n]%*c", person->email);
 
-    viewPeople(vet, n);
+    return person;
+}
 
-    printf("Ordenado por idade ---- \n");
-
-    sort(vet,n, sizeof(typePerson), &cmp_age);
-
-    viewPeople(vet, n);
-
+int sizeTypePerson(){
+    return sizeof(typePerson);
 }

@@ -37,8 +37,6 @@ void rotate_rigth(typeNode * node){
 
     aux->color = node->color;
     node->color = RED;
-    
-
 
 }
 

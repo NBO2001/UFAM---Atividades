@@ -1,0 +1,39 @@
+data r0 0x80
+out addr,r0
+data r1 0x51
+out data,r1
+data r1 0x75
+out data,r1
+data r1 0x65
+out data,r1
+data r1 0x72
+out data,r1
+data r1 0x6f
+out data,r1
+data r1 0x20
+out data,r1
+data r1 0x66
+out data,r1
+data r1 0x65
+out data,r1
+data r1 0x72
+out data,r1
+data r1 0x69
+out data,r1
+data r1 0x61
+out data,r1
+data r1 0x61
+out data,r1
+data r1 0x61
+out data,r1
+data r1 0x61
+out data,r1
+data r1 0x73
+out data,r1
+data r1 0x73
+out data,r1
+data r1 0x73
+out data,r1
+xor r0,r0
+out addr,r0
+jmp 0x39
