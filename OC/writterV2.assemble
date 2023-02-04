@@ -1,0 +1,14 @@
+data r0,0x81
+data r1,0x00
+data r2,0x00
+out addr,r0
+in data,r1
+WHILE(r1 != r2):
+data r0,0x80
+out addr,r0
+out data,r1
+data r0,0x81
+out addr,r0
+in data,r1
+ENDWHILE
+ENDCODE

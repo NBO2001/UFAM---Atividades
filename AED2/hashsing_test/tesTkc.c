@@ -40,6 +40,57 @@ uint32_t MurmurOAAT_32(const char* str, uint32_t h)
     return h;
 }
 
+unsigned int MurmurHash2 ( const void * key, int len, unsigned int seed )
+{
+	// 'm' and 'r' are mixing constants generated offline.
+	// They're not really 'magic', they just happen to work well.
+
+	const unsigned int m = 0x5bd1e995;
+	const int r = 24;
+
+	// Initialize the hash to a 'random' value
+
+	unsigned int h = seed ^ len;
+
+	// Mix 4 bytes at a time into the hash
+
+	const unsigned char * data = (const unsigned char *)key;
+
+	while(len >= 4)
+	{
+		unsigned int k = *(unsigned int *)data;
+
+		k *= m; 
+		k ^= k >> r; 
+		k *= m; 
+		
+		h *= m; 
+		h ^= k;
+
+		data += 4;
+		len -= 4;
+	}
+	
+	// Handle the last few bytes of the input array
+
+	switch(len)
+	{
+	case 3: h ^= data[2] << 16;
+	case 2: h ^= data[1] << 8;
+	case 1: h ^= data[0];
+	        h *= m;
+	};
+
+	// Do a few final mixes of the hash to ensure the last few
+	// bytes are well-incorporated.
+
+	h ^= h >> 13;
+	h *= m;
+	h ^= h >> 15;
+
+	return h;
+} 
+
 uint32_t KR_v2_hash(const char *s)
 {
     // Source: https://stackoverflow.com/a/45641002/5407270
@@ -107,7 +158,7 @@ uint32_t x17(const void * key, int len, uint32_t h)
     return h ^ (h >> 16);
 }
 
-uint32_t apply_hash(int hash, const char* line)
+uint32_t apply_hash(int hash, const void* line)
 {
     switch (hash) {
     case 1: return crc32b((const uint8_t*)line);
@@ -118,6 +169,7 @@ uint32_t apply_hash(int hash, const char* line)
     case 6: return KR_v2_hash(line);
     case 7: return Coffin_hash(line);
     case 8: return x17(line, strlen(line), SEED);
+    case 9: return MurmurHash2(line,sizeof(char)*25,SEED);
     default: break;
     }
     return 0;
@@ -139,7 +191,7 @@ int main(int argc, char* argv[]){
 
     while (fscanf(arq,"%s", ts) == 1){
         // int idx = dupleHashing(ts,strlen(ts), totV)%totV;
-        int idx = apply_hash(2,ts)%totV;
+        int idx = apply_hash(9,arq)%totV;
         wds[idx]++;
     }
     
@@ -151,12 +203,14 @@ int main(int argc, char* argv[]){
     int confitos = 0;
     double tolC = 0.0;
     int maiorConfito = 0;
-    
+    int tolValue = 0;
     double quality = 0;
 
     for(int i=0; i < totV; i++){
         
         quality += wds[i]*wds[i];
+        
+        tolValue += wds[i];
 
         if(wds[i] == 1){
             contOn++;
@@ -169,7 +223,7 @@ int main(int argc, char* argv[]){
         }
     }
 
-    quality = quality / (392-10);
+    quality = quality / tolValue - 1;
     printf("1: %d; 0: %d; C: %d; M: %lf; MaiorC: %d; quality: %lf\n",contOn,contzeros, confitos, tolC/confitos, maiorConfito, quality);
     // int a = 0x25;
     // 

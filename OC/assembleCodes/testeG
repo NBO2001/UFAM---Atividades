@@ -1,0 +1,15 @@
+	data r0,0x80
+	out addr,r0
+	data r1,0x4d
+	out data,r1
+	data r1,0x45
+	out data,r1
+	data r1,0x53
+	out data,r1
+	data r1,0x53
+	out data,r1
+	data r1,0x49
+	out data,r1
+	xor r0,r0
+	out addr,r0
+	halt

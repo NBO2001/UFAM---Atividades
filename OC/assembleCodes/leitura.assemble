@@ -1,0 +1,25 @@
+    data r3,32
+    not r3,r3
+    data r2,1
+    add r2,r3
+    data r2,0x00
+statCode:
+    data r0,0x81
+    out addr,r0
+    in data,r1
+    data r2,96
+    clf
+    cmp r2,r1
+    ja pulaproximmo
+    add r3,r1
+pulaproximmo:
+    data r2,0x00
+    clf
+    cmp r1,r2
+    je finalprog
+    data r0,0x80
+    out addr,r0
+    out data,r1
+    jmp statCode
+finalprog:
+    halt

@@ -75,17 +75,11 @@ int main(int argc, char * argv[]){
         scanf("%[^\n]%*c", vet[i].email);
     }
    
-    //viewPeople(vet, n);
+    viewPeople(vet, n);
 
     printf("Ordenado por nome ---- \n");
 
-    sort(vet,n, sizeof(typePerson), &cmp_name);
-
-    viewPeople(vet, n);
-
-    printf("Ordenado por idade ---- \n");
-
-    sort(vet,n, sizeof(typePerson), &cmp_age);
+    sort(vet,n, sizeof(typePerson), &cmp_weight);
 
     viewPeople(vet, n);
 

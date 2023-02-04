@@ -1,0 +1,22 @@
+	data r0,0x09
+	data r1,0x04
+	data r3,0x01
+	not r1,r1
+	add r3,r1
+	add r1,r0
+	data r3,0x00
+	clf
+	cmp r3,r0
+	ja 0x14
+	data r3,0x01
+	add r3,r2
+	jmp 0x08
+	data r3,-1
+	add r3,r1
+	not r1,r1
+	add r1,r0
+	data r1,0x28
+	data r3,0x29
+	st r1,r2
+	st r3,r0
+	halt

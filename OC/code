@@ -1,0 +1,7 @@
+    data r0,vec
+    data r2,0x04
+loop:
+    jc return
+    ld r0,r1
+    shl r1,r1
+    st r0, r1

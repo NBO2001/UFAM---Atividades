@@ -1,14 +1,14 @@
-DATA R0 0x05
-DATA R1 0x05
-DATA R2 0x01
-CLF
-SHR R1,R1
-JC 0x10
-SHL R0,R0
-SHL R2,R2
-JC 0x14
-JMP 0x06
-CLF
-ADD R0,R3
-JMP 0x0a
-JMP 0x14
+data r0,0x05
+data r1,0x05
+data r2 0x01
+clf
+shr r1,r1
+jc 0x10
+shl r0,r0
+shl r2,r2
+jc 20
+jmp 6
+clf
+add r0,r3
+jmp 0x0a
+halt
