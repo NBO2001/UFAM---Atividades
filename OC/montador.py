@@ -1,49 +1,86 @@
 import sys
 
-global stack
+instStack = []
+pilhasCodicoes = []
+endLine = -1
+pilhasLabels = {}
+
+
+def existsInStackLabel(key):
+    global pilhasLabels
+
+    if key in pilhasLabels.keys():
+        return True
+    else:
+        return False
+
+
+def consultInstro(instruction):
+
+    codes = {
+        'add': {'hexVaue': '8', 'typeInstro': 2},
+        'shr': {'hexVaue': '9', 'typeInstro': 2},
+        'shl': {'hexVaue': 'a', 'typeInstro': 2},
+        'not': {'hexVaue': 'b', 'typeInstro': 2},
+        'and': {'hexVaue': 'c', 'typeInstro': 2},
+        'or': {'hexVaue': 'd', 'typeInstro': 2},
+        'xor': {'hexVaue': 'e', 'typeInstro': 2},
+        'cmp': {'hexVaue': 'f', 'typeInstro': 2},
+        'ld': {'hexVaue': '0', 'typeInstro': 2},
+        'st': {'hexVaue': '1', 'typeInstro': 2},
+        'data': {'hexVaue': '2', 'typeInstro': 4},
+        'jmpr': {'hexVaue': '3', 'typeInstro': 1},
+        'jmp': {'hexVaue': '40', 'typeInstro': 3},
+        'jc': {'hexVaue': '58', 'typeInstro': 3},
+        'ja': {'hexVaue': '54', 'typeInstro': 3},
+        'je': {'hexVaue': '52', 'typeInstro': 3},
+        'jz': {'hexVaue': '51', 'typeInstro': 3},
+        'jca': {'hexVaue': '5c', 'typeInstro': 3},
+        'jce': {'hexVaue': '5a', 'typeInstro': 3},
+        'jcz': {'hexVaue': '59', 'typeInstro': 3},
+        'jae': {'hexVaue': '56', 'typeInstro': 3},
+        'jez': {'hexVaue': '53', 'typeInstro': 3},
+        'jaz': {'hexVaue': '55', 'typeInstro': 3},
+        'jcae': {'hexVaue': '5e', 'typeInstro': 3},
+        'jcaz': {'hexVaue': '5d', 'typeInstro': 3},
+        'jcez': {'hexVaue': '5b', 'typeInstro': 3},
+        'jaez': {'hexVaue': '57', 'typeInstro': 3},
+        'jcaez': {'hexVaue': '5f', 'typeInstro': 3},
+        'clf': {'hexVaue': '60', 'typeInstro': 0},
+        'in': {'hexVaue': '7', 'typeInstro': 5},
+        'out': {'hexVaue': '7', 'typeInstro': 5},
+        'move': {'hexVaue': 'nun', 'typeInstro': 6},
+    }
+
+    if not instruction in codes.keys():
+        return 'null'
+
+    return codes[instruction]
 
 
 def convert_instruction(instruction):
+    intro = consultInstro(instruction)
+    return intro['hexVaue'] if intro != 'null' else 'null'
 
-    codes = {
-        'add': '8',
-        'shr': '9',
-        'shl': 'a',
-        'not': 'b',
-        'and': 'c',
-        'or': 'd',
-        'xor': 'e',
-        'cmp': 'f',
-        'ld': '0',
-        'st': '1',
-        'data': '2',
-        'jmpr': '3',
-        'jmp': '40',
-        'jc': '58',
-        'ja': '54',
-        'je': '52',
-        'jz': '51',
-        'jca': '5c',
-        'jce': '5a',
-        'jcz': '59',
-        'jae': '56',
-        'jez': '53',
-        'jaz': '55',
-        'jcae': '5e',
-        'jcaz': '5d',
-        'jcez': '5b',
-        'jaez': '57',
-        'jcaez': '5f',
-        'clf': '60',
-        'in': '7',
-        'out': '7',
-    }
-    assert (instruction in codes.keys(), 'Invalide Key')
-    return codes[instruction]
+
+def typeOfInstrution(instruction):
+    intro = consultInstro(instruction)
+    return intro['typeInstro'] if intro != 'null' else 'null'
 
 
 def isOutInput(inOut):
     return inOut == 'in' or inOut == 'out'
+
+
+def isInstruction(string):
+
+    strBrute = string.strip().split()
+    strBrute = strBrute.pop(0)
+
+    if convert_instruction(strBrute) == 'null':
+        return False
+    else:
+        return True
 
 
 def binHex(binNumber):
@@ -65,6 +102,7 @@ def binHex(binNumber):
         '1110': 'e',
         '1111': 'f',
     }
+
     return hexDic[binNumber]
 
 
@@ -82,97 +120,258 @@ def registConvet(rg):
     return dicregistrs[rg]
 
 
-def convertInHexCode(listRegistrs):
-
-    binStr = ''
-
-    listRegistrs = listRegistrs.split(',')
-
-    tam = len(listRegistrs)
-
-    if tam == 1:
-        binStr = f'{binStr}00'
-
-    for register in listRegistrs:
-        binStr = f'{binStr}{registConvet(register.strip())}'
-
-    return binHex(binStr)
+def inOrOut(string):
+    if string == 'in':
+        return 0
+    else:
+        return 1
 
 
-def isInstruction(value):
+def dataOrAddr(string):
 
-    if isinstance(value, str):
+    if string == 'data':
+        return 0
+    else:
+        return 1
 
-        if value[:2] == '0x':
-            return False
-        else:
-            return True
 
+def isHexValue(value):
+    if '0x' in value:
+        return True
     else:
         return False
 
 
-def clearString(strValues):
+def addrCovert(adrress):
+    if isLabel(adrress):
 
-    listArgvs = strValues.strip().lower().replace(' ', ',').split(',')
+            if existsInStackLabel(adrress):
+                adrress = pilhasLabels[adrress]['value']
+            else:
+                pilhasLabels[adrress] = {
+                    'addrOrIndex': 1,
+                    'value': endLine + 2,
+                }
+                return adrress
+    else:
+        adrress = (
+            adrress[2:] if isHexValue(adrress) else convertnumber(adrress)
+        )
 
-    intructionList = []
+    return adrress
 
-    n = len(listArgvs)
 
-    secondIsInst = False
+def convertnumber(number):
 
-    instcode = ''
-    if isInstruction(listArgvs[0]):
-        instcode = f'{instcode}{convert_instruction(listArgvs[0])}'
+    num = int(number)
 
-    if n > 1 and isInstruction(listArgvs[1]):
+    binNum = ''
+    cont = 0
+    while cont < 8:
 
-        if not isOutInput(listArgvs[0]):
-            instcode = f'{instcode}{convertInHexCode(listArgvs[1])}'
-
-            secondIsInst = True
+        if num & 1:
+            binNum = f'1{binNum}'
         else:
-            lisargvs = [lsT.strip() for lsT in listArgvs[1].split(',')]
+            binNum = f'0{binNum}'
 
-            instcode = f'{instcode}{binHex(f"{registConvet(listArgvs[0])}{registConvet(lisargvs[0])}{registConvet(lisargvs[1])}")}'
+        num = num >> 1
+        cont += 1
 
-            intructionList.append(instcode)
+    hexValue = f'{binHex(binNum[:4])}{binHex(binNum[4:])}'
+    return hexValue
 
-            return intructionList
 
-    intructionList.append(instcode)
+def isDecimalValue(value):
 
-    if n > 2 and secondIsInst:
+    for letter in value:
 
-        intructionList.append(listArgvs[2][2:])
+        if ord(letter) == 45 or ord(letter) == 43:
+            continue
 
-    elif n > 1 and not secondIsInst:
+        elif not (48 <= ord(letter) <= 57) :
+            return False
 
-        intructionList.append(listArgvs[1][2:])
 
-    return intructionList
+    return True
+
+
+def isLabel(instro):
+
+    if isHexValue(instro):
+        return False
+    elif isDecimalValue(instro):
+        return False
+    else:
+        return True
+
+
+def instructorProcessor(lineCode):
+    global instStack
+    global endLine
+    global pilhasLabels
+
+    listArgvs = lineCode.strip().lower().replace(' ', ',').split(',')
+
+    instrutionAssemble = listArgvs.pop(0)
+
+    instrution = convert_instruction(instrutionAssemble)
+
+    typeInst = typeOfInstrution(instrutionAssemble)
+
+    if typeInst == 0:
+        instStack.append(instrution)
+        endLine += 1
+
+    elif typeInst == 1:
+
+        rb = registConvet(listArgvs.pop(0))
+
+        secPart = binHex(f'00{rb}')
+
+        instStack.append(f'{instrution}{secPart}')
+        endLine += 1
+
+    elif typeInst == 2:
+
+        ra = registConvet(listArgvs.pop(0))
+        rb = registConvet(listArgvs.pop(0))
+
+        secPart = binHex(f'{ra}{rb}')
+        instStack.append(f'{instrution}{secPart}')
+
+        endLine += 1
+
+    elif typeInst == 3:
+
+        adrress = addrCovert(listArgvs.pop(0))
+
+        instStack.append(f'{instrution}')
+        instStack.append(adrress)
+
+        endLine += 2
+
+    elif typeInst == 4:
+
+        rb = registConvet(listArgvs.pop(0))
+
+        secPart = binHex(f'00{rb}')
+
+        adrress = addrCovert(listArgvs.pop(0))
+
+        instStack.append(f'{instrution}{secPart}')
+        instStack.append(adrress)
+
+        endLine += 2
+
+    elif typeInst == 5:
+
+        dtOrOut = listArgvs.pop(0)
+        rb = registConvet(listArgvs.pop(0))
+        secPart = binHex(
+            f'{inOrOut(instrutionAssemble)}{dataOrAddr(dtOrOut)}{rb}'
+        )
+        instStack.append(f'{instrution}{secPart}')
+        endLine += 1
+    elif typeInst == 6:
+        ra = registConvet(listArgvs.pop(0))
+        rb = registConvet(listArgvs.pop(0))
+
+        xorRB = f"e{binHex(f'{rb}{rb}')}"
+        addRARB = f"8{binHex(f'{ra}{rb}')}"
+        instStack.append(xorRB)
+        instStack.append(addRARB)
+        endLine += 2
+        
+
+
+def isLabelLine(string):
+
+    if ':' in string or not ('.' in string):
+        return True
+    else:
+        return False
+
+def conditionProcessor(lineCode):
+    global instStack
+    global endLine
+    global pilhasCodicoes
+    global pilhasLabels
+
+    if ":" in lineCode:
+
+        lineCode = lineCode.strip().lower()
+
+        lineLabel = lineCode[:-1]
+
+        if existsInStackLabel(lineLabel):
+            endhexLineValue = str(hex(endLine + 1))
+            endhexLineValue = (
+                endhexLineValue[2:]
+                if len(endhexLineValue[2:]) == 2
+                else f'0{endhexLineValue[2:]}'
+            )
+            indexDesteni = pilhasLabels[lineLabel]['value']
+
+            instStack[indexDesteni] = endhexLineValue
+
+        else:
+            lineInhex = str(hex(endLine + 1))
+
+            lineInhex = lineInhex[2:]
+            lineInhex = lineInhex if len(lineInhex) == 2 else f'0{lineInhex}'
+
+            pilhasLabels[lineLabel] = {'addrOrIndex': 0, 'value': lineInhex}
+    else:
+
+        lineCode = lineCode.strip()
+        if lineCode == 'halt':
+            instStack.append('40')
+            endLine += 1
+            startCodeIn = str(hex(endLine))[2:]
+            startCodeIn = (
+                startCodeIn if len(startCodeIn) == 2 else f'0{startCodeIn}'
+            )
+            instStack.append(startCodeIn)
+            endLine += 1
+
+def vectorProcessor(lineCode):
+    global instStack
+    global endLine
+
+    lineCode = lineCode.strip().lower().split()
+    value = addrCovert(lineCode[1])
+    instStack.append(value)
+    endLine += 1
+
+
+def processLine(lineCode):
+
+    if isInstruction(lineCode):
+        return instructorProcessor(lineCode)
+    elif isLabelLine(lineCode):
+        return conditionProcessor(lineCode)
+    else:
+        return vectorProcessor(lineCode)
+        
 
 
 def parse_input_file(asm_file):
-
-    hex_code = []
+    global endLine
+    global instStack
 
     with open(asm_file, 'r') as f:
-        lines = [clearString(line) for line in f.readlines()]
-        for line in lines:
-            for code in line:
-                if len(code) > 0:
-                    hex_code.append(code)
-
-    return hex_code
+        
+        for line in f.readlines():
+            if len(line.strip()) > 0:
+                processLine(line)
 
 
-def write_outputfile(memory_file, hexaCode):
+def write_outputfile(memory_file):
+    global instStack
 
-    tam = len(hexaCode)
+    tam = len(instStack)
     cnt = 0
-    with open(memory_file, 'w') as f:
+    with open(f'{memory_file}.m', 'w') as f:
         f.write('v3.0 hex words plain\n')
 
         for i in range(16):
@@ -180,7 +379,7 @@ def write_outputfile(memory_file, hexaCode):
             for j in range(16):
 
                 if cnt < tam:
-                    f.write(f'{hexaCode[cnt]}\t')
+                    f.write(f'{instStack[cnt]}\t')
                     cnt += 1
                 else:
                     f.write(f'00\t')
@@ -189,9 +388,11 @@ def write_outputfile(memory_file, hexaCode):
 
 
 def main(asm_file, memory_file):
+    global endLine
+    global instStack
 
-    hexaCode = parse_input_file(asm_file)
-    write_outputfile(memory_file, hexaCode)
+    parse_input_file(asm_file)
+    write_outputfile(memory_file)
 
 
 if __name__ == '__main__':
@@ -201,3 +402,14 @@ if __name__ == '__main__':
     assert n == 3, 'Ivalidade arguments'
 
     main(sys.argv[1], sys.argv[2])
+
+"""
+ -> Tudo Minuscula
+ -> Separacao entre operador e operando devem ser um espaco
+ -> Separacao entre operando deve ser uma vigula (sem espaco)
+ -> Numero podem ser hexa ou decimais (se for decimal pode ser negativo)
+ -> nao pode ter linhas vazias
+ -> Nao pode ter linhas com apenas cometarios
+ -> Os comentarios comecam com #
+ -> Labels sao indentificaados por : (sem espacos e carate especial)
+"""
