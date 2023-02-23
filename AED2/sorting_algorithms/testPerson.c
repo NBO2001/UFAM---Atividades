@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "stdlib.h"
-#include "quick_sort.h"
+#include "./heap_sort_generico/heap_sort.h"
 #include <string.h>
 
 typedef struct typePerson{
@@ -31,16 +31,16 @@ void viewPeople(typePerson * people, int n){
 
 }
 
-char cmp_name(void * a, void * b){
+int cmp_name(void * a, void * b){
 
     typePerson * aa = a;
     typePerson * bb = b;
     
-    return strcmp(bb->name,aa->name);
+    return strcmp(aa->name,bb->name);
 
 }
 
-char cmp_weight(void * a, void * b){
+int cmp_weight(void * a, void * b){
 
     typePerson * aa = a;
     typePerson * bb = b;
@@ -49,7 +49,7 @@ char cmp_weight(void * a, void * b){
 
 }
 
-char cmp_age(void * a, void * b){
+int cmp_age(void * a, void * b){
 
     typePerson * aa = a;
     typePerson * bb = b;
@@ -79,7 +79,7 @@ int main(int argc, char * argv[]){
 
     printf("Ordenado por nome ---- \n");
 
-    sort(vet,n, sizeof(typePerson), &cmp_weight);
+    heap_sort(vet,n, sizeof(typePerson), &cmp_name);
 
     viewPeople(vet, n);
 

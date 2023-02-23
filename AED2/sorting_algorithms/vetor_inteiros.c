@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "stdlib.h"
-#include "quick_sort.h"
+#include "./heap_sort_generico/heap_sort.h"
 
-char cmp(void * a, void * b){
+int cmp(void * a, void * b){
 
     int * aa = a;
     int * bb = b;
     
-    return (*bb) - (*aa);
+    return (*aa) - (*bb);
 
 }
 
@@ -29,7 +29,7 @@ int main(int argc, char * argv[]){
 
     printf("\n");
 
-    sort(vet,n, sizeof(int), &cmp);
+    heap_sort( vet,n, sizeof(int), &cmp);
 
     for(int i=0; i < n; i++){
         printf("%d ", vet[i]);

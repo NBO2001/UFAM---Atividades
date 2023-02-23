@@ -49,6 +49,7 @@ def consultInstro(instruction):
         'clf': {'hexVaue': '60', 'typeInstro': 0},
         'in': {'hexVaue': '7', 'typeInstro': 5},
         'out': {'hexVaue': '7', 'typeInstro': 5},
+        'move': {'hexVaue': 'nun', 'typeInstro': 6},
     }
 
     if not instruction in codes.keys():
@@ -75,7 +76,7 @@ def isInstruction(string):
 
     strBrute = string.strip().split()
     strBrute = strBrute.pop(0)
-    
+
     if convert_instruction(strBrute) == 'null':
         return False
     else:
@@ -242,22 +243,7 @@ def instructorProcessor(lineCode):
 
     elif typeInst == 3:
 
-        adrress = listArgvs.pop(0)
-
-        if isLabel(adrress):
-
-            if existsInStackLabel(adrress):
-                adrress = pilhasLabels[adrress]['value']
-            else:
-                pilhasLabels[adrress] = {
-                    'addrOrIndex': 1,
-                    'value': endLine + 2,
-                }
-
-        else:
-            adrress = (
-                adrress[2:] if isHexValue(adrress) else convertnumber(adrress)
-            )
+        adrress = addrCovert(listArgvs.pop(0))
 
         instStack.append(f'{instrution}')
         instStack.append(adrress)
@@ -270,22 +256,7 @@ def instructorProcessor(lineCode):
 
         secPart = binHex(f'00{rb}')
 
-        adrress = listArgvs.pop(0)
-
-        if isLabel(adrress):
-            
-            if existsInStackLabel(adrress):
-                adrress = pilhasLabels[adrress]['value']
-            else:
-                pilhasLabels[adrress] = {
-                    'addrOrIndex': 1,
-                    'value': endLine + 2,
-                }
-        else:
-            
-            adrress = (
-                adrress[2:] if isHexValue(adrress) else convertnumber(adrress)
-            )
+        adrress = addrCovert(listArgvs.pop(0))
 
         instStack.append(f'{instrution}{secPart}')
         instStack.append(adrress)
@@ -301,6 +272,16 @@ def instructorProcessor(lineCode):
         )
         instStack.append(f'{instrution}{secPart}')
         endLine += 1
+    elif typeInst == 6:
+        ra = registConvet(listArgvs.pop(0))
+        rb = registConvet(listArgvs.pop(0))
+
+        xorRB = f"e{binHex(f'{rb}{rb}')}"
+        addRARB = f"8{binHex(f'{ra}{rb}')}"
+        instStack.append(xorRB)
+        instStack.append(addRARB)
+        endLine += 2
+        
 
 
 def isLabelLine(string):
@@ -364,7 +345,7 @@ def vectorProcessor(lineCode):
 
 
 def processLine(lineCode):
-    
+
     if isInstruction(lineCode):
         return instructorProcessor(lineCode)
     elif isLabelLine(lineCode):

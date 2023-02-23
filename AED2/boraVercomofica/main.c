@@ -17,7 +17,7 @@ char isLetter(unsigned char letter){
 void cleaningWord(unsigned char * word){
     
     int tam = strlen(word);
-
+    printf("t %d\n", word);
     int ctI = 0;
     int ctJ = tam-1;
 
@@ -95,24 +95,15 @@ void removeSpecialCharacters(unsigned char * string){
 
 int main(int argc, char * argv[]){
 
-    unsigned char * teste = malloc(sizeof(char)*150);
+    unsigned char * key = malloc(50);
 
-    strcpy(teste,"—ƒ");
-    for(int i=0; i < strlen(teste); i++) printf("%u ", teste[i]);
-    printf("\n");
+    strcpy(key, "coração");
 
-    removeSpecialCharacters(teste);
+    cleaningWord(key);
+    lowerCase(key);
+    removeSpecialCharacters(key);
+    printf("%s\n", key);
     
-    printf("%s\n", teste);
-
-
-    cleaningWord(teste);
-    printf("%s\n", teste);
-    
-
-    lowerCase(teste);
-    printf("%s\n", teste);
-
 
     // FILE * fp = fopen("./test/stopwords_br.txt","r");
 
