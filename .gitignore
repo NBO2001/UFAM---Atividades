@@ -131,3 +131,5 @@ dmypy.json
 
 #vs
 *vscode/
+video_parte*
+*.out
