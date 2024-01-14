@@ -1,0 +1,43 @@
+            .data
+matrixA:    .word32     1,2,3,4
+matrixB:    .word32     5,6,7,8
+matrixR:    .word32     0,0,0,0
+ordem:      .byte       2
+
+            .code
+LB          $s0,        ordem($zero) ; ordem da matrix
+MULT        $s0,        $s0          ; Tamanho total da matriz
+MFLO        $s1                      ; tam==s1
+ADD         $s2,        $zero, $zero ; so para dizer  q (column_control==s2) recebe zero
+ADD         $s3,        $zero, $s0 ; loop_control==s3
+ADD         $s4,        $zero, $zero ; so para dizer  q (i_start==s4) recebe zero
+ADD         $s5,        $zero, $zero ; so para dizer  q (b_control==s5) recebe zero
+ADD         $s6,        $zero, $zero ; so para dizer  q (a_control==s6) recebe zero
+
+SLT         $a0,        $s2, $s0
+BEQZ        $a0,        endFwilhe
+
+SLT         $a0,        $s6, $s1
+BEQZ        $a0,        endSwilhe
+
+ADD         $t0,        $zero, $s4  ; i = i_start
+
+SLT         $a0,        $t0, $s3
+BEQZ        $a0,        endTwilhe
+
+ADDI        $s6,        $s6, 0x1 ; a_control += 1
+ADDI        $t0,        $t0, 0x1 ; i += 1
+
+endTwilhe:
+ADDI        $s5,        $s5, 0x1    ; b_control += 1
+
+
+endSwilhe:
+    ADD         $s3,        $s3, $s0    ; loop_control += ordem
+    ADD         $s4,        $s4, $s0    ; i_start += ordem
+    ADD         $s6,        $s6, $zero  ; a_control = 0
+    ADDI        $s2,        $s2, 0x1    ; column_control += 1
+
+
+endFwilhe:
+    SYSCALL 0

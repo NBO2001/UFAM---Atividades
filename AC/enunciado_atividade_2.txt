@@ -1,0 +1,10 @@
+	.data
+vetor:	.byte		9,8,7,6,5,4,3,2	;maior 7, menor 2
+
+format_str:	.asciiz	"O maior numero primo eh %i.\nO menor numero primo eh %i.\n"
+
+sys5:		.space	8
+maior:	.space	8
+menor:	.space	8
+	
+	.code

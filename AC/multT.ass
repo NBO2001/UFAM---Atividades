@@ -1,0 +1,10 @@
+            .data
+matrixA:    .word32     1,2,3,4
+matrixB:    .word32     5,6,7,8
+matrixR:    .word32     0,0,0,0
+ordem:      .byte       2
+
+            .code
+ADDI        $s0, $s0, 0xc
+LB          $s1, matrixA($s0)
+SYSCALL     0

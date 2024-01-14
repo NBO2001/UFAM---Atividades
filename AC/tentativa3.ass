@@ -1,0 +1,66 @@
+            .data
+matrixA:    .word32     1,2,5,7,8,1,3,1,5
+matrixB:    .word32     5,7,1, 6,8,4, 4,9,3
+matrixR:    .word32     0,0,0,0,0,0,0,0,0
+ordem:      .byte       3
+
+            .code
+LB          $s0,        ordem($zero) ; ordem da matrix
+ADDI        $t1,        $zero, 0x4
+MULT        $s0,        $t1
+MFLO        $t1
+
+MULT        $s0,        $s0
+MFLO        $s0
+
+ADDI        $s2,        $zero, 0x4
+MULT        $s0,        $s2          ; Tamanho total da matriz
+MFLO        $s1                      ; tam==s1
+ADD         $s2,        $zero, $zero ; so para dizer  q (column_control==s2) recebe zero
+ADD         $s3,        $zero, $t1 ; loop_control==s3
+ADD         $s4,        $zero, $zero ; so para dizer  q (i_start==s4) recebe zero
+ADD         $s5,        $zero, $zero ; so para dizer  q (b_control==s5) recebe zero
+ADD         $s6,        $zero, $zero ; so para dizer  q (a_control==s6) recebe zero
+
+tercWhileStart:
+SLT         $a0,        $s2, $t1     ;  column_control < ordem
+BEQZ        $a0,        tercWhileEnd    ;  while
+
+secondWhileStart:
+SLT         $a0,        $s6, $s1     ; a_control < tam
+BEQZ        $a0,        secondWhileEnd    ; while
+
+ADD         $t0,        $zero, $s4  ; i = i_start
+
+fistWhileStart:
+SLT         $a0,        $t0, $s3     ; i < loop_control
+BEQZ        $a0,        firstWhileEnd    ; while
+
+LB          $a1,        matrixA($s6)    ; matrixA[a_control]
+LB          $a2,        matrixB($s5)    ; matrixB[b_control]
+MULT        $a1, $a2
+MFLO        $a1
+LB          $a2,        matrixR($t0)
+ADD         $a2,        $a2, $a1
+SW          $a2,        matrixR($t0) 
+
+ADDI        $s6,        $s6, 0x4 ; a_control += 4
+ADDI        $t0,        $t0, 0x4 ; i += 4
+
+B           fistWhileStart
+
+firstWhileEnd:
+ADDI        $s5,        $s5, 0x4;  b_control += 1
+B           secondWhileStart
+
+secondWhileEnd: 
+ADD         $s3,        $s3, $t1    ; loop_control += ordem
+
+
+ADD         $s4,        $s4, $t1   ; i_start += ordem
+
+ADD         $s6,        $zero, $zero  ; a_control = 0
+ADDI        $s2,        $s2, 0x4    ; column_control += 4
+B           tercWhileStart
+tercWhileEnd:
+SYSCALL 0
